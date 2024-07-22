@@ -12,18 +12,20 @@ const NewSampleForm = ({ image, caption }: NewSampleFormProps) => {
     <article>
       <button
         type="button"
-        className="block relative h-[140px] w-full bg-white rounded-sm"
+        className="block relative h-[150px] w-full bg-white rounded-sm"
       >
         <Image
           src={image}
           alt=""
           fill
-          sizes="100vw"
+          sizes="80vw 50vw 30vw"
           className="border-1 hover:border-purple-800 rounded-sm object-contain"
         />
       </button>
 
-      <figcaption className="text-xs lg:text-sm mt-2">{caption}</figcaption>
+      <figcaption className="text-black text-xs font-medium capitalize lg:text-sm mt-2">
+        {caption}
+      </figcaption>
     </article>
   );
 };
