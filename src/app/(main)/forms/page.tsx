@@ -1,4 +1,5 @@
 import FormsNavbar from "@/components/containers/forms-navbar";
+import RecentForms from "@/components/containers/recent-forms";
 import StartNewForm from "@/components/containers/start-new-form";
 
 const Forms = () => {
@@ -6,6 +7,7 @@ const Forms = () => {
     <main>
       <FormsNavbar />
       <StartNewForm />
+      <RecentForms />
     </main>
   );
 };
