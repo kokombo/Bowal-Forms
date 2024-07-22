@@ -1,0 +1,10 @@
+{
+  "files": {
+    // All tools, including the linter, ignore following files
+    "ignore": ["src/lib/icons"]
+  },
+  "linter": {
+    // Only the linter ignores the following files
+    "ignore": ["src/lib/icons"]
+  }
+}

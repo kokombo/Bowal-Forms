@@ -5,8 +5,11 @@ import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import images from "@/constants";
+import { useSession } from "next-auth/react";
 
 const Hero = () => {
+  const { data: session } = useSession();
+
   return (
     <header className="flex flex-col items-center text-center gap-6 lg:gap-9 px-6 lg:px-16 py-14 lg:py-24">
       <h1 className="text-3xl lg:text-6xl text-black font-medium">
@@ -18,7 +21,7 @@ const Hero = () => {
         in real-time.
       </h2>
 
-      <div className="flex flex-col items-center lg:flex-row gap-y-3 lg:gap-x-5">
+      <div className="flex flex-col items-center lg:flex-row gap-4 lg:gap-5">
         <Link
           href=""
           className={cn(buttonVariants({ size: "lg" }), "w-52 lg:w-auto")}
@@ -27,7 +30,7 @@ const Hero = () => {
         </Link>
 
         <Link
-          href=""
+          href={session ? "/" : "/sign-in"}
           className={cn(
             buttonVariants({ variant: "outline", size: "lg" }),
             "text-blue w-52 lg:w-auto"
@@ -41,7 +44,7 @@ const Hero = () => {
         <h3 className="text-primarytext">Don&apos;t have an account?</h3>
 
         <Link
-          href=""
+          href="/sign-up"
           className={cn(
             buttonVariants({ variant: "ghost", size: "lg" }),
             "text-blue"

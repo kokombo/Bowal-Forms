@@ -1,11 +1,14 @@
 import { FaFileWaveform } from "react-icons/fa6";
+import Link from "next/link";
 
 const Logo = () => {
   return (
-    <span className="flex gap-1 items-center">
+    <Link href="/" className="flex gap-1 items-center">
       <FaFileWaveform size={36} color="green" />
-      <h4 className="lg:text-xl text-primarytext font-medium">Bowal Forms</h4>
-    </span>
+      <h4 className="text-lg lg:text-xl text-primarytext font-medium">
+        Bowal Forms
+      </h4>
+    </Link>
   );
 };
 

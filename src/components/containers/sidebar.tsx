@@ -41,7 +41,7 @@ const Sidebar = ({ hideSidebar, sidebarIsActive }: SidebarProps) => {
           </Link>
 
           <Link
-            href=""
+            href="/sign-in"
             className={cn(
               buttonVariants({ variant: "ghost", size: "lg" }),
               "text-blue"
