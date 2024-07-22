@@ -16,7 +16,7 @@ const LandingPageNavbar = () => {
 
   return (
     <Fragment>
-      <nav className="sticky left-0 top-0 bg-white z-10 px-1 lg:px-6 py-4 border-b-1">
+      <nav className="sticky left-0 top-0 bg-white z-10 px-1 md:px-2 py-4 border-b-1">
         <div className="flex items-center lg:gap-1">
           <Button variant="ghost" onClick={showSidebar}>
             <MdOutlineDehaze size={24} className="text-primarytext" />

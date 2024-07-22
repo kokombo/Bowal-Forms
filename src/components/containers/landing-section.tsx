@@ -39,6 +39,7 @@ const LandingSection = ({
           alt={heading.substring(0, 30)}
           quality={100}
           priority
+          sizes="100vw"
           className="object-contain shadow-xl rounded-xl"
         />
       </div>

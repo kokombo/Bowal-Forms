@@ -3,7 +3,7 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import Providers from "@/lib/providers";
 
-const manrope = Manrope({ subsets: ["latin"] });
+const manrope = Manrope({ subsets: ["latin"], weight: "500" });
 
 export const metadata: Metadata = {
   title: "Bowal Forms",

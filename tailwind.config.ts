@@ -22,7 +22,7 @@ const config = {
         black: "#202124",
         primarytext: "#5f638d",
         blue: "#1a73e8",
-        grey: "#f8f9fa",
+        grey: "#f1f3f4",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

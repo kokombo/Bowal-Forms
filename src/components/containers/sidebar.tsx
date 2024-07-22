@@ -12,11 +12,11 @@ const Sidebar = ({ hideSidebar, sidebarIsActive }: SidebarProps) => {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 w-full h-screen z-10 flex transition duration-500",
+        "fixed left-0 top-0 w-full h-screen z-10 flex transition duration-700",
         sidebarIsActive ? "translate-x-0" : "-translate-x-full"
       )}
     >
-      <div className="flex flex-col justify-between w-5/6 lg:w-2/6 bg-white">
+      <div className="flex flex-col justify-between w-5/6 lg:w-2/6 bg-white shadow-2xl">
         <div
           className="px-2 lg:px-3 py-4 border-b-1"
           onClick={hideSidebar}
@@ -53,7 +53,7 @@ const Sidebar = ({ hideSidebar, sidebarIsActive }: SidebarProps) => {
       </div>
 
       <div
-        className="w-1/6 lg:w-4/6 bg-black opacity-40 transition duration-200 ease-linear"
+        className="w-1/6 lg:w-4/6 bg-transparent"
         onClick={hideSidebar}
         onKeyDown={() => {}}
       />

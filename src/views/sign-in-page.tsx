@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { FcGoogle } from "react-icons/fc";
 import Logo from "@/components/ui/logo";
-import { useSession } from "next-auth/react";
+import { AuthScreenIcon } from "@/lib/icons";
 
 type AuthProps = {
   heading: string;
@@ -18,13 +18,14 @@ const SigninPage = ({ heading, callToAction }: AuthProps) => {
         <Logo />
       </div>
 
-      <div className="flex flex-col justify-between text-center border-1 rounded-lg px-4 py-6 w-5/6 lg:w-2/5 h-3/5 lg:h-4/5 shadow-sm">
+      <div className="flex flex-col justify-between text-center border-1 rounded-lg px-4 py-6 w-11/12 sm:w-3/5 md:w-1/2 lg:w-2/5 h-3/5 sm:h-4/5 shadow-sm">
         <h4 className="text-black text-xl lg:text-2xl font-medium">
           {heading}
         </h4>
 
-        <div>
+        <div className="flex flex-col items-center gap-5">
           <h5 className="text-primarytext">{callToAction} to Bowal Forms</h5>
+          <AuthScreenIcon />
         </div>
 
         <Button
