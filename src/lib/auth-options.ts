@@ -9,7 +9,12 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       profile(profile) {
-        return profile;
+        return {
+          id: profile?.id,
+          name: profile?.name,
+          image: profile?.image,
+          email: profile?.email,
+        };
       },
     }),
   ],
@@ -30,9 +35,6 @@ export const authOptions: NextAuthOptions = {
         });
 
         token.id = accountUser?.id;
-        token.email = accountUser?.email;
-        token.name = accountUser?.name;
-        token.picture = accountUser?.image;
       }
       return token;
     },
@@ -40,9 +42,6 @@ export const authOptions: NextAuthOptions = {
     async session({ token, session }) {
       session.user = {
         id: token.id,
-        name: token.name,
-        email: token.email,
-        image: token.picture,
       };
       return session;
     },
@@ -58,6 +57,7 @@ export const authOptions: NextAuthOptions = {
         if (!existingUser) {
           await prisma.user.create({
             data: {
+              id: profile?.sub as string,
               name: profile?.name as string,
               email: profile?.email as string,
               image: profile?.image as string,
