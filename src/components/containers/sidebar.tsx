@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Logo from "../ui/logo";
 import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 
 type SidebarProps = {
   hideSidebar: () => void;
@@ -9,6 +12,8 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ hideSidebar, sidebarIsActive }: SidebarProps) => {
+  const { data: session } = useSession();
+
   return (
     <aside
       className={cn(
@@ -26,12 +31,15 @@ const Sidebar = ({ hideSidebar, sidebarIsActive }: SidebarProps) => {
         </div>
 
         <div className="flex flex-col gap-5 fixed bottom-0 left-0 w-5/6 lg:w-2/6 px-2 lg:px-3 pb-4 lg:pb-0">
-          <Link href="" className={cn(buttonVariants({ size: "lg" }))}>
+          <Link
+            href={session ? "/forms" : "/sign-up"}
+            className={cn(buttonVariants({ size: "lg" }))}
+          >
             Try Forms for Work
           </Link>
 
           <Link
-            href=""
+            href={session ? "/forms" : "/sign-in"}
             className={cn(
               buttonVariants({ variant: "outline", size: "lg" }),
               "text-blue"
@@ -41,7 +49,7 @@ const Sidebar = ({ hideSidebar, sidebarIsActive }: SidebarProps) => {
           </Link>
 
           <Link
-            href="/sign-in"
+            href={session ? "/forms" : "/sign-in"}
             className={cn(
               buttonVariants({ variant: "ghost", size: "lg" }),
               "text-blue"

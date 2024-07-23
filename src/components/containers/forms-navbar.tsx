@@ -3,12 +3,14 @@
 import { MdOutlineDehaze } from "react-icons/md";
 import { Button } from "../ui/button";
 import Logo from "../ui/logo";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { TbGridDots } from "react-icons/tb";
 import Search from "../ui/search";
+import type { Session } from "next-auth";
+import ProfilePicture from "../ui/profile-picture";
+import { signOut } from "next-auth/react";
 
-const FormsNavbar = () => {
+const FormsNavbar = ({ session }: { session: Session | null }) => {
   return (
     <nav className="sticky left-0 top-0 bg-white z-10 flex items-center justify-between md:px-2 pr-1 md:pr-5 py-3">
       <div className="flex items-center lg:gap-1">
@@ -30,13 +32,21 @@ const FormsNavbar = () => {
             </Button>
           </PopoverTrigger>
 
-          <PopoverContent>AAA</PopoverContent>
+          <PopoverContent>
+            <ul className="">
+              <li>
+                <Button
+                  variant="ghost"
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                >
+                  Logout
+                </Button>
+              </li>
+            </ul>
+          </PopoverContent>
         </Popover>
 
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <ProfilePicture picture={session?.user.image as string} />
       </div>
     </nav>
   );

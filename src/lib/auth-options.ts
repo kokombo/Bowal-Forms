@@ -8,14 +8,6 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      profile(profile) {
-        return {
-          id: profile?.id,
-          name: profile?.name,
-          image: profile?.image,
-          email: profile?.email,
-        };
-      },
     }),
   ],
 
@@ -40,9 +32,7 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ token, session }) {
-      session.user = {
-        id: token.id,
-      };
+      session.user.id = token.id;
       return session;
     },
 
@@ -60,7 +50,7 @@ export const authOptions: NextAuthOptions = {
               id: profile?.sub as string,
               name: profile?.name as string,
               email: profile?.email as string,
-              image: profile?.image as string,
+              image: profile?.picture as string,
             },
           });
         }
@@ -68,5 +58,10 @@ export const authOptions: NextAuthOptions = {
 
       return true;
     },
+  },
+
+  pages: {
+    signIn: "/sign-in",
+    newUser: "/sign-up",
   },
 };

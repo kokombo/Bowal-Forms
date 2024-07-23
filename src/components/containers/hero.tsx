@@ -23,14 +23,14 @@ const Hero = () => {
 
       <div className="flex flex-col items-center lg:flex-row gap-4 lg:gap-5">
         <Link
-          href=""
+          href={session ? "/forms" : "/sign-up"}
           className={cn(buttonVariants({ size: "lg" }), "w-52 lg:w-auto")}
         >
           Try Forms for Work
         </Link>
 
         <Link
-          href={session ? "/" : "/sign-in"}
+          href={session ? "/forms" : "/sign-in"}
           className={cn(
             buttonVariants({ variant: "outline", size: "lg" }),
             "text-blue w-52 lg:w-auto"
@@ -44,7 +44,7 @@ const Hero = () => {
         <h3 className="text-primarytext">Don&apos;t have an account?</h3>
 
         <Link
-          href="/sign-up"
+          href={session ? "/forms" : "/sign-up"}
           className={cn(
             buttonVariants({ variant: "ghost", size: "lg" }),
             "text-blue"

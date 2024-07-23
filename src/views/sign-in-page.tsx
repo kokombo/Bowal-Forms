@@ -30,7 +30,9 @@ const SigninPage = ({ heading, callToAction }: AuthProps) => {
 
         <Button
           type="button"
-          onClick={() => signIn("google", { callbackUrl: "/forms" })}
+          onClick={() =>
+            signIn("google", { callbackUrl: "/forms", redirect: true })
+          }
           size="lg"
           className="w-full"
         >
