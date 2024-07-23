@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { prisma } from "./lib/prisma-connect";
 import { getServerSession } from "./lib/getServerSession";
+import { revalidatePath } from "next/cache";
 
 export const startANewForm = async ({ formId }: { formId: string }) => {
   const session = await getServerSession();
@@ -75,4 +76,26 @@ export const updateFormTitle = async ({
   } finally {
     await prisma.$disconnect();
   }
+
+  revalidatePath("/forms");
+};
+
+export const deleteForm = async (formId: string) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+
+    await prisma.form.delete({
+      where: {
+        id: formId,
+      },
+    });
+  } catch (error) {
+    console.error("error updating form title", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  revalidatePath("/forms");
 };

@@ -4,8 +4,6 @@ import StartNewForm from "@/components/containers/start-new-form";
 import { getForms } from "@/lib/get-forms";
 import { getServerSession } from "@/lib/getServerSession";
 
-export const dynamic = "force-dynamic";
-
 const Forms = async () => {
   const getSession = getServerSession();
   const formsData = getForms();

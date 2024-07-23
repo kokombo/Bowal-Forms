@@ -3,15 +3,20 @@
 import images from "@/constants";
 import Image from "next/image";
 import { FaFileWaveform } from "react-icons/fa6";
+import { TbDotsVertical } from "react-icons/tb";
 import { Fragment, useMemo } from "react";
 import { openRecentForm } from "@/actions";
 import { useServerAction } from "@/lib/use-server-actions";
 import DotLoader from "@/components/loaders/dot-loader";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Button } from "./button";
+import RenameFormDialog from "../dialogs/rename-form-dialog";
+import RemoveFormDialog from "../dialogs/remove-form-dialog";
 
 const RecentForm = ({ lastOpened, title, id }: Form) => {
   const [runAction, isPending] = useServerAction(() => openRecentForm(id));
 
-  const parsedLastOpended = useMemo(() => {
+  const parsedLastOpened = useMemo(() => {
     const dateTime = new Date(lastOpened);
     return dateTime.toLocaleTimeString();
   }, [lastOpened]);
@@ -20,8 +25,8 @@ const RecentForm = ({ lastOpened, title, id }: Form) => {
     <Fragment>
       {isPending && <DotLoader />}
 
-      <button type="button" onClick={runAction}>
-        <div className="flex flex-col items-start rounded-sm border-1 hover:border-purple-800">
+      <div className="cursor-pointer" onClick={runAction} onKeyDown={() => {}}>
+        <div className="flex flex-col items-start rounded-sm  border-1 hover:border-purple-800">
           <div className="block relative h-[185px] w-full">
             <Image
               src={images.hero}
@@ -37,17 +42,42 @@ const RecentForm = ({ lastOpened, title, id }: Form) => {
               {title}
             </h5>
 
-            <div>
+            <div className="flex justify-between w-full">
               <span className="flex items-center gap-1">
                 <FaFileWaveform size={22} color="green" />
                 <h6 className="text-xs font-medium text-primarytext">
-                  Opened {parsedLastOpended}
+                  Opened {parsedLastOpened}
                 </h6>
               </span>
+
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={(e) => e.stopPropagation()}
+                    className="rounded-[100%] p-2"
+                  >
+                    <TbDotsVertical size={20} className="text-primarytext" />
+                  </Button>
+                </PopoverTrigger>
+
+                <PopoverContent onClick={(e) => e.stopPropagation()}>
+                  <ul>
+                    <li>
+                      <RenameFormDialog formId={id} previousTitle={title} />
+                    </li>
+
+                    <li>
+                      <RemoveFormDialog formId={id} title={title} />
+                    </li>
+                  </ul>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
         </div>
-      </button>
+      </div>
     </Fragment>
   );
 };
