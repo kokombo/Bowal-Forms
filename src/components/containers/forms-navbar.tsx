@@ -24,7 +24,7 @@ const FormsNavbar = ({ session }: { session: Session | null }) => {
         <Search />
       </div>
 
-      <div className="flex items-center md:gap-3">
+      <div className="flex items-center md:gap-2">
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="ghost">

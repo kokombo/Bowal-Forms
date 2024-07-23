@@ -53,6 +53,8 @@ export const authOptions: NextAuthOptions = {
               image: profile?.picture as string,
             },
           });
+
+          await prisma.$disconnect();
         }
       }
 
