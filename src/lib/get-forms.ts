@@ -23,6 +23,9 @@ export const getForms = async () => {
       theme: true,
       questions: true,
     },
+    orderBy: {
+      lastOpened: "desc",
+    },
   });
   return forms;
 };

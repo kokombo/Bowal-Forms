@@ -3,43 +3,52 @@
 import images from "@/constants";
 import Image from "next/image";
 import { FaFileWaveform } from "react-icons/fa6";
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
+import { openRecentForm } from "@/actions";
+import { useServerAction } from "@/lib/use-server-actions";
+import DotLoader from "@/components/loaders/dot-loader";
 
-const RecentForm = ({ lastOpened, title }: Form) => {
+const RecentForm = ({ lastOpened, title, id }: Form) => {
+  const [runAction, isPending] = useServerAction(() => openRecentForm(id));
+
   const parsedLastOpended = useMemo(() => {
     const dateTime = new Date(lastOpened);
     return dateTime.toLocaleTimeString();
   }, [lastOpened]);
 
   return (
-    <button type="button">
-      <div className="flex flex-col items-start rounded-sm border-1 hover:border-purple-800">
-        <div className="block relative h-[185px] w-full">
-          <Image
-            src={images.hero}
-            alt=""
-            fill
-            sizes="80vw 50vw 30vw"
-            className="rounded-t-sm object-contain"
-          />
-        </div>
+    <Fragment>
+      {isPending && <DotLoader />}
 
-        <div className="flex flex-col items-start gap-2 py-3 px-3 lg:px-4 border-t-1 w-full">
-          <h5 className="text-xs lg:text-sm font-medium text-black capitalize">
-            {title}
-          </h5>
+      <button type="button" onClick={runAction}>
+        <div className="flex flex-col items-start rounded-sm border-1 hover:border-purple-800">
+          <div className="block relative h-[185px] w-full">
+            <Image
+              src={images.hero}
+              alt=""
+              fill
+              sizes="80vw 50vw 30vw"
+              className="rounded-t-sm object-contain"
+            />
+          </div>
 
-          <div>
-            <span className="flex items-center gap-1">
-              <FaFileWaveform size={22} color="green" />
-              <h6 className="text-xs font-medium text-primarytext">
-                Opened {parsedLastOpended}
-              </h6>
-            </span>
+          <div className="flex flex-col items-start gap-2 py-3 px-3 lg:px-4 border-t-1 w-full">
+            <h5 className="text-xs lg:text-sm font-medium text-black capitalize">
+              {title}
+            </h5>
+
+            <div>
+              <span className="flex items-center gap-1">
+                <FaFileWaveform size={22} color="green" />
+                <h6 className="text-xs font-medium text-primarytext">
+                  Opened {parsedLastOpended}
+                </h6>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    </button>
+      </button>
+    </Fragment>
   );
 };
 
