@@ -14,7 +14,7 @@ import RenameFormDialog from "../dialogs/rename-form-dialog";
 import RemoveFormDialog from "../dialogs/remove-form-dialog";
 import { useFormatLastOpened } from "@/lib/use-format-last-opened";
 
-const RecentForm = ({ lastOpened, title, id }: Form) => {
+const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
   const [runAction, isPending] = useServerAction(() => openRecentForm(id));
   const formattedLastOpened = useFormatLastOpened(lastOpened);
 
@@ -65,11 +65,19 @@ const RecentForm = ({ lastOpened, title, id }: Form) => {
               <PopoverContent onClick={(e) => e.stopPropagation()}>
                 <ul>
                   <li>
-                    <RenameFormDialog formId={id} previousTitle={title} />
+                    <RenameFormDialog
+                      formId={id}
+                      previousTitle={title}
+                      ownerId={ownerId}
+                    />
                   </li>
 
                   <li>
-                    <RemoveFormDialog formId={id} title={title} />
+                    <RemoveFormDialog
+                      formId={id}
+                      title={title}
+                      ownerId={ownerId}
+                    />
                   </li>
                 </ul>
               </PopoverContent>

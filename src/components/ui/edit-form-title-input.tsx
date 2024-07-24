@@ -4,12 +4,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { updateFormTitle } from "@/actions";
 
 const EditFormTitleInput = ({
-  currentTitle,
-  formId,
-}: {
-  currentTitle: string | null;
-  formId: string;
-}) => {
+  title: currentTitle,
+  id: formId,
+  ownerId,
+}: Form) => {
   const [showEditableInputStyle, setShowEditableInputStyle] = useState(false);
   const [title, setTitle] = useState(currentTitle as string);
   const titleRef = useRef<null | HTMLInputElement>(null);
@@ -26,7 +24,7 @@ const EditFormTitleInput = ({
   const handleInputBlur = async () => {
     setShowEditableInputStyle(false);
     if (title.length < 1) setTitle(currentTitle as string);
-    await updateFormTitle({ formId, title });
+    await updateFormTitle({ formId, title, ownerId });
   };
 
   return (

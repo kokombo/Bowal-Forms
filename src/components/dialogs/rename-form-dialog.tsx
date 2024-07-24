@@ -18,12 +18,17 @@ import { updateFormTitle } from "@/actions";
 type RenameFormDialogProps = {
   formId: string;
   previousTitle: string | null;
+  ownerId: string;
 };
 
-const RenameFormDialog = ({ formId, previousTitle }: RenameFormDialogProps) => {
+const RenameFormDialog = ({
+  formId,
+  previousTitle,
+  ownerId,
+}: RenameFormDialogProps) => {
   const [newTitle, setNewTitle] = useState(previousTitle as string);
   const [runAction, isPending] = useServerAction(() =>
-    updateFormTitle({ formId, title: newTitle })
+    updateFormTitle({ formId, title: newTitle, ownerId })
   );
 
   return (

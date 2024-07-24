@@ -53,15 +53,17 @@ export const openRecentForm = async (formId: string) => {
 export const updateFormTitle = async ({
   formId,
   title,
+  ownerId,
 }: {
   formId: string;
   title: string;
+  ownerId: string;
 }) => {
   const session = await getServerSession();
 
   try {
     if (!session) return;
-
+    if (ownerId !== session?.user.id) return;
     if (title.length < 1) return;
 
     await prisma.form.update({
@@ -82,11 +84,18 @@ export const updateFormTitle = async ({
   revalidatePath("/forms");
 };
 
-export const deleteForm = async (formId: string) => {
+export const deleteForm = async ({
+  formId,
+  ownerId,
+}: {
+  formId: string;
+  ownerId: string;
+}) => {
   const session = await getServerSession();
 
   try {
     if (!session) return;
+    if (ownerId !== session?.user.id) return;
 
     await prisma.form.delete({
       where: {

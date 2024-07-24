@@ -19,10 +19,17 @@ import { useServerAction } from "@/lib/use-server-actions";
 type RemoveFormDialogProps = {
   formId: string;
   title: string | null;
+  ownerId: string;
 };
 
-const RemoveFormDialog = ({ formId, title }: RemoveFormDialogProps) => {
-  const [runAction, isPending] = useServerAction(() => deleteForm(formId));
+const RemoveFormDialog = ({
+  formId,
+  title,
+  ownerId,
+}: RemoveFormDialogProps) => {
+  const [runAction, isPending] = useServerAction(() =>
+    deleteForm({ formId, ownerId })
+  );
 
   return (
     <AlertDialog>
