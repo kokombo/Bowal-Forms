@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { updateFormTitle } from "@/actions";
 
 const EditFormTitleInput = ({
@@ -15,13 +15,19 @@ const EditFormTitleInput = ({
   const titleRef = useRef<null | HTMLInputElement>(null);
   const spanRef = useRef<null | HTMLSpanElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (titleRef.current && spanRef.current) {
       spanRef.current.textContent = title || " ";
       const spanWidth = spanRef.current.offsetWidth;
       titleRef.current.style.width = `${spanWidth}px`;
     }
   }, [title]);
+
+  const handleInputBlur = async () => {
+    setShowEditableInputStyle(false);
+    if (title.length < 1) setTitle(currentTitle as string);
+    await updateFormTitle({ formId, title });
+  };
 
   return (
     <div className="relative">
@@ -32,10 +38,7 @@ const EditFormTitleInput = ({
         ref={titleRef}
         onChange={(e) => setTitle(e.target.value)}
         onFocus={() => setShowEditableInputStyle(true)}
-        onBlur={async () => {
-          setShowEditableInputStyle(false);
-          await updateFormTitle({ formId, title });
-        }}
+        onBlur={handleInputBlur}
         className="outline-none"
       />
       <span ref={spanRef} className="absolute invisible whitespace-pre" />

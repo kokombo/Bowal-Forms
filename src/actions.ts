@@ -62,6 +62,8 @@ export const updateFormTitle = async ({
   try {
     if (!session) return;
 
+    if (title.length < 1) return;
+
     await prisma.form.update({
       where: {
         id: formId,
