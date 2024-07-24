@@ -28,7 +28,7 @@ const RenameFormDialog = ({
 }: RenameFormDialogProps) => {
   const [newTitle, setNewTitle] = useState(previousTitle as string);
   const [runAction, isPending] = useServerAction(() =>
-    updateFormTitle({ formId, title: newTitle, ownerId })
+    updateFormTitle({ formId, title: newTitle.trim(), ownerId })
   );
 
   return (

@@ -24,7 +24,7 @@ const EditFormTitleInput = ({
   const handleInputBlur = async () => {
     setShowEditableInputStyle(false);
     if (title.replace(/\s+/g, "").length < 1) setTitle(currentTitle as string);
-    await updateFormTitle({ formId, title, ownerId });
+    await updateFormTitle({ formId, title: title.trim(), ownerId });
   };
 
   return (

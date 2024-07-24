@@ -82,6 +82,7 @@ export const updateFormTitle = async ({
   }
 
   revalidatePath("/forms");
+  revalidatePath(`/forms/nx/${formId}/edit`);
 };
 
 export const deleteForm = async ({
