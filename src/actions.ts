@@ -14,7 +14,7 @@ export const startANewForm = async ({ formId }: { formId: string }) => {
     await prisma.form.create({
       data: {
         id: formId,
-        ownerId: session?.user.id as string,
+        ownerId: session.user.id as string,
       },
     });
   } catch (error) {
@@ -63,8 +63,8 @@ export const updateFormTitle = async ({
 
   try {
     if (!session) return;
-    if (ownerId !== session?.user.id) return;
-    if (title.length < 1) return;
+    if (ownerId !== session.user.id) return;
+    if (title.replace(/\s+/g, "").length < 1) return;
 
     await prisma.form.update({
       where: {
@@ -95,7 +95,7 @@ export const deleteForm = async ({
 
   try {
     if (!session) return;
-    if (ownerId !== session?.user.id) return;
+    if (ownerId !== session.user.id) return;
 
     await prisma.form.delete({
       where: {
@@ -103,7 +103,7 @@ export const deleteForm = async ({
       },
     });
   } catch (error) {
-    console.error("error updating form title", error);
+    console.error("error deleting form", error);
   } finally {
     await prisma.$disconnect();
   }
