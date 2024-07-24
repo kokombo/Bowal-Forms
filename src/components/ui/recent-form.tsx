@@ -12,14 +12,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Button } from "./button";
 import RenameFormDialog from "../dialogs/rename-form-dialog";
 import RemoveFormDialog from "../dialogs/remove-form-dialog";
+import { useFormatLastOpened } from "@/lib/use-format-last-opened";
 
 const RecentForm = ({ lastOpened, title, id }: Form) => {
   const [runAction, isPending] = useServerAction(() => openRecentForm(id));
-
-  const parsedLastOpened = useMemo(() => {
-    const dateTime = new Date(lastOpened);
-    return dateTime.toLocaleTimeString();
-  }, [lastOpened]);
+  const formattedLastOpened = useFormatLastOpened(lastOpened);
 
   return (
     <Fragment>
@@ -43,10 +40,10 @@ const RecentForm = ({ lastOpened, title, id }: Form) => {
             </h5>
 
             <div className="flex justify-between w-full">
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-2">
                 <FaFileWaveform size={22} color="green" />
                 <h6 className="text-xs font-medium text-primarytext">
-                  Opened {parsedLastOpened}
+                  Opened {formattedLastOpened}
                 </h6>
               </span>
 
