@@ -10,6 +10,10 @@ export const middleware = async (req: NextRequest) => {
   if (nextUrl.pathname.startsWith("/forms") && !isLoggedIn) {
     return NextResponse.redirect(new URL("/", nextUrl));
   }
+
+  if (isLoggedIn && nextUrl.pathname === ("/sign-in" || "/sign-up")) {
+    return NextResponse.redirect(new URL("/forms", nextUrl));
+  }
 };
 
 export const config = {
