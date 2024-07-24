@@ -29,7 +29,7 @@ const RenameFormDialog = ({ formId, previousTitle }: RenameFormDialogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" onClick={(e) => e.stopPropagation()}>
+        <Button variant="ghost" size="sm">
           Rename
         </Button>
       </DialogTrigger>
@@ -63,7 +63,7 @@ const RenameFormDialog = ({ formId, previousTitle }: RenameFormDialogProps) => {
                 type="submit"
                 disabled={newTitle.length < 1 || isPending}
               >
-                Ok
+                Rename
               </Button>
             </DialogClose>
           </div>

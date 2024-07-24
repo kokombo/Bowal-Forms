@@ -27,6 +27,7 @@ export const authOptions: NextAuthOptions = {
         });
 
         token.id = accountUser?.id;
+        await prisma.$disconnect();
       }
       return token;
     },

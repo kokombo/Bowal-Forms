@@ -2,15 +2,18 @@
 
 import React from "react";
 import { FaFileWaveform } from "react-icons/fa6";
+import EditFormTitleInput from "../ui/edit-form-title-input";
 
-const FormEditNavbar = () => {
+const FormEditNavbar = ({ title, id }: Form) => {
   return (
-    <div>
+    <div className="sticky left-0 top-0 bg-white z-10 flex items-center justify-between md:px-2 py-3">
       <nav>
-        <FaFileWaveform size={36} color="green" />
-      </nav>
+        <div className="flex items-center gap-1 w-fit">
+          <FaFileWaveform size={36} color="green" />
 
-      <div>AA</div>
+          <EditFormTitleInput currentTitle={title} formId={id} />
+        </div>
+      </nav>
     </div>
   );
 };
