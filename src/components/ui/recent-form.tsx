@@ -4,15 +4,18 @@ import images from "@/constants";
 import Image from "next/image";
 import { FaFileWaveform } from "react-icons/fa6";
 import { TbDotsVertical } from "react-icons/tb";
-import { Fragment, useMemo } from "react";
+import { Fragment } from "react";
 import { openRecentForm } from "@/actions";
 import { useServerAction } from "@/lib/use-server-actions";
 import DotLoader from "@/components/loaders/dot-loader";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Button } from "./button";
-import RenameFormDialog from "../dialogs/rename-form-dialog";
-import RemoveFormDialog from "../dialogs/remove-form-dialog";
 import { useFormatLastOpened } from "@/lib/use-format-last-opened";
+import dynamic from "next/dynamic";
+import { sliceString } from "@/lib/slice-string";
+
+const RenameFormDialog = dynamic(() => import("../dialogs/rename-form-dialog"));
+const RemoveFormDialog = dynamic(() => import("../dialogs/remove-form-dialog"));
 
 const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
   const [runAction, isPending] = useServerAction(() => openRecentForm(id));
@@ -25,21 +28,21 @@ const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
       <div
         onClick={runAction}
         onKeyDown={() => {}}
-        className="flex flex-col items-start rounded-sm  border-1 hover:border-purple-800 cursor-pointer"
+        className="flex flex-col items-start rounded-sm lg:min-w-56  border-1 hover:border-purple-800 cursor-pointer"
       >
         <div className="block relative h-[185px] w-full">
           <Image
             src={images.hero}
             alt=""
             fill
-            sizes="80vw 50vw 30vw"
+            sizes="100vw"
             className="rounded-t-sm object-contain"
           />
         </div>
 
         <div className="flex flex-col items-start gap-2 py-3 px-3 lg:px-4 border-t-1 w-full">
-          <h5 className="text-xs lg:text-sm font-medium text-black capitalize">
-            {title}
+          <h5 className="text-xs lg:text-sm font-medium text-black">
+            {sliceString(title as string, 25)}
           </h5>
 
           <div className="flex justify-between w-full">
