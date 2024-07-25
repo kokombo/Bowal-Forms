@@ -1,6 +1,6 @@
-import FormEditNavbar from "@/components/containers/form-edit-navbar";
 import { redirect } from "next/navigation";
 import { getFormDetails } from "@/lib/get-form-details";
+import FormEditPlayground from "@/components/containers/form-edit-playground";
 
 type Params = {
   id: string;
@@ -11,11 +11,7 @@ const EditForm = async ({ params }: { params: Params }) => {
 
   if (!form) redirect("/forms");
 
-  return (
-    <main>
-      <FormEditNavbar {...form} />
-    </main>
-  );
+  return <FormEditPlayground {...form} />;
 };
 
 export default EditForm;

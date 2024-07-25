@@ -11,11 +11,9 @@ import DotLoader from "@/components/loaders/dot-loader";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Button } from "./button";
 import { useFormatLastOpened } from "@/lib/use-format-last-opened";
-import dynamic from "next/dynamic";
 import { sliceString } from "@/lib/slice-string";
-
-const RenameFormDialog = dynamic(() => import("../dialogs/rename-form-dialog"));
-const RemoveFormDialog = dynamic(() => import("../dialogs/remove-form-dialog"));
+import RenameFormDialog from "../dialogs/rename-form-dialog";
+import RemoveFormDialog from "../dialogs/remove-form-dialog";
 
 const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
   const [runAction, isPending] = useServerAction(() => openRecentForm(id));
