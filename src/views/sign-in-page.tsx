@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { FcGoogle } from "react-icons/fc";
 import Logo from "@/components/ui/logo";
 import { AuthScreenIcon } from "@/lib/icons";
+import AuthFooterCTA from "@/components/ui/auth-footer-cta";
+import { usePathname } from "next/navigation";
 
 type AuthProps = {
   heading: string;
@@ -12,6 +14,8 @@ type AuthProps = {
 };
 
 const SigninPage = ({ heading, callToAction }: AuthProps) => {
+  const pathname = usePathname();
+
   return (
     <main className="fixed flex lg:items-center justify-center pt-32 lg:py-12 h-screen w-full">
       <div className="absolute left-3 top-3">
@@ -28,17 +32,37 @@ const SigninPage = ({ heading, callToAction }: AuthProps) => {
           <AuthScreenIcon />
         </div>
 
-        <Button
-          type="button"
-          onClick={() => signIn("google", { callbackUrl: "/forms" })}
-          size="lg"
-          className="w-full"
-        >
-          <span className="mr-2 bg-white p-1 rounded-lg">
-            <FcGoogle className="h-5 w-5" />
-          </span>
-          Continue with Google
-        </Button>
+        <div>
+          <Button
+            type="button"
+            onClick={() => signIn("google", { callbackUrl: "/forms" })}
+            size="lg"
+            className="w-full"
+          >
+            <span className="mr-2 bg-white p-1 rounded-lg">
+              <FcGoogle className="h-5 w-5" />
+            </span>
+            Continue with Google
+          </Button>
+
+          <div className="mt-2">
+            {pathname === "/sign-in" && (
+              <AuthFooterCTA
+                text="Don't have an account yet?"
+                ctaLabel="Sign up"
+                href="/sign-up"
+              />
+            )}
+
+            {pathname === "/sign-up" && (
+              <AuthFooterCTA
+                text="Already have an account?"
+                ctaLabel="Sign in"
+                href="/sign-in"
+              />
+            )}
+          </div>
+        </div>
       </div>
     </main>
   );
