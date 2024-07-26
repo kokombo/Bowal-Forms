@@ -1,8 +1,11 @@
 "use client";
 
-const ResponsesPlayground = () => {
+const ResponsesPlayground = ({ theme }: Form) => {
   return (
-    <div className="bg-yellow-50">
+    <div
+      style={{ backgroundColor: theme?.backgroundColor as string }}
+      className=""
+    >
       ResponsesPlayground
       <div className="h-[1200px]" />
     </div>

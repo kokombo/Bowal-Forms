@@ -1,8 +1,11 @@
 "use client";
 
-const SettingsPlayground = () => {
+const SettingsPlayground = ({ theme }: Form) => {
   return (
-    <div className="bg-pink-50">
+    <div
+      style={{ backgroundColor: theme?.backgroundColor as string }}
+      className=""
+    >
       SettingsPlayground
       <div className="h-[1200px]" />
     </div>

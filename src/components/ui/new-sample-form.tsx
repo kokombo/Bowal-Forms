@@ -26,7 +26,7 @@ const NewSampleForm = ({ image, caption, theme }: NewSampleFormProps) => {
   const [createANewFormTheme, formThemeIsPending] =
     useServerAction(createNewFormTheme);
 
-  const createNewFormFromSampleTheme = async () => {
+  const createANewFormFromSampleTheme = async () => {
     await createANewForm({ formId, title: caption });
     await createANewFormTheme({
       formId,
@@ -43,7 +43,7 @@ const NewSampleForm = ({ image, caption, theme }: NewSampleFormProps) => {
         <button
           type="button"
           className="block relative h-[150px] w-full bg-white rounded-sm"
-          onClick={createNewFormFromSampleTheme}
+          onClick={createANewFormFromSampleTheme}
         >
           <Image
             src={image}

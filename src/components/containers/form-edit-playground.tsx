@@ -11,8 +11,8 @@ const FormEditPlayground = (form: Form) => {
   return (
     <main>
       {hash === "" && <QuestionsPlaygound {...form} />}
-      {hash === "#responses" && <ResponsesPlayground />}
-      {hash === "#settings" && <SettingsPlayground />}
+      {hash === "#responses" && <ResponsesPlayground {...form} />}
+      {hash === "#settings" && <SettingsPlayground {...form} />}
     </main>
   );
 };
