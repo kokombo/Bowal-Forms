@@ -37,7 +37,7 @@ const FormEditNavbar = (form: Form) => {
                 <Link
                   href={tab.href}
                   className={cn(
-                    "px-2 text-sm",
+                    "px-2 text-sm font-medium",
                     tabIsActive && "text-green-700"
                   )}
                 >
