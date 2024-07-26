@@ -2,30 +2,48 @@
 
 import { startANewForm } from "@/actions";
 import Image, { type StaticImageData } from "next/image";
-import { v4 as id } from "uuid";
+import { v4 as uuid } from "uuid";
 import { useServerAction } from "@/lib/use-server-actions";
 import { Fragment } from "react";
 import DotLoader from "../loaders/dot-loader";
+import { createNewFormTheme } from "@/actions";
+import { useRouter } from "next/navigation";
 
 type NewSampleFormProps = {
   image: string | StaticImageData;
   caption: string;
+  theme: {
+    headerImage: string;
+    backgroundColor: string;
+  };
 };
 
-const NewSampleForm = ({ image, caption }: NewSampleFormProps) => {
-  const [runAction, isPending] = useServerAction(() =>
-    startANewForm({ formId: id() })
-  );
+const NewSampleForm = ({ image, caption, theme }: NewSampleFormProps) => {
+  const formId = uuid();
+  const router = useRouter();
+
+  const [createANewForm, formIsPending] = useServerAction(startANewForm);
+  const [createANewFormTheme, formThemeIsPending] =
+    useServerAction(createNewFormTheme);
+
+  const createNewFormFromSampleTheme = async () => {
+    await createANewForm({ formId, title: caption });
+    await createANewFormTheme({
+      formId,
+      headerImage: theme.headerImage,
+      backgroundColor: theme.backgroundColor,
+    }).then(() => router.push(`/forms/nx/${formId}/edit`));
+  };
 
   return (
     <Fragment>
-      {isPending && <DotLoader />}
+      {(formIsPending || formThemeIsPending) && <DotLoader />}
 
       <article>
         <button
           type="button"
           className="block relative h-[150px] w-full bg-white rounded-sm"
-          onClick={runAction}
+          onClick={createNewFormFromSampleTheme}
         >
           <Image
             src={image}

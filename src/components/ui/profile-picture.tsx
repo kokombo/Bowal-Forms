@@ -9,6 +9,7 @@ const ProfilePicture = ({ picture }: { picture: string }) => {
         src={picture}
         alt="profile picture"
         fill
+        sizes="100vw"
         className="object-contain rounded-full"
       />
     </div>

@@ -12,7 +12,7 @@ import { signOut } from "next-auth/react";
 
 const FormsNavbar = ({ session }: { session: Session | null }) => {
   return (
-    <nav className="sticky left-0 top-0 bg-white z-10 flex items-center justify-between md:px-2 pr-1 md:pr-5 py-3">
+    <nav className="sticky left-0 top-0 bg-white z-10 flex items-center justify-between md:px-4 pr-1 md:pr-5 py-3">
       <div className="flex items-center lg:gap-1">
         <Button variant="ghost">
           <MdOutlineDehaze size={24} className="text-primarytext" />

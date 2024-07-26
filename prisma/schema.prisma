@@ -60,13 +60,13 @@ model Question {
   dropDownOptions    String[]
   date               DateTime?
   time               DateTime?
-  form               Form?          @relation(fields: [formId], references: [id])
+  form               Form           @relation(fields: [formId], references: [id])
   formId             String
 }
 
 model Response {
   id     String @id @default(uuid())
-  form   Form?  @relation(fields: [formId], references: [id])
+  form   Form   @relation(fields: [formId], references: [id])
   formId String
 }
 
@@ -74,6 +74,6 @@ model Theme {
   id              String  @id @default(uuid())
   headerImage     String?
   backgroundColor String?
-  form            Form?   @relation(fields: [formId], references: [id])
+  form            Form    @relation(fields: [formId], references: [id])
   formId          String  @unique
 }

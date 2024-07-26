@@ -5,7 +5,13 @@ import { prisma } from "./lib/prisma-connect";
 import { getServerSession } from "./lib/getServerSession";
 import { revalidatePath } from "next/cache";
 
-export const startANewForm = async ({ formId }: { formId: string }) => {
+export const startANewForm = async ({
+  formId,
+  title,
+}: {
+  formId: string;
+  title: string;
+}) => {
   const session = await getServerSession();
 
   try {
@@ -14,6 +20,7 @@ export const startANewForm = async ({ formId }: { formId: string }) => {
     await prisma.form.create({
       data: {
         id: formId,
+        title,
         ownerId: session.user.id as string,
       },
     });
@@ -23,7 +30,35 @@ export const startANewForm = async ({ formId }: { formId: string }) => {
     await prisma.$disconnect();
   }
 
-  redirect(`/forms/nx/${formId}/edit`);
+  revalidatePath("/forms");
+};
+
+export const createNewFormTheme = async ({
+  formId,
+  headerImage,
+  backgroundColor,
+}: {
+  formId: string;
+  headerImage: string;
+  backgroundColor: string;
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+
+    await prisma.theme.create({
+      data: {
+        formId,
+        headerImage,
+        backgroundColor,
+      },
+    });
+  } catch (error) {
+    console.error("error creating form theme", error);
+  } finally {
+    await prisma.$disconnect();
+  }
 };
 
 export const openRecentForm = async (formId: string) => {
@@ -97,6 +132,12 @@ export const deleteForm = async ({
   try {
     if (!session) return;
     if (ownerId !== session.user.id) return;
+
+    await prisma.theme.delete({
+      where: {
+        formId,
+      },
+    });
 
     await prisma.form.delete({
       where: {

@@ -1,15 +1,7 @@
 "use client";
 
-import images from "@/constants";
 import NewSampleForm from "../ui/new-sample-form";
-
-const newFormSample = [
-  { image: images.hero, caption: "Blank Form" },
-  { image: images.hero, caption: "Contact Information" },
-  { image: images.hero, caption: "RSVP" },
-  { image: images.hero, caption: "Party Invite" },
-  { image: images.hero, caption: "T-Shirt Sign Up" },
-];
+import { newFormSample } from "@/constants";
 
 const StartNewForm = () => {
   return (
