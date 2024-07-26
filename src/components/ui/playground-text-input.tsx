@@ -6,7 +6,7 @@ import { Bold, Italic, Underline } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 type PlaygroundTextInputProps = {
-  value: string | null;
+  value: string;
   size: "small" | "large";
   placeholder?: string;
   onChange: ChangeEventHandler<HTMLInputElement> | undefined;
@@ -39,7 +39,7 @@ const PlaygroundTextInput = ({
       <input
         type="text"
         ref={inputRef}
-        value={value as string}
+        value={value || ""}
         placeholder={placeholder}
         onChange={onChange}
         className={cn(

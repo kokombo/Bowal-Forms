@@ -36,3 +36,9 @@ type Question = {
 type Response = {
   id: string;
 };
+
+type MultipleChoiceOption = {
+  id: string;
+  label: string;
+  value: string;
+};
