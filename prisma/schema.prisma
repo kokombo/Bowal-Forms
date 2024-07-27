@@ -79,24 +79,24 @@ model Theme {
 
 model MultipleChoiceOption {
   id         String   @id @default(uuid())
-  label      String?
-  value      String?
+  label      String
+  value      String
   question   Question @relation(fields: [questionId], references: [id])
   questionId String
 }
 
 model CheckBoxOption {
   id         String   @id @default(uuid())
-  label      String?
-  value      String?
+  label      String
+  value      String
   question   Question @relation(fields: [questionId], references: [id])
   questionId String
 }
 
 model DropDownOption {
   id         String   @id @default(uuid())
-  label      String?
-  value      String?
+  label      String
+  value      String
   question   Question @relation(fields: [questionId], references: [id])
   questionId String
 }

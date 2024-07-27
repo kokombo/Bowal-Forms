@@ -11,6 +11,7 @@ import {
   createShortAnswerTextQuestion,
   deleteQuestion,
   createParagraphAnswerQuestion,
+  createMultiChoiceAnswerQuestion,
 } from "@/actions";
 import type { Question } from "@/types/my-types";
 import { Button } from "../ui/button";
@@ -35,11 +36,25 @@ const QuestionEditor = ({
   const [isQuestionRequired, setIsQuestionRequired] = useState(
     question.required || false
   );
+  const [multiChoiceOptions, setMultiChoiceOptions] = useState(
+    question.multiChoiceOptions || [
+      {
+        id: "1",
+        value: "Option 1",
+        label: "Option 1",
+        questionId: question.id,
+      },
+    ]
+  );
+
   const [handleCreateShortAnswerTextQuestion, isPending1] = useServerAction(
     createShortAnswerTextQuestion
   );
   const [handleCreateParagraphAnswerQuestion, isPending2] = useServerAction(
     createParagraphAnswerQuestion
+  );
+  const [handleCreateMultiChoiceAnswerQuestion, isPending3] = useServerAction(
+    createMultiChoiceAnswerQuestion
   );
 
   const handleCreateQuestion = async () => {
@@ -53,6 +68,14 @@ const QuestionEditor = ({
       });
     } else if (answerType === "PARAGRAPH") {
       await handleCreateParagraphAnswerQuestion({
+        formId: question.formId,
+        questionId: question.id,
+        ownerId,
+        required: isQuestionRequired,
+        title: questionTitle,
+      });
+    } else if (answerType === "MULTIPLE_CHOICE") {
+      await handleCreateMultiChoiceAnswerQuestion({
         formId: question.formId,
         questionId: question.id,
         ownerId,
@@ -88,7 +111,12 @@ const QuestionEditor = ({
             )}
 
             {answerType === "MULTIPLE_CHOICE" && (
-              <MultipleChoiceOptions options={question.multiChoiceOptions} />
+              <MultipleChoiceOptions
+                multiChoiceOptions={multiChoiceOptions}
+                setMultiChoiceOptions={setMultiChoiceOptions}
+                questionId={question.id}
+                formId={question.formId}
+              />
             )}
           </div>
         </div>

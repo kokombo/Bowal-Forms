@@ -2,39 +2,54 @@
 
 import { cn } from "@/lib/utils";
 import { type Dispatch, type SetStateAction, useState } from "react";
+import {
+  createOptionForMultiChoiceQuestion,
+  deleteMultipleChoiceOption,
+} from "@/actions";
 
 //id is the identifier of the input element option while optionId is the id from the server
 
 type RadioGroupItemProps = {
   value: string;
   id: string;
+  optionId: string;
+  questionId: string;
+  formId: string;
   setData: Dispatch<SetStateAction<Option[]>>;
   data: Option[];
-  optionId: string;
 };
 
 const RadioGroupItem = ({
   value,
   id,
+  optionId,
+  questionId,
+  formId,
   setData,
   data,
-  optionId,
 }: RadioGroupItemProps) => {
   const [showOutline, setShowOutline] = useState(false);
   const [newValue, setNewValue] = useState(value);
 
   return (
     <div className="flex items-center gap-2 relative">
-      <input type="radio" value={value} className="h-5 w-5" />
+      <input type="radio" value={value} disabled className="h-5 w-5" />
 
       <input
         type="text"
         value={newValue}
         id={id}
         onFocus={() => setShowOutline(true)}
-        onBlur={() => {
+        onBlur={async () => {
           setShowOutline(false);
-          // call api to replace existing value with the new value
+          if (value.trim() === newValue.trim()) return;
+          await createOptionForMultiChoiceQuestion({
+            label: newValue,
+            value: newValue,
+            questionId,
+            formId,
+            optionId,
+          });
         }}
         onChange={(e) => setNewValue(e.target.value)}
         className={cn(
@@ -47,13 +62,10 @@ const RadioGroupItem = ({
 
       <button
         type="button"
-        onClick={
-          () => {
-            setData(data.filter((item) => item.id !== optionId));
-          }
-          //call api to delete option and remove above code
-          //Check if newvalue is different from old value before calling the api
-        }
+        onClick={async () => {
+          setData(data.filter((item) => item.id !== optionId));
+          await deleteMultipleChoiceOption({ formId, optionId });
+        }}
         className="text-primarytext font-lg font-semibold rounded-full px-2"
       >
         X

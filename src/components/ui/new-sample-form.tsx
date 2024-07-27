@@ -19,7 +19,6 @@ type NewSampleFormProps = {
 };
 
 const NewSampleForm = ({ image, caption, theme }: NewSampleFormProps) => {
-  const formId = uuid();
   const router = useRouter();
 
   const [createANewForm, formIsPending] = useServerAction(startANewForm);
@@ -27,12 +26,15 @@ const NewSampleForm = ({ image, caption, theme }: NewSampleFormProps) => {
     useServerAction(createNewFormTheme);
 
   const createANewFormFromSampleTheme = async () => {
+    const formId = uuid();
+
     await createANewForm({ formId, title: caption });
+
     await createANewFormTheme({
       formId,
       headerImage: theme.headerImage,
       backgroundColor: theme.backgroundColor,
-    }).then(() => router.push(`/forms/nx/${formId}/edit`));
+    });
   };
 
   return (

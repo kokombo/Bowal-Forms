@@ -6,20 +6,19 @@ import { AnswerTypePlayground } from "./answer-type-playground";
 import TitleAndDescriptionCombo from "./title-and-description-combo";
 import { CreateNewQuestionButton } from "../ui/icon-buttons";
 import { v4 as uuid } from "uuid";
+import type { Question } from "@/types/my-types";
 
-const QuestionsPlaygound = ({
-  theme,
-  title,
-  description,
-  id,
-  ownerId,
-  questions,
-}: Form) => {
+type QuestionsPlaygoundProps = {
+  form: Form;
+  questions: Question[] | undefined;
+};
+
+const QuestionsPlaygound = ({ form, questions }: QuestionsPlaygoundProps) => {
   const questionId = uuid();
 
   return (
     <section
-      style={{ backgroundColor: theme?.backgroundColor as string }}
+      style={{ backgroundColor: form.theme?.backgroundColor as string }}
       className="flex justify-center pt-5 pb-20 min-h-screen relative"
     >
       <div className="w-11/12 lg:w-3/5 md:w-9/12 space-y-3">
@@ -33,10 +32,10 @@ const QuestionsPlaygound = ({
         </div>
 
         <TitleAndDescriptionCombo
-          title={title}
-          description={description}
-          formId={id}
-          ownerId={ownerId}
+          title={form.title}
+          description={form.description}
+          formId={form.id}
+          ownerId={form.ownerId}
         />
 
         <div className="flex flex-col gap-3">
@@ -45,7 +44,7 @@ const QuestionsPlaygound = ({
               <AnswerTypePlayground
                 key={question.id}
                 question={question}
-                ownerId={ownerId}
+                ownerId={form.ownerId}
               />
             );
           })}
@@ -55,8 +54,8 @@ const QuestionsPlaygound = ({
       <div className="absolute right-[3%] lg:right-[12%] top-1/2 flex flex-col bg-white px-1 py-2 rounded-md shadow-md">
         <CreateNewQuestionButton
           questionId={questionId}
-          ownerId={ownerId}
-          formId={id}
+          ownerId={form.ownerId}
+          formId={form.id}
         />
       </div>
     </section>

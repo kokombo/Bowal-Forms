@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { prisma } from "./lib/prisma-connect";
 import { getServerSession } from "./lib/getServerSession";
 import { revalidatePath } from "next/cache";
-import type { Prisma } from "@prisma/client";
 
 /**
  * The function allows a user to create a new form
@@ -68,6 +67,8 @@ export const createNewFormTheme = async ({
   } finally {
     await prisma.$disconnect();
   }
+
+  redirect(`/forms/nx/${formId}/edit`);
 };
 
 /**
@@ -438,16 +439,12 @@ export const createMultiChoiceAnswerQuestion = async ({
   formId,
   title,
   required,
-  multiChoiceOptions,
   questionId,
   ownerId,
 }: {
   formId: string;
   title: string;
   required: boolean;
-  multiChoiceOptions:
-    | Prisma.MultipleChoiceOptionUncheckedUpdateManyWithoutQuestionNestedInput
-    | undefined;
   questionId: string;
   ownerId: string;
 }) => {
@@ -475,7 +472,6 @@ export const createMultiChoiceAnswerQuestion = async ({
         formId,
         title: title.trim(),
         required,
-        multiChoiceOptions,
       },
     });
   } catch (error) {
@@ -483,4 +479,100 @@ export const createMultiChoiceAnswerQuestion = async ({
   } finally {
     await prisma.$disconnect();
   }
+};
+
+/**
+ * The function allows a user to create options for a multi choice question
+ */
+
+export const createOptionForMultiChoiceQuestion = async ({
+  value,
+  label,
+  questionId,
+  formId,
+  optionId,
+}: {
+  value: string;
+  label: string;
+  questionId: string;
+  formId: string;
+  optionId: string | undefined;
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+    if (value.replace(/\s+/g, "").length < 1) return;
+
+    const existingOption = await prisma.multipleChoiceOption.findUnique({
+      where: {
+        id: optionId,
+      },
+    });
+
+    if (existingOption) {
+      await prisma.multipleChoiceOption.update({
+        where: {
+          id: optionId,
+        },
+        data: {
+          value: value.trim(),
+          label: label.trim(),
+          questionId,
+        },
+      });
+    } else {
+      await prisma.multipleChoiceOption.create({
+        data: {
+          value: value.trim(),
+          label: label.trim(),
+          questionId,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("error creating option", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
+};
+
+/**
+ * The function allows a user to delete a multiple choice answer option
+ */
+
+export const deleteMultipleChoiceOption = async ({
+  formId,
+  optionId,
+}: {
+  formId: string;
+  optionId: string;
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+
+    const existingOption = await prisma.multipleChoiceOption.findUnique({
+      where: {
+        id: optionId,
+      },
+    });
+
+    if (!existingOption) return;
+
+    await prisma.multipleChoiceOption.delete({
+      where: {
+        id: optionId,
+      },
+    });
+  } catch (error) {
+    console.error("error deleting option", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
 };
