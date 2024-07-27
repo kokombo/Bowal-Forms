@@ -39,6 +39,7 @@ const RadioGroupItem = ({
         type="text"
         value={newValue}
         id={id}
+        placeholder="Add option"
         onFocus={() => setShowOutline(true)}
         onBlur={async () => {
           setShowOutline(false);

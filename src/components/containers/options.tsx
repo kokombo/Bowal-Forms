@@ -5,6 +5,7 @@ import { RadioGroup } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import RadioGroupItem from "../ui/radio-group-item";
+import { v4 as uuid } from "uuid";
 
 export const TextOption = ({
   placeholder,
@@ -35,6 +36,8 @@ export const MultipleChoiceOptions = ({
   questionId: string;
   formId: string;
 }) => {
+  const id = uuid();
+
   return (
     <RadioGroup
       defaultValue=""
@@ -65,15 +68,15 @@ export const MultipleChoiceOptions = ({
           setMultiChoiceOptions((multiChoiceOptions) => [
             ...multiChoiceOptions,
             {
-              id: "new-option",
-              value: "Add option",
-              label: "Add option",
+              id: id,
+              value: "",
+              label: "",
               questionId,
             },
           ]);
         }}
       >
-        Add Another
+        {multiChoiceOptions.length > 1 ? "Add Another" : "Add Option"}
       </Button>
     </RadioGroup>
   );

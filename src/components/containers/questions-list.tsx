@@ -40,7 +40,7 @@ export const QuestionsList = ({
 
         {answerType === "MULTIPLE_CHOICE" && (
           <div
-            className="flex flex-col gap-4 py-1 px-1"
+            className="flex flex-col gap-4 py-1 px-1 cursor-text"
             onClick={handleShowEditor}
             onKeyDown={() => {}}
           >

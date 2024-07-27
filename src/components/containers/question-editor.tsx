@@ -37,14 +37,16 @@ const QuestionEditor = ({
     question.required || false
   );
   const [multiChoiceOptions, setMultiChoiceOptions] = useState(
-    question.multiChoiceOptions || [
-      {
-        id: "1",
-        value: "Option 1",
-        label: "Option 1",
-        questionId: question.id,
-      },
-    ]
+    question.multiChoiceOptions.length > 0
+      ? question.multiChoiceOptions
+      : [
+          {
+            id: "1",
+            value: "Option 1",
+            label: "Option 1",
+            questionId: question.id,
+          },
+        ]
   );
 
   const [handleCreateShortAnswerTextQuestion, isPending1] = useServerAction(
