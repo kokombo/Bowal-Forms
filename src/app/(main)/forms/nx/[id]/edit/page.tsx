@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getFormDetails } from "@/lib/get-form-details";
+import { getFormDetails } from "@/lib/get-requests/form";
 import FormEditPlayground from "@/components/containers/form-edit-playground";
 
 type Params = {
@@ -8,7 +8,6 @@ type Params = {
 
 const EditForm = async ({ params }: { params: Params }) => {
   const form = await getFormDetails(params.id);
-
   if (!form) redirect("/forms");
 
   return <FormEditPlayground {...form} />;

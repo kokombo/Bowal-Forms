@@ -1,98 +1,53 @@
 "use client";
 
 import { useState } from "react";
-import PlaygroundTextInput from "../ui/playground-text-input";
-import { Separator } from "../ui/separator";
-import { MultipleChoiceOptions, TextOption } from "./options";
-import { Switch } from "../ui/switch";
-import AnswerTypeSelect from "../selects/answer-type-select";
-import { RiDeleteBin5Fill } from "react-icons/ri";
-import { Button } from "../ui/button";
+import { TextOption } from "./options";
+import QuestionEditor from "./question-editor";
+import type { Question } from "@/types/my-types";
 
 type AnswerTypePlaygroundProps = {
-  value: string;
-  required: boolean;
+  question: Question;
+  ownerId: string;
 };
 
-const optionsData: MultipleChoiceOption[] = [
-  { id: "1", label: "Option 1", value: "Option 1" },
-];
-
 export const AnswerTypePlayground = ({
-  value,
-  required,
+  question,
+  ownerId,
 }: AnswerTypePlaygroundProps) => {
   const [showEditor, setShowEditor] = useState(false);
-  const [answerType, setAnswerType] = useState("shortAnswer");
-  const [newValue, setNewValue] = useState(value);
+  const [answerType, setAnswerType] = useState(
+    question.type?.toString() || "SHORT_ANSWER"
+  );
 
   const handleShowEditor = () => setShowEditor(true);
   const handleHideEditor = () => setShowEditor(false);
 
   return showEditor ? (
-    <div className="bg-white py-6 px-5 flex flex-col gap-10 rounded-lg shadow-md">
-      <div className="flex justify-between">
-        <div className="w-3/5 space-y-3">
-          <PlaygroundTextInput
-            name="question"
-            value={newValue}
-            size="small"
-            onInputChange={(e) => setNewValue(e.target.value)}
-          />
-
-          <div>
-            {answerType === "shortAnswer" && (
-              <TextOption placeholder="Short-answer text" />
-            )}
-
-            {answerType === "paragraph" && (
-              <TextOption placeholder="Long-answer text" />
-            )}
-
-            {answerType === "multipleChoice" && (
-              <MultipleChoiceOptions optionsData={optionsData} />
-            )}
-          </div>
-        </div>
-
-        <AnswerTypeSelect
-          value={answerType}
-          onValueChange={(value) => setAnswerType(value)}
-        />
-      </div>
-
-      <div className="space-y-4">
-        <Separator />
-
-        <div className="text-primarytext flex items-center float-end gap-2 text-sm">
-          <span className="flex items-center gap-1">
-            Delete
-            <button type="button">
-              <RiDeleteBin5Fill size={28} />
-            </button>
-          </span>
-          <span className="flex items-center gap-1">
-            Required
-            <Switch />
-          </span>
-        </div>
-      </div>
-    </div>
+    <QuestionEditor
+      question={question}
+      answerType={answerType}
+      setAnswerType={setAnswerType}
+      ownerId={ownerId}
+      handleHideEditor={handleHideEditor}
+    />
   ) : (
     <div className="bg-white py-6 px-5 space-y-2 rounded-lg shadow-md">
       <label className="text-black text-sm font-medium">
-        {value} {required && <span className="text-red-600 text-base">*</span>}
+        {question.title || "Add question title"}{" "}
+        {question.required && <span className="text-red-600 text-base">*</span>}
       </label>
 
+      {/* MULTIPLE_CHOICE CHECKBOXES PARAGRAPH SHORT_ANSWER DROP_DOWN DATE TIME */}
+
       <div>
-        {answerType === "shortAnswer" && (
+        {answerType === "SHORT_ANSWER" && (
           <TextOption
             placeholder="Short-answer text"
             onClick={handleShowEditor}
           />
         )}
 
-        {answerType === "paragraph" && (
+        {answerType === "PARAGRAPH" && (
           <TextOption
             placeholder="Long-answer text"
             onClick={handleShowEditor}

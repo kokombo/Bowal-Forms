@@ -8,8 +8,8 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 type RadioGroupItemProps = {
   value: string;
   id: string;
-  setData: Dispatch<SetStateAction<MultipleChoiceOption[]>>;
-  data: MultipleChoiceOption[];
+  setData: Dispatch<SetStateAction<Option[]>>;
+  data: Option[];
   optionId: string;
 };
 

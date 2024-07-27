@@ -3,7 +3,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
@@ -17,17 +16,17 @@ const AnswerTypeSelect = ({ value, onValueChange }: AnswerTypeSeletProps) => {
   return (
     <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger className="w-[200px]">
-        <SelectValue defaultValue="shortAnswer" />
+        <SelectValue defaultValue="SHORT_ANSWER" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="shortAnswer">Short answer</SelectItem>
-          <SelectItem value="paragraph">Paragraph</SelectItem>
-          <SelectItem value="multipleChoice">Multiple choice</SelectItem>
-          <SelectItem value="checkboxes">Checkboxes</SelectItem>
-          <SelectItem value="dropdown">Dropdown</SelectItem>
-          <SelectItem value="date">Date</SelectItem>
-          <SelectItem value="time">Time</SelectItem>
+          <SelectItem value="SHORT_ANSWER">Short answer</SelectItem>
+          <SelectItem value="PARAGRAPH">Paragraph</SelectItem>
+          <SelectItem value="MULTIPLE_CHOICE">Multiple choice</SelectItem>
+          <SelectItem value="CHECKBOXES">Checkboxes</SelectItem>
+          <SelectItem value="DROP_DOWN">Dropdown</SelectItem>
+          <SelectItem value="DATE">Date</SelectItem>
+          <SelectItem value="TIME">Time</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

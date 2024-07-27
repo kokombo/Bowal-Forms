@@ -2,9 +2,10 @@
 
 import images from "@/constants";
 import Image from "next/image";
-import PlaygroundTextInput from "../ui/playground-text-input";
 import { AnswerTypePlayground } from "./answer-type-playground";
 import TitleAndDescriptionCombo from "./title-and-description-combo";
+import { CreateNewQuestionButton } from "../ui/icon-buttons";
+import { v4 as uuid } from "uuid";
 
 const QuestionsPlaygound = ({
   theme,
@@ -12,11 +13,14 @@ const QuestionsPlaygound = ({
   description,
   id,
   ownerId,
+  questions,
 }: Form) => {
+  const questionId = uuid();
+
   return (
     <section
       style={{ backgroundColor: theme?.backgroundColor as string }}
-      className="flex justify-center py-3 min-h-screen"
+      className="flex justify-center py-3 min-h-screen relative"
     >
       <div className="w-11/12 lg:w-3/5 md:w-9/12 space-y-3">
         <div className="block relative w-full h-[220px] bg-green-800 rounded-lg">
@@ -34,9 +38,26 @@ const QuestionsPlaygound = ({
           formId={id}
           ownerId={ownerId}
         />
-        <AnswerTypePlayground value="" required />
-        <AnswerTypePlayground value="" required />
-        <AnswerTypePlayground value="" required />
+
+        <div className="flex flex-col gap-3">
+          {questions?.map((question) => {
+            return (
+              <AnswerTypePlayground
+                key={question.id}
+                question={question}
+                ownerId={ownerId}
+              />
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="absolute right-[12%] top-1/2 flex flex-col bg-white px-1 py-2 rounded-md shadow-md">
+        <CreateNewQuestionButton
+          questionId={questionId}
+          ownerId={ownerId}
+          formId={id}
+        />
       </div>
     </section>
   );

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "./lib/prisma-connect";
 import { getServerSession } from "./lib/getServerSession";
 import { revalidatePath } from "next/cache";
+import type { Prisma } from "@prisma/client";
 
 /**
  * The function allows a user to create a new form
@@ -250,22 +251,8 @@ export const deleteForm = async ({
   revalidatePath("/forms");
 };
 
-// model Question {
-//   id                 String         @id @default(uuid())
-//   title              String?
-//   type               QUESTION_TYPE?
-//   required           Boolean        @default(false)
-//   multiChoiceOptions String[]
-//   checkboxesOptions  String[]
-//   dropDownOptions    String[]
-//   date               DateTime?
-//   time               DateTime?
-//   form               Form           @relation(fields: [formId], references: [id])
-//   formId             String
-// }
-
 /**
- * The function allows a user to create/start a new question in a form
+ * The function allows a user to create a new question to a form
  */
 
 export const createNewQuestion = async ({
@@ -294,6 +281,49 @@ export const createNewQuestion = async ({
   } finally {
     await prisma.$disconnect();
   }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
+};
+
+/**
+ * The function allows a user to delete a question associated with a form
+ */
+
+export const deleteQuestion = async ({
+  questionId,
+  ownerId,
+  formId,
+}: {
+  questionId: string;
+  ownerId: string;
+  formId: string;
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+    if (ownerId !== session.user.id) return;
+
+    const existingQuestion = await prisma.question.findUnique({
+      where: {
+        id: questionId,
+      },
+    });
+
+    if (!existingQuestion) return;
+
+    await prisma.question.delete({
+      where: {
+        id: questionId,
+      },
+    });
+  } catch (error) {
+    console.error("error deleting form", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
 };
 
 /**
@@ -310,7 +340,7 @@ export const createShortAnswerTextQuestion = async ({
   formId: string;
   title: string;
   required: boolean;
-  questionId: string | undefined;
+  questionId: string;
   ownerId: string;
 }) => {
   const session = await getServerSession();
@@ -344,6 +374,8 @@ export const createShortAnswerTextQuestion = async ({
   } finally {
     await prisma.$disconnect();
   }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
 };
 
 /**
@@ -360,7 +392,7 @@ export const createParagraphAnswerQuestion = async ({
   formId: string;
   title: string;
   required: boolean;
-  questionId: string | undefined;
+  questionId: string;
   ownerId: string;
 }) => {
   const session = await getServerSession();
@@ -394,6 +426,8 @@ export const createParagraphAnswerQuestion = async ({
   } finally {
     await prisma.$disconnect();
   }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
 };
 
 /**
@@ -411,8 +445,10 @@ export const createMultiChoiceAnswerQuestion = async ({
   formId: string;
   title: string;
   required: boolean;
-  multiChoiceOptions: string[];
-  questionId: string | undefined;
+  multiChoiceOptions:
+    | Prisma.MultipleChoiceOptionUncheckedUpdateManyWithoutQuestionNestedInput
+    | undefined;
+  questionId: string;
   ownerId: string;
 }) => {
   const session = await getServerSession();

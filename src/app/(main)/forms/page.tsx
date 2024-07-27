@@ -1,7 +1,7 @@
 import FormsNavbar from "@/components/containers/forms-navbar";
 import RecentForms from "@/components/containers/recent-forms";
 import StartNewForm from "@/components/containers/start-new-form";
-import { getForms } from "@/lib/get-forms";
+import { getForms } from "@/lib/get-requests/form";
 import { getServerSession } from "@/lib/getServerSession";
 
 const Forms = async () => {

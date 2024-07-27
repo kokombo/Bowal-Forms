@@ -19,26 +19,13 @@ type Theme = {
   formId: string;
 };
 
-type Question = {
+type Option = {
   id: string;
-  title: string | null;
-  type: string | null;
-  required: boolean | null;
-  longAnswerText: string | null;
-  shortAnswerText: string | null;
-  multiChoiceOptions: string[];
-  checkboxesOptions: string[];
-  dropDownOptions: string[];
-  date: Date | null;
-  time: Date | null;
+  label: string;
+  value: string;
+  questionId: string;
 };
 
 type Response = {
   id: string;
-};
-
-type MultipleChoiceOption = {
-  id: string;
-  label: string;
-  value: string;
 };

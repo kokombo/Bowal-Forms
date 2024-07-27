@@ -25,7 +25,7 @@ export const TextOption = ({
 export const MultipleChoiceOptions = ({
   optionsData,
 }: {
-  optionsData: MultipleChoiceOption[];
+  optionsData: Option[];
 }) => {
   const [data, setData] = useState(optionsData);
 
@@ -50,16 +50,7 @@ export const MultipleChoiceOptions = ({
         );
       })}
 
-      <Button
-        variant="link"
-        size="sm"
-        onClick={() =>
-          setData((data) => [
-            ...data,
-            { id: "2", label: "Add option", value: "Add option" },
-          ])
-        }
-      >
+      <Button variant="link" size="sm" onClick={() => {}}>
         Add Another
       </Button>
     </RadioGroup>
