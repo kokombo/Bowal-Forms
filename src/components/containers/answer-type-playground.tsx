@@ -34,9 +34,10 @@ export const AnswerTypePlayground = ({
       <div className="flex justify-between">
         <div className="w-3/5 space-y-3">
           <PlaygroundTextInput
+            name="question"
             value={newValue}
             size="small"
-            onChange={(e) => setNewValue(e.target.value)}
+            onInputChange={(e) => setNewValue(e.target.value)}
           />
 
           <div>

@@ -4,8 +4,15 @@ import images from "@/constants";
 import Image from "next/image";
 import PlaygroundTextInput from "../ui/playground-text-input";
 import { AnswerTypePlayground } from "./answer-type-playground";
+import TitleAndDescriptionCombo from "./title-and-description-combo";
 
-const QuestionsPlaygound = ({ theme, title, description }: Form) => {
+const QuestionsPlaygound = ({
+  theme,
+  title,
+  description,
+  id,
+  ownerId,
+}: Form) => {
   return (
     <section
       style={{ backgroundColor: theme?.backgroundColor as string }}
@@ -21,21 +28,12 @@ const QuestionsPlaygound = ({ theme, title, description }: Form) => {
           />
         </div>
 
-        <div className="bg-white py-6 px-5 space-y-2 rounded-lg shadow-md">
-          <PlaygroundTextInput
-            value={title as string}
-            size="large"
-            placeholder="Form title"
-            onChange={() => {}}
-          />
-          <PlaygroundTextInput
-            value={description as string}
-            size="small"
-            placeholder="Form description"
-            onChange={() => {}}
-          />
-        </div>
-
+        <TitleAndDescriptionCombo
+          title={title}
+          description={description}
+          formId={id}
+          ownerId={ownerId}
+        />
         <AnswerTypePlayground value="" required />
         <AnswerTypePlayground value="" required />
         <AnswerTypePlayground value="" required />

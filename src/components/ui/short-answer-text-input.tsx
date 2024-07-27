@@ -25,10 +25,11 @@ const ShortAnswerTextInput = ({
       </label>
 
       <PlaygroundTextInput
+        name=""
         value={value}
         size="small"
         placeholder="Short-answer text"
-        onChange={onChange}
+        onInputChange={onChange}
         disabled={disabled}
       />
     </div>

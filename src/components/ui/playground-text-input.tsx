@@ -1,24 +1,33 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { type ChangeEventHandler, useRef, useState } from "react";
+import {
+  type ChangeEventHandler,
+  type FocusEventHandler,
+  useRef,
+  useState,
+} from "react";
 import { Bold, Italic, Underline } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 type PlaygroundTextInputProps = {
-  value: string;
+  value: string | null;
+  name: string;
   size: "small" | "large";
   placeholder?: string;
-  onChange: ChangeEventHandler<HTMLInputElement> | undefined;
+  onInputChange?: ChangeEventHandler<HTMLInputElement> | undefined;
   disabled?: boolean;
+  onInputBlur?: FocusEventHandler<HTMLInputElement> | undefined;
 };
 
 const PlaygroundTextInput = ({
   value,
   size,
   placeholder,
-  onChange,
+  onInputChange,
   disabled,
+  onInputBlur,
+  name,
 }: PlaygroundTextInputProps) => {
   const [showOutline, setShowOutline] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -39,9 +48,11 @@ const PlaygroundTextInput = ({
       <input
         type="text"
         ref={inputRef}
+        name={name}
         value={value || ""}
         placeholder={placeholder}
-        onChange={onChange}
+        onChange={onInputChange}
+        onBlur={onInputBlur}
         className={cn(
           "outline-none font-medium px-1 w-full",
           style,

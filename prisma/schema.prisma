@@ -53,8 +53,6 @@ model Question {
   title              String?
   type               QUESTION_TYPE?
   required           Boolean        @default(false)
-  longAnswerText     String?
-  shortAnswerText    String?
   multiChoiceOptions String[]
   checkboxesOptions  String[]
   dropDownOptions    String[]

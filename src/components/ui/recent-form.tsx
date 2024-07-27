@@ -16,7 +16,9 @@ import RenameFormDialog from "../dialogs/rename-form-dialog";
 import RemoveFormDialog from "../dialogs/remove-form-dialog";
 
 const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
-  const [runAction, isPending] = useServerAction(() => openRecentForm(id));
+  const [runAction, isPending] = useServerAction(() =>
+    openRecentForm({ formId: id, ownerId })
+  );
   const formattedLastOpened = useFormatLastOpened(lastOpened);
 
   return (
