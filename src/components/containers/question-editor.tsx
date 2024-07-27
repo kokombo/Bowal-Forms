@@ -88,9 +88,7 @@ const QuestionEditor = ({
             )}
 
             {answerType === "MULTIPLE_CHOICE" && (
-              <MultipleChoiceOptions
-                optionsData={question.multiChoiceOptions}
-              />
+              <MultipleChoiceOptions options={question.multiChoiceOptions} />
             )}
           </div>
         </div>

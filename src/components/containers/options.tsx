@@ -22,12 +22,8 @@ export const TextOption = ({
   );
 };
 
-export const MultipleChoiceOptions = ({
-  optionsData,
-}: {
-  optionsData: Option[];
-}) => {
-  const [data, setData] = useState(optionsData);
+export const MultipleChoiceOptions = ({ options }: { options: Option[] }) => {
+  const [data, setData] = useState(options);
 
   return (
     <RadioGroup

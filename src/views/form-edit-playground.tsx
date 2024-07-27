@@ -1,10 +1,10 @@
 "use client";
 
 import { useHash } from "@/lib/use-hash";
-import ResponsesPlayground from "./responses-playground";
-import QuestionsPlaygound from "./questions-playgound";
-import SettingsPlayground from "./settings-playground";
-import FormEditNavbar from "./form-edit-navbar";
+import ResponsesPlayground from "@/components/containers/responses-playground";
+import QuestionsPlaygound from "@/components/containers/questions-playgound";
+import SettingsPlayground from "@/components/containers/settings-playground";
+import FormEditNavbar from "@/components/containers/form-edit-navbar";
 
 const FormEditPlayground = (form: Form) => {
   const hash = useHash();

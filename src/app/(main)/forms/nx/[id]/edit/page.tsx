@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getFormDetails } from "@/lib/get-requests/form";
-import FormEditPlayground from "@/components/containers/form-edit-playground";
+import FormEditPlayground from "@/views/form-edit-playground";
 
 type Params = {
   id: string;
