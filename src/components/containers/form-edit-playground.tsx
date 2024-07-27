@@ -12,7 +12,7 @@ const FormEditPlayground = (form: Form) => {
   return (
     <main>
       <FormEditNavbar {...form} />
-      {hash === "" && <QuestionsPlaygound {...form} />}
+      {(!hash || hash === "") && <QuestionsPlaygound {...form} />}
       {hash === "#responses" && <ResponsesPlayground {...form} />}
       {hash === "#settings" && <SettingsPlayground {...form} />}
     </main>

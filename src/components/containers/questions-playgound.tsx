@@ -20,7 +20,7 @@ const QuestionsPlaygound = ({
   return (
     <section
       style={{ backgroundColor: theme?.backgroundColor as string }}
-      className="flex justify-center py-3 min-h-screen relative"
+      className="flex justify-center pt-5 pb-20 min-h-screen relative"
     >
       <div className="w-11/12 lg:w-3/5 md:w-9/12 space-y-3">
         <div className="block relative w-full h-[220px] bg-green-800 rounded-lg">
@@ -52,7 +52,7 @@ const QuestionsPlaygound = ({
         </div>
       </div>
 
-      <div className="absolute right-[12%] top-1/2 flex flex-col bg-white px-1 py-2 rounded-md shadow-md">
+      <div className="absolute right-[3%] lg:right-[12%] top-1/2 flex flex-col bg-white px-1 py-2 rounded-md shadow-md">
         <CreateNewQuestionButton
           questionId={questionId}
           ownerId={ownerId}

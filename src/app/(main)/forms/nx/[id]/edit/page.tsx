@@ -8,6 +8,7 @@ type Params = {
 
 const EditForm = async ({ params }: { params: Params }) => {
   const form = await getFormDetails(params.id);
+
   if (!form) redirect("/forms");
 
   return <FormEditPlayground {...form} />;

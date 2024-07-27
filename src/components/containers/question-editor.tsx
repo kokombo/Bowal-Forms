@@ -71,6 +71,7 @@ const QuestionEditor = ({
           <PlaygroundTextInput
             name="question"
             value={questionTitle}
+            placeholder="Add question title"
             size="small"
             onInputChange={(e) => setQuestionTitle(e.target.value)}
           />

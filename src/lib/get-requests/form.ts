@@ -42,7 +42,7 @@ export const getForms = async () => {
 };
 
 /**
- * The function allows a user to get the details of a single form
+ * The function allows a user to get the details of a form
  */
 
 export const getFormDetails = async (formId: string) => {

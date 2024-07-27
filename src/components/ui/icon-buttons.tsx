@@ -22,7 +22,7 @@ export const CreateNewQuestionButton = ({
   ownerId,
 }: CreateNewQuestionButtonProps) => {
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
