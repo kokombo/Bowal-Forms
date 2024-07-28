@@ -3,7 +3,7 @@ import hero from "../public/assets/images/hero.png";
 const images = { hero };
 export default images;
 
-export const newFormSample = [
+export const newFormSamples = [
   {
     image: images.hero,
     caption: "Blank Form",

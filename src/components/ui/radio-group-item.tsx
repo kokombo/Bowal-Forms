@@ -71,7 +71,7 @@ const RadioGroupItem = ({
       <button
         type="button"
         onClick={handleDeleteOption}
-        className="text-primarytext font-lg font-semibold rounded-full px-2"
+        className="text-primarytext font-lg font-semibold px-2"
       >
         X
       </button>

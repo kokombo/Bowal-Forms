@@ -36,13 +36,8 @@ export const MultipleChoiceOptions = ({
   questionId: string;
   formId: string;
 }) => {
-  const id = uuid();
-
   return (
-    <RadioGroup
-      defaultValue=""
-      className="flex flex-col gap-6 py-2 items-start"
-    >
+    <RadioGroup className="flex flex-col gap-6 py-2 items-start">
       {multiChoiceOptions.map((option, index) => {
         return (
           <div key={index.toString()} className="flex items-center space-x-2">
@@ -68,7 +63,7 @@ export const MultipleChoiceOptions = ({
           setMultiChoiceOptions((multiChoiceOptions) => [
             ...multiChoiceOptions,
             {
-              id: id,
+              id: uuid(),
               value: "",
               label: "",
               questionId,

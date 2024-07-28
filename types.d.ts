@@ -7,8 +7,6 @@ type Form = {
   image: string | null;
   lastOpened: Date;
   theme: Theme | null;
-  questions?: Question[];
-  responses?: Response[];
   createdAt: Date;
 };
 

@@ -26,7 +26,6 @@ export const getForms = async () => {
         lastOpened: true,
         image: true,
         theme: true,
-        questions: true,
       },
       orderBy: {
         lastOpened: "desc",
@@ -66,7 +65,6 @@ export const getFormDetails = async (formId: string) => {
         lastOpened: true,
         image: true,
         theme: true,
-        questions: true,
       },
     });
 

@@ -21,12 +21,12 @@ const TitleAndDescriptionCombo = ({
   const [newDescription, setNewDescription] = useState(description || "");
 
   const handleCreateTitle = async () => {
-    if (title === newTitle) return;
+    if (title?.trim() === newTitle.trim()) return;
     await updateFormTitle({ formId, ownerId, title: newTitle });
   };
 
   const handleCreateDescription = async () => {
-    if (description === newDescription) return;
+    if (description?.trim() === newDescription.trim()) return;
     await updateFormDescription({
       formId,
       ownerId,

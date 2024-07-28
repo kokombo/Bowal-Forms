@@ -49,15 +49,12 @@ const QuestionEditor = ({
         ]
   );
 
-  const [handleCreateShortAnswerTextQuestion, isPending1] = useServerAction(
-    createShortAnswerTextQuestion
-  );
-  const [handleCreateParagraphAnswerQuestion, isPending2] = useServerAction(
-    createParagraphAnswerQuestion
-  );
-  const [handleCreateMultiChoiceAnswerQuestion, isPending3] = useServerAction(
-    createMultiChoiceAnswerQuestion
-  );
+  const [handleCreateShortAnswerTextQuestion, isCreatingShortAnswerQuestion] =
+    useServerAction(createShortAnswerTextQuestion);
+  const [handleCreateParagraphAnswerQuestion, isCreatingParagraphQuestion] =
+    useServerAction(createParagraphAnswerQuestion);
+  const [handleCreateMultiChoiceAnswerQuestion, isCreatingMultiChoiceQuestion] =
+    useServerAction(createMultiChoiceAnswerQuestion);
 
   const handleCreateQuestion = async () => {
     if (answerType === "SHORT_ANSWER") {
@@ -87,6 +84,14 @@ const QuestionEditor = ({
     }
 
     handleHideEditor();
+  };
+
+  const handleDeleteQuestion = async () => {
+    await deleteQuestion({
+      questionId: question.id,
+      formId: question.formId,
+      ownerId,
+    });
   };
 
   return (
@@ -139,23 +144,18 @@ const QuestionEditor = ({
             </Button>
 
             <p className="text-sm text-medium text-green-700">
-              {isPending1 || isPending2 ? "Saving..." : ""}{" "}
+              {isCreatingShortAnswerQuestion ||
+              isCreatingParagraphQuestion ||
+              isCreatingMultiChoiceQuestion
+                ? "Saving..."
+                : ""}
             </p>
           </div>
 
           <div className="flex items-center gap-2 text-sm text-primarytext">
             <span className="flex items-center gap-1">
               Delete
-              <button
-                type="button"
-                onClick={async () =>
-                  await deleteQuestion({
-                    questionId: question.id,
-                    formId: question.formId,
-                    ownerId,
-                  })
-                }
-              >
+              <button type="button" onClick={handleDeleteQuestion}>
                 <RiDeleteBin5Fill size={28} />
               </button>
             </span>
