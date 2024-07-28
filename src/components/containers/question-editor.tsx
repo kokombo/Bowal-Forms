@@ -38,7 +38,7 @@ const QuestionEditor = ({
   );
 
   const [isQuestionRequired, setIsQuestionRequired] = useState<boolean>(
-    question.required || true
+    question.required || false
   );
 
   const [multiChoiceOptions, setMultiChoiceOptions] = useState<Option[]>(
