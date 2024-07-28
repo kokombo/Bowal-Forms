@@ -19,8 +19,8 @@ const FormEditNavbar = (form: Form) => {
   const router = useRouter();
   const { toast } = useToast();
 
-  const handleDeleteForm = async () => {
-    await deleteForm({ formId: form.id, ownerId: form.ownerId }).then(() => {
+  const handleDeleteForm = () => {
+    deleteForm({ formId: form.id, ownerId: form.ownerId }).then(() => {
       router.push("/forms");
       toast({
         description: "Form deleted successfully",

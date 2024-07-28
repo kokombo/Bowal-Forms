@@ -6,7 +6,6 @@ import { v4 as uuid } from "uuid";
 import { useServerAction } from "@/lib/use-server-actions";
 import { Fragment } from "react";
 import DotLoader from "../loaders/dot-loader";
-import { createNewFormTheme } from "@/actions";
 
 type NewSampleFormProps = {
   image: string | StaticImageData;
@@ -19,24 +18,19 @@ type NewSampleFormProps = {
 
 const NewSampleForm = ({ image, caption, theme }: NewSampleFormProps) => {
   const [createANewForm, formIsPending] = useServerAction(startANewForm);
-  const [createANewFormTheme, formThemeIsPending] =
-    useServerAction(createNewFormTheme);
 
   const createANewFormFromSampleTheme = async () => {
-    const formId = uuid();
-
-    await createANewForm({ formId, title: caption });
-
-    await createANewFormTheme({
-      formId,
-      headerImage: theme.headerImage,
+    await createANewForm({
+      formId: uuid(),
+      title: caption,
       backgroundColor: theme.backgroundColor,
+      headerImage: theme.headerImage,
     });
   };
 
   return (
     <Fragment>
-      {(formIsPending || formThemeIsPending) && <DotLoader />}
+      {formIsPending && <DotLoader />}
 
       <article>
         <button

@@ -86,8 +86,8 @@ const QuestionEditor = ({
     handleHideEditor();
   };
 
-  const handleDeleteQuestion = async () => {
-    await deleteQuestion({
+  const handleDeleteQuestion = () => {
+    deleteQuestion({
       questionId: question.id,
       formId: question.formId,
       ownerId,

@@ -12,22 +12,36 @@ import { revalidatePath } from "next/cache";
 export const startANewForm = async ({
   formId,
   title,
+  headerImage,
+  backgroundColor,
 }: {
   formId: string;
   title: string;
+  headerImage: string;
+  backgroundColor: string;
 }) => {
   const session = await getServerSession();
 
   try {
     if (!session) return;
 
-    await prisma.form.create({
+    const form = await prisma.form.create({
       data: {
         id: formId,
         title: title.trim(),
         ownerId: session.user.id as string,
       },
     });
+
+    const theme = await prisma.theme.create({
+      data: {
+        formId: form.id,
+        headerImage,
+        backgroundColor,
+      },
+    });
+
+    if (!theme) return;
   } catch (error) {
     console.error("error creating form", error);
   } finally {
@@ -35,13 +49,14 @@ export const startANewForm = async ({
   }
 
   revalidatePath("/forms");
+  redirect(`/forms/nx/${formId}/edit`);
 };
 
 /**
  * The function allows a user to select one of the existing themes for a new form
  */
 
-export const createNewFormTheme = async ({
+export const updateFormTheme = async ({
   formId,
   headerImage,
   backgroundColor,
@@ -55,7 +70,18 @@ export const createNewFormTheme = async ({
   try {
     if (!session) return;
 
-    await prisma.theme.create({
+    const existingTheme = await prisma.theme.findUnique({
+      where: {
+        formId,
+      },
+    });
+
+    if (!existingTheme) return;
+
+    await prisma.theme.update({
+      where: {
+        formId,
+      },
       data: {
         formId,
         headerImage,
@@ -67,8 +93,6 @@ export const createNewFormTheme = async ({
   } finally {
     await prisma.$disconnect();
   }
-
-  redirect(`/forms/nx/${formId}/edit`);
 };
 
 /**
@@ -230,7 +254,13 @@ export const deleteForm = async ({
       },
     });
 
-    if (!existingForm) return;
+    const existingTheme = await prisma.theme.findUnique({
+      where: {
+        formId,
+      },
+    });
+
+    if (!existingForm || !existingTheme) return;
 
     await prisma.theme.delete({
       where: {
