@@ -29,7 +29,7 @@ const FormEditNavbar = (form: Form) => {
   };
 
   return (
-    <nav className="sticky left-0 top-0 bg-white z-10 px-1 md:px-4 pt-4 space-y-6">
+    <nav className="sticky left-0 top-0 bg-white z-10 px-2 md:px-4 pt-4 space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
           <Link href="/forms">
