@@ -31,9 +31,26 @@ const RadioGroupItem = ({
   const [showOutline, setShowOutline] = useState(false);
   const [newValue, setNewValue] = useState(value);
 
+  const handleOnBlur = async () => {
+    setShowOutline(false);
+    if (value.trim() === newValue.trim()) return;
+    await createOptionForMultiChoiceQuestion({
+      label: newValue,
+      value: newValue,
+      questionId,
+      formId,
+      optionId,
+    });
+  };
+
+  const handleDeleteOption = async () => {
+    setData(data.filter((item) => item.id !== optionId));
+    await deleteMultipleChoiceOption({ formId, optionId });
+  };
+
   return (
     <div className="flex items-center gap-2 relative">
-      <input type="radio" value={value} disabled className="h-5 w-5" />
+      <input type="radio" disabled className="h-5 w-5" />
 
       <input
         type="text"
@@ -41,17 +58,7 @@ const RadioGroupItem = ({
         id={id}
         placeholder="Add option"
         onFocus={() => setShowOutline(true)}
-        onBlur={async () => {
-          setShowOutline(false);
-          if (value.trim() === newValue.trim()) return;
-          await createOptionForMultiChoiceQuestion({
-            label: newValue,
-            value: newValue,
-            questionId,
-            formId,
-            optionId,
-          });
-        }}
+        onBlur={handleOnBlur}
         onChange={(e) => setNewValue(e.target.value)}
         className={cn(
           "outline-none font-medium px-1 md:min-w-[350px] w-full text-sm py-1",
@@ -63,10 +70,7 @@ const RadioGroupItem = ({
 
       <button
         type="button"
-        onClick={async () => {
-          setData(data.filter((item) => item.id !== optionId));
-          await deleteMultipleChoiceOption({ formId, optionId });
-        }}
+        onClick={handleDeleteOption}
         className="text-primarytext font-lg font-semibold rounded-full px-2"
       >
         X
