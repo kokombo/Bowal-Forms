@@ -39,7 +39,9 @@ const FormEditNavbar = (form: Form) => {
           <EditFormTitleInput {...form} />
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
+          <Button size="sm">Preview</Button>
+
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="ghost" size="sm" className="rounded-full p-2">

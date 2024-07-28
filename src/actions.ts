@@ -53,7 +53,7 @@ export const startANewForm = async ({
 };
 
 /**
- * The function allows a user to select one of the existing themes for a new form
+ * The function allows a user to update form theme
  */
 
 export const updateFormTheme = async ({
