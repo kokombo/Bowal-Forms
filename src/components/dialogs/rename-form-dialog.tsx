@@ -43,7 +43,8 @@ const RenameFormDialog = ({
           Rename
         </Button>
       </DialogTrigger>
-      <DialogContent>
+
+      <DialogContent className="max-w-[90vw]">
         <DialogHeader>
           <DialogTitle>Rename</DialogTitle>
           <DialogDescription>

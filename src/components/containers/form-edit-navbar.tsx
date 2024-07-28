@@ -49,7 +49,7 @@ const FormEditNavbar = (form: Form) => {
               </Button>
             </PopoverTrigger>
 
-            <PopoverContent>
+            <PopoverContent className="w-44 lg:w-72">
               <ul>
                 <li>
                   <Button

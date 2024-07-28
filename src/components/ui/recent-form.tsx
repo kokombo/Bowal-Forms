@@ -65,7 +65,10 @@ const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
                 </Button>
               </PopoverTrigger>
 
-              <PopoverContent onClick={(e) => e.stopPropagation()}>
+              <PopoverContent
+                onClick={(e) => e.stopPropagation()}
+                className="w-44 lg:w-72"
+              >
                 <ul>
                   <li>
                     <RenameFormDialog

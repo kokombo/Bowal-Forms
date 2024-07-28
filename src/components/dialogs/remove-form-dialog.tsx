@@ -46,7 +46,8 @@ const RemoveFormDialog = ({
           Remove
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+
+      <AlertDialogContent className="max-w-[90vw]">
         <AlertDialogHeader>
           <AlertDialogTitle>Trash &quot;{title}&quot; </AlertDialogTitle>
           <AlertDialogDescription>

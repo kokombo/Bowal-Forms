@@ -33,7 +33,7 @@ const FormsNavbar = ({ session }: { session: Session | null }) => {
             </Button>
           </PopoverTrigger>
 
-          <PopoverContent>
+          <PopoverContent className="w-44 lg:w-72">
             <ul>
               <li>
                 <Button
