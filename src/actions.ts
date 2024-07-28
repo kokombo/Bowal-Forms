@@ -509,6 +509,8 @@ export const createMultiChoiceAnswerQuestion = async ({
   } finally {
     await prisma.$disconnect();
   }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
 };
 
 /**

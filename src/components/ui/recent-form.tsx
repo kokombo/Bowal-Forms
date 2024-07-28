@@ -46,7 +46,7 @@ const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
           </h5>
 
           <div className="flex justify-between w-full">
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-1 lg:gap-2">
               <FaFileWaveform size={22} color="green" />
               <h6 className="text-xs font-medium text-primarytext">
                 Opened {formattedLastOpened}
