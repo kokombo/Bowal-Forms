@@ -96,7 +96,7 @@ const QuestionEditor = ({
 
   return (
     <div className="bg-white py-6 px-5 flex flex-col gap-10 rounded-lg shadow-md">
-      <div className="flex justify-between">
+      <div className="flex flex-col-reverse md:flex-row gap-4 md:justify-between">
         <div className="w-3/5 space-y-3">
           <PlaygroundTextInput
             name="question"

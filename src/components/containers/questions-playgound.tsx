@@ -51,7 +51,7 @@ const QuestionsPlaygound = ({ form, questions }: QuestionsPlaygoundProps) => {
         </div>
       </div>
 
-      <div className="absolute right-[3%] lg:right-[12%] top-1/2 flex flex-col bg-white px-1 py-2 rounded-md shadow-md">
+      <div className="fixed right-[3%] lg:right-[12%] bottom-5 lg:bottom-1/3 flex flex-col bg-white z-10 px-1 py-2 rounded-md shadow-md">
         <CreateNewQuestionButton
           questionId={questionId}
           ownerId={form.ownerId}
