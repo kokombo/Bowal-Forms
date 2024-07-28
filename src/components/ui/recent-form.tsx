@@ -67,7 +67,7 @@ const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
 
               <PopoverContent
                 onClick={(e) => e.stopPropagation()}
-                className="w-44 lg:w-72"
+                className="w-56 lg:w-72"
               >
                 <ul>
                   <li>

@@ -49,12 +49,12 @@ const FormEditNavbar = (form: Form) => {
               </Button>
             </PopoverTrigger>
 
-            <PopoverContent className="w-44 lg:w-72">
+            <PopoverContent className="w-56 lg:w-72">
               <ul>
                 <li>
                   <Button
                     variant="ghost"
-                    className="w-full justify-start"
+                    className="w-full justify-start outline-none"
                     onClick={handleDeleteForm}
                   >
                     <RiDeleteBin5Fill

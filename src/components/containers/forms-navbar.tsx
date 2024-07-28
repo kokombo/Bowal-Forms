@@ -33,13 +33,13 @@ const FormsNavbar = ({ session }: { session: Session | null }) => {
             </Button>
           </PopoverTrigger>
 
-          <PopoverContent className="w-44 lg:w-72">
+          <PopoverContent className="w-56 lg:w-72">
             <ul>
               <li>
                 <Button
                   variant="ghost"
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="w-full justify-start"
+                  className="w-full justify-start outline-none"
                 >
                   <BiLogOut size={20} className="text-primarytext mr-2" />
                   Logout

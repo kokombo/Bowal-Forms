@@ -41,7 +41,7 @@ const RemoveFormDialog = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild className="w-full justify-start">
-        <Button variant="ghost" size="sm">
+        <Button variant="ghost" size="sm" className="outline-none">
           <RiDeleteBin5Fill size={20} className="text-primarytext mr-2" />
           Remove
         </Button>
