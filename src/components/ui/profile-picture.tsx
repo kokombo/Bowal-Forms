@@ -2,16 +2,22 @@
 
 import Image from "next/image";
 
-const ProfilePicture = ({ picture }: { picture: string }) => {
+const ProfilePicture = ({
+  picture,
+}: {
+  picture: string | null | undefined;
+}) => {
   return (
     <div className="block relative h-8 w-8 rounded-full bg-grey">
-      <Image
-        src={picture}
-        alt="profile picture"
-        fill
-        sizes="100vw"
-        className="object-contain rounded-full"
-      />
+      {picture && (
+        <Image
+          src={picture}
+          alt="profile picture"
+          fill
+          sizes="100vw"
+          className="object-contain rounded-full"
+        />
+      )}
     </div>
   );
 };

@@ -5,6 +5,8 @@ import EditFormTitleInput from "../ui/edit-form-title-input";
 import Link from "next/link";
 import { useHash } from "@/lib/use-hash";
 import { cn } from "@/lib/utils";
+import ProfilePicture from "../ui/profile-picture";
+import { useSession } from "next-auth/react";
 
 const tabs = [
   { label: "Questions", href: "" },
@@ -14,10 +16,11 @@ const tabs = [
 
 const FormEditNavbar = (form: Form) => {
   const hash = useHash();
+  const { data: session } = useSession();
 
   return (
     <nav className="sticky left-0 top-0 bg-white z-10 md:px-4 pt-4 space-y-6">
-      <div>
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-1 w-fit">
           <Link href="/forms">
             <FaFileWaveform size={36} color="green" />
@@ -26,7 +29,9 @@ const FormEditNavbar = (form: Form) => {
           <EditFormTitleInput {...form} />
         </div>
 
-        <div />
+        <div>
+          <ProfilePicture picture={session?.user.image} />
+        </div>
       </div>
 
       <div className="flex w-full justify-center">

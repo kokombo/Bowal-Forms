@@ -7,7 +7,6 @@ import { useServerAction } from "@/lib/use-server-actions";
 import { Fragment } from "react";
 import DotLoader from "../loaders/dot-loader";
 import { createNewFormTheme } from "@/actions";
-import { useRouter } from "next/navigation";
 
 type NewSampleFormProps = {
   image: string | StaticImageData;
@@ -19,8 +18,6 @@ type NewSampleFormProps = {
 };
 
 const NewSampleForm = ({ image, caption, theme }: NewSampleFormProps) => {
-  const router = useRouter();
-
   const [createANewForm, formIsPending] = useServerAction(startANewForm);
   const [createANewFormTheme, formThemeIsPending] =
     useServerAction(createNewFormTheme);

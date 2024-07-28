@@ -35,7 +35,7 @@ const TitleAndDescriptionCombo = ({
   };
 
   return (
-    <div className="bg-white py-6 px-5 space-y-2 rounded-lg shadow-md relative">
+    <div className="bg-white py-6 px-5 space-y-2 rounded-lg shadow-md">
       <PlaygroundTextInput
         name="title"
         value={newTitle}
