@@ -16,7 +16,7 @@ export const QuestionsList = ({
 }: QuestionsListProps) => {
   return (
     <div className="bg-white py-6 px-5 space-y-2 rounded-lg shadow-md">
-      <label className="text-black text-sm font-medium">
+      <label className="text-black">
         {question.title || "Add question title"}{" "}
         {question.required && <span className="text-red-600 text-base">*</span>}
       </label>
@@ -48,6 +48,25 @@ export const QuestionsList = ({
               return (
                 <span key={option.id} className="flex items-center gap-2">
                   <input type="radio" disabled className="h-5 w-5" />
+                  <label className="text-sm font-medium text-gray-400">
+                    {option.label}
+                  </label>
+                </span>
+              );
+            })}
+          </div>
+        )}
+
+        {answerType === "CHECKBOXES" && (
+          <div
+            className="flex flex-col gap-4 py-1 px-1 cursor-text"
+            onClick={handleShowEditor}
+            onKeyDown={() => {}}
+          >
+            {question?.checkboxesOptions?.map((option) => {
+              return (
+                <span key={option.id} className="flex items-center gap-2">
+                  <input type="checkbox" disabled className="h-5 w-5" />
                   <label className="text-sm font-medium text-gray-400">
                     {option.label}
                   </label>

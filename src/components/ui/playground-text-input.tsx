@@ -35,7 +35,7 @@ const PlaygroundTextInput = ({
   let style = "";
 
   if (size === "small") {
-    style = "text-sm py-1";
+    style = "text-primarytext py-1";
   } else if (size === "large") {
     style = "text-3xl py-2";
   }

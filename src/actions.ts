@@ -505,7 +505,7 @@ export const createMultiChoiceAnswerQuestion = async ({
       },
     });
   } catch (error) {
-    console.error("error deleting form", error);
+    console.error("error creating multi choice form", error);
   } finally {
     await prisma.$disconnect();
   }
@@ -563,7 +563,7 @@ export const createOptionForMultiChoiceQuestion = async ({
       });
     }
   } catch (error) {
-    console.error("error creating option", error);
+    console.error("error creating option for multichoice question", error);
   } finally {
     await prisma.$disconnect();
   }
@@ -601,7 +601,155 @@ export const deleteMultipleChoiceOption = async ({
       },
     });
   } catch (error) {
-    console.error("error deleting option", error);
+    console.error("error deleting option for multichoice question", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
+};
+
+/**
+ * The function allows a user to create checkboxes answer question in a form
+ */
+
+export const createCheckboxAnswerQuestion = async ({
+  formId,
+  title,
+  required,
+  questionId,
+  ownerId,
+}: {
+  formId: string;
+  title: string;
+  required: boolean;
+  questionId: string;
+  ownerId: string;
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+    if (ownerId !== session.user.id) return;
+    if (title.replace(/\s+/g, "").length < 1) return;
+
+    const existingQuestion = await prisma.question.findUnique({
+      where: {
+        id: questionId,
+      },
+    });
+
+    if (!existingQuestion) return;
+
+    await prisma.question.update({
+      where: {
+        id: existingQuestion.id,
+      },
+      data: {
+        type: "CHECKBOXES",
+        formId,
+        title: title.trim(),
+        required,
+      },
+    });
+  } catch (error) {
+    console.error("error creating checkbox question", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
+};
+
+/**
+ * The function allows a user to create options for a multi choice question
+ */
+
+export const createOptionForCheckboxQuestion = async ({
+  value,
+  label,
+  questionId,
+  formId,
+  optionId,
+}: {
+  value: string;
+  label: string;
+  questionId: string;
+  formId: string;
+  optionId: string | undefined;
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+    if (value.replace(/\s+/g, "").length < 1) return;
+
+    const existingOption = await prisma.checkBoxOption.findUnique({
+      where: {
+        id: optionId,
+      },
+    });
+
+    if (existingOption) {
+      await prisma.checkBoxOption.update({
+        where: {
+          id: optionId,
+        },
+        data: {
+          value: value.trim(),
+          label: label.trim(),
+          questionId,
+        },
+      });
+    } else {
+      await prisma.checkBoxOption.create({
+        data: {
+          value: value.trim(),
+          label: label.trim(),
+          questionId,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("error creating option for checkbox question", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
+};
+
+/**
+ * The function allows a user to delete a checkbox answer option
+ */
+
+export const deleteCheckboxOption = async ({
+  formId,
+  optionId,
+}: {
+  formId: string;
+  optionId: string;
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+
+    const existingOption = await prisma.checkBoxOption.findUnique({
+      where: {
+        id: optionId,
+      },
+    });
+
+    if (!existingOption) return;
+
+    await prisma.checkBoxOption.delete({
+      where: {
+        id: optionId,
+      },
+    });
+  } catch (error) {
+    console.error("error deleting option for checkbox question", error);
   } finally {
     await prisma.$disconnect();
   }

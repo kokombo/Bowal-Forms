@@ -2,7 +2,7 @@
 
 import { type Dispatch, type SetStateAction, useState } from "react";
 import PlaygroundTextInput from "../ui/playground-text-input";
-import { MultipleChoiceOptions, TextOption } from "./options";
+import { CheckboxOptions, MultipleChoiceOptions, TextOption } from "./options";
 import AnswerTypeSelect from "../selects/answer-type-select";
 import { Separator } from "../ui/separator";
 import { RiDeleteBin5Fill } from "react-icons/ri";
@@ -12,6 +12,7 @@ import {
   deleteQuestion,
   createParagraphAnswerQuestion,
   createMultiChoiceAnswerQuestion,
+  createCheckboxAnswerQuestion,
 } from "@/actions";
 import type { Question } from "@/types/my-types";
 import { Button } from "../ui/button";
@@ -32,13 +33,30 @@ const QuestionEditor = ({
   ownerId,
   handleHideEditor,
 }: QuestionEditorProps) => {
-  const [questionTitle, setQuestionTitle] = useState(question.title || "");
-  const [isQuestionRequired, setIsQuestionRequired] = useState(
-    question.required || false
+  const [questionTitle, setQuestionTitle] = useState<string>(
+    question.title || ""
   );
-  const [multiChoiceOptions, setMultiChoiceOptions] = useState(
+
+  const [isQuestionRequired, setIsQuestionRequired] = useState<boolean>(
+    question.required || true
+  );
+
+  const [multiChoiceOptions, setMultiChoiceOptions] = useState<Option[]>(
     question.multiChoiceOptions.length > 0
       ? question.multiChoiceOptions
+      : [
+          {
+            id: "1",
+            value: "Option 1",
+            label: "Option 1",
+            questionId: question.id,
+          },
+        ]
+  );
+
+  const [checkboxOptions, setCheckboxOptions] = useState<Option[]>(
+    question.checkboxesOptions.length > 0
+      ? question.checkboxesOptions
       : [
           {
             id: "1",
@@ -55,6 +73,8 @@ const QuestionEditor = ({
     useServerAction(createParagraphAnswerQuestion);
   const [handleCreateMultiChoiceAnswerQuestion, isCreatingMultiChoiceQuestion] =
     useServerAction(createMultiChoiceAnswerQuestion);
+  const [handleCreateCheckboxAnswerQuestion, isCreatingCheckboxQuestion] =
+    useServerAction(createCheckboxAnswerQuestion);
 
   const handleCreateQuestion = async () => {
     if (answerType === "SHORT_ANSWER") {
@@ -75,6 +95,14 @@ const QuestionEditor = ({
       });
     } else if (answerType === "MULTIPLE_CHOICE") {
       await handleCreateMultiChoiceAnswerQuestion({
+        formId: question.formId,
+        questionId: question.id,
+        ownerId,
+        required: isQuestionRequired,
+        title: questionTitle,
+      });
+    } else if (answerType === "CHECKBOXES") {
+      await handleCreateCheckboxAnswerQuestion({
         formId: question.formId,
         questionId: question.id,
         ownerId,
@@ -125,6 +153,15 @@ const QuestionEditor = ({
                 formId={question.formId}
               />
             )}
+
+            {answerType === "CHECKBOXES" && (
+              <CheckboxOptions
+                checkboxOptions={checkboxOptions}
+                setCheckboxOptions={setCheckboxOptions}
+                questionId={question.id}
+                formId={question.formId}
+              />
+            )}
           </div>
         </div>
 
@@ -146,7 +183,8 @@ const QuestionEditor = ({
             <p className="text-sm text-medium text-green-700">
               {isCreatingShortAnswerQuestion ||
               isCreatingParagraphQuestion ||
-              isCreatingMultiChoiceQuestion
+              isCreatingMultiChoiceQuestion ||
+              isCreatingCheckboxQuestion
                 ? "Saving..."
                 : ""}
             </p>
