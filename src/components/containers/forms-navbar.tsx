@@ -1,9 +1,10 @@
 "use client";
 
-import { MdOutlineDehaze } from "react-icons/md";
 import { Button } from "../ui/button";
 import Logo from "../ui/logo";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { MdOutlineDehaze } from "react-icons/md";
+import { BiLogOut } from "react-icons/bi";
 import { TbGridDots } from "react-icons/tb";
 import Search from "../ui/search";
 import type { Session } from "next-auth";
@@ -27,18 +28,20 @@ const FormsNavbar = ({ session }: { session: Session | null }) => {
       <div className="flex items-center md:gap-2">
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="ghost">
+            <Button variant="ghost" className="rounded-full p-2">
               <TbGridDots size={24} className="text-primarytext" />
             </Button>
           </PopoverTrigger>
 
           <PopoverContent>
-            <ul className="">
+            <ul>
               <li>
                 <Button
                   variant="ghost"
                   onClick={() => signOut({ callbackUrl: "/" })}
+                  className="w-full justify-start"
                 >
+                  <BiLogOut size={20} className="text-primarytext mr-2" />
                   Logout
                 </Button>
               </li>
@@ -46,7 +49,7 @@ const FormsNavbar = ({ session }: { session: Session | null }) => {
           </PopoverContent>
         </Popover>
 
-        <ProfilePicture picture={session?.user.image as string} />
+        <ProfilePicture picture={session?.user.image} />
       </div>
     </nav>
   );

@@ -14,7 +14,8 @@ import {
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
 import { deleteForm } from "@/actions";
-import { useServerAction } from "@/lib/use-server-actions";
+import { RiDeleteBin5Fill } from "react-icons/ri";
+import { useToast } from "../ui/use-toast";
 
 type RemoveFormDialogProps = {
   formId: string;
@@ -27,14 +28,21 @@ const RemoveFormDialog = ({
   title,
   ownerId,
 }: RemoveFormDialogProps) => {
-  const [runAction, isPending] = useServerAction(() =>
-    deleteForm({ formId, ownerId })
-  );
+  const { toast } = useToast();
+
+  const handleDeleteForm = () => {
+    deleteForm({ formId, ownerId }).then(() => {
+      toast({
+        description: "Form deleted successfully",
+      });
+    });
+  };
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
+      <AlertDialogTrigger asChild className="w-full justify-start">
         <Button variant="ghost" size="sm">
+          <RiDeleteBin5Fill size={20} className="text-primarytext mr-2" />
           Remove
         </Button>
       </AlertDialogTrigger>
@@ -53,7 +61,7 @@ const RemoveFormDialog = ({
             </Button>
           </AlertDialogCancel>
           <AlertDialogAction asChild>
-            <Button size="sm" onClick={runAction} disabled={isPending}>
+            <Button size="sm" onClick={handleDeleteForm}>
               Continue
             </Button>
           </AlertDialogAction>

@@ -4,10 +4,9 @@ const ResponsesPlayground = ({ theme }: Form) => {
   return (
     <div
       style={{ backgroundColor: theme?.backgroundColor as string }}
-      className=""
+      className="min-h-screen"
     >
       ResponsesPlayground
-      <div className="h-[1200px]" />
     </div>
   );
 };

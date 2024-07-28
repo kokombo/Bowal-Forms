@@ -14,6 +14,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useServerAction } from "@/lib/use-server-actions";
 import { updateFormTitle } from "@/actions";
+import { MdDriveFileRenameOutline } from "react-icons/md";
 
 type RenameFormDialogProps = {
   formId: string;
@@ -33,8 +34,12 @@ const RenameFormDialog = ({
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="w-full justify-start">
         <Button variant="ghost" size="sm">
+          <MdDriveFileRenameOutline
+            size={20}
+            className="text-primarytext mr-2"
+          />
           Rename
         </Button>
       </DialogTrigger>
