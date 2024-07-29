@@ -528,7 +528,7 @@ export const createOptionForMultiChoiceQuestion = async ({
   label: string;
   questionId: string;
   formId: string;
-  optionId: string | undefined;
+  optionId: string;
 }) => {
   const session = await getServerSession();
 
@@ -560,7 +560,7 @@ export const createOptionForMultiChoiceQuestion = async ({
     } else {
       await prisma.multipleChoiceOption.create({
         data: {
-          id: optionId as string,
+          id: optionId,
           value: value.trim(),
           label: label.trim(),
           questionId,
@@ -681,7 +681,7 @@ export const createOptionForCheckboxQuestion = async ({
   label: string;
   questionId: string;
   formId: string;
-  optionId: string | undefined;
+  optionId: string;
 }) => {
   const session = await getServerSession();
 
@@ -712,7 +712,7 @@ export const createOptionForCheckboxQuestion = async ({
     } else {
       await prisma.checkBoxOption.create({
         data: {
-          id: optionId as string,
+          id: optionId,
           value: value.trim(),
           label: label.trim(),
           questionId,

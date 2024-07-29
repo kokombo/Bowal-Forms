@@ -264,6 +264,7 @@ import {
 import type { Question } from "@/types/my-types";
 import { Button } from "../ui/button";
 import { useServerAction } from "@/lib/use-server-actions";
+import { v4 as uuid } from "uuid";
 
 type QuestionEditorProps = {
   question: Question;
@@ -293,7 +294,7 @@ const QuestionEditor = ({
       ? question.multiChoiceOptions
       : [
           {
-            id: "1",
+            id: uuid(),
             value: "Option 1",
             label: "Option 1",
             questionId: question.id,
@@ -306,7 +307,7 @@ const QuestionEditor = ({
       ? question.checkboxesOptions
       : [
           {
-            id: "1",
+            id: uuid(),
             value: "Option 1",
             label: "Option 1",
             questionId: question.id,

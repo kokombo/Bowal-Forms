@@ -45,9 +45,9 @@ const CheckboxItem = ({
     });
   }, [formId, questionId, optionId, newValue, value]);
 
-  const handleDeleteOption = useCallback(async () => {
+  const handleDeleteOption = useCallback(() => {
     setData((data) => data.filter((item) => item.id !== optionId));
-    await deleteCheckboxOption({ formId, optionId });
+    deleteCheckboxOption({ formId, optionId });
   }, [formId, optionId, setData]);
 
   return (

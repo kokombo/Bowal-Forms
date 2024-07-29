@@ -45,9 +45,9 @@ const RadioGroupItem = ({
     });
   }, [newValue, questionId, formId, optionId, value]);
 
-  const handleDeleteOption = useCallback(async () => {
+  const handleDeleteOption = useCallback(() => {
     setData((data) => data.filter((item) => item.id !== optionId));
-    await deleteMultipleChoiceOption({ formId, optionId });
+    deleteMultipleChoiceOption({ formId, optionId });
   }, [formId, optionId, setData]);
 
   return (
