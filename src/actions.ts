@@ -543,11 +543,15 @@ export const createOptionForMultiChoiceQuestion = async ({
     });
 
     if (existingOption) {
+      if (existingOption.value === value) return;
+
       await prisma.multipleChoiceOption.update({
         where: {
           id: optionId,
         },
+
         data: {
+          id: optionId,
           value: value.trim(),
           label: label.trim(),
           questionId,
@@ -556,6 +560,7 @@ export const createOptionForMultiChoiceQuestion = async ({
     } else {
       await prisma.multipleChoiceOption.create({
         data: {
+          id: optionId as string,
           value: value.trim(),
           label: label.trim(),
           questionId,
@@ -691,11 +696,14 @@ export const createOptionForCheckboxQuestion = async ({
     });
 
     if (existingOption) {
+      if (existingOption.value === value) return;
+
       await prisma.checkBoxOption.update({
         where: {
           id: optionId,
         },
         data: {
+          id: optionId,
           value: value.trim(),
           label: label.trim(),
           questionId,
@@ -704,6 +712,7 @@ export const createOptionForCheckboxQuestion = async ({
     } else {
       await prisma.checkBoxOption.create({
         data: {
+          id: optionId as string,
           value: value.trim(),
           label: label.trim(),
           questionId,

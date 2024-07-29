@@ -16,17 +16,19 @@ import RenameFormDialog from "../dialogs/rename-form-dialog";
 import RemoveFormDialog from "../dialogs/remove-form-dialog";
 
 const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
-  const [runAction, isPending] = useServerAction(() =>
-    openRecentForm({ formId: id, ownerId })
-  );
+  const [openForm, isPending] = useServerAction(openRecentForm);
   const formattedLastOpened = useFormatLastOpened(lastOpened);
+
+  const handleOpenRecentForm = async () => {
+    await openForm({ formId: id, ownerId });
+  };
 
   return (
     <Fragment>
       {isPending && <DotLoader />}
 
       <div
-        onClick={runAction}
+        onClick={handleOpenRecentForm}
         onKeyDown={() => {}}
         className="flex flex-col items-start rounded-sm lg:min-w-56  border-1 hover:border-purple-800 cursor-pointer"
       >
@@ -35,7 +37,7 @@ const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
             src={images.hero}
             alt=""
             fill
-            sizes="100vw"
+            sizes="100vw 50vw 30vw"
             className="rounded-t-sm object-contain"
           />
         </div>

@@ -22,6 +22,7 @@ type Option = {
   label: string;
   value: string;
   questionId: string;
+  createdAt?: Date;
 };
 
 type Response = {

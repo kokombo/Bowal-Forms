@@ -1,6 +1,11 @@
 "use client";
 
-import type { Dispatch, SetStateAction, MouseEventHandler } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  type MouseEventHandler,
+  useState,
+} from "react";
 import { RadioGroup } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
@@ -39,13 +44,13 @@ export const MultipleChoiceOptions = ({
 }) => {
   return (
     <RadioGroup className="flex flex-col gap-6 py-2 items-start">
-      {multiChoiceOptions.map((option, index) => {
+      {multiChoiceOptions.map((option) => {
         return (
-          <div key={index.toString()} className="flex items-center space-x-2">
+          <div key={option.id} className="flex items-center space-x-2">
             <RadioGroupItem
               value={option.value}
               optionId={option.id}
-              id={option.label}
+              inputId={option.label}
               setData={setMultiChoiceOptions}
               data={multiChoiceOptions}
               questionId={questionId}
@@ -91,13 +96,13 @@ export const CheckboxOptions = ({
 }) => {
   return (
     <div className="flex flex-col gap-6 py-2 items-start">
-      {checkboxOptions.map((option, index) => {
+      {checkboxOptions.map((option) => {
         return (
-          <div key={index.toString()} className="flex items-center space-x-2">
+          <div key={option.id} className="flex items-center space-x-2">
             <CheckboxItem
               value={option.value}
               optionId={option.id}
-              id={option.label}
+              inputId={option.label}
               setData={setCheckboxOptions}
               data={checkboxOptions}
               questionId={questionId}

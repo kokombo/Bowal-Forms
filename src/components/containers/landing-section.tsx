@@ -40,7 +40,7 @@ const LandingSection = memo(function LandingSecton({
           alt={heading.substring(0, 30)}
           quality={100}
           priority
-          sizes="100vw"
+          sizes="100vw 50vw 30vw"
           className="object-contain shadow-xl rounded-xl"
         />
       </div>

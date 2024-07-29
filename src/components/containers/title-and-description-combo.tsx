@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import PlaygroundTextInput from "../ui/playground-text-input";
 import { updateFormDescription, updateFormTitle } from "@/actions";
 
@@ -20,19 +20,19 @@ const TitleAndDescriptionCombo = ({
   const [newTitle, setNewTitle] = useState(title || "");
   const [newDescription, setNewDescription] = useState(description || "");
 
-  const handleCreateTitle = async () => {
+  const handleCreateTitle = useCallback(async () => {
     if (title?.trim() === newTitle.trim()) return;
     await updateFormTitle({ formId, ownerId, title: newTitle });
-  };
+  }, [formId, ownerId, title, newTitle]);
 
-  const handleCreateDescription = async () => {
+  const handleCreateDescription = useCallback(async () => {
     if (description?.trim() === newDescription.trim()) return;
     await updateFormDescription({
       formId,
       ownerId,
       description: newDescription,
     });
-  };
+  }, [formId, ownerId, description, newDescription]);
 
   return (
     <div className="bg-white py-6 px-5 space-y-2 rounded-lg shadow-md">
@@ -44,6 +44,7 @@ const TitleAndDescriptionCombo = ({
         onInputChange={(e) => setNewTitle(e.target.value)}
         onInputBlur={handleCreateTitle}
       />
+
       <PlaygroundTextInput
         name="description"
         value={newDescription}

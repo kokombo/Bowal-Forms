@@ -1,17 +1,20 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { type Dispatch, type SetStateAction, useState } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useCallback,
+  useState,
+} from "react";
 import {
   createOptionForMultiChoiceQuestion,
   deleteMultipleChoiceOption,
 } from "@/actions";
 
-//id is the identifier of the input element option while optionId is the id from the server
-
 type RadioGroupItemProps = {
   value: string;
-  id: string;
+  inputId: string;
   optionId: string;
   questionId: string;
   formId: string;
@@ -21,32 +24,31 @@ type RadioGroupItemProps = {
 
 const RadioGroupItem = ({
   value,
-  id,
+  inputId,
   optionId,
   questionId,
   formId,
   setData,
-  data,
 }: RadioGroupItemProps) => {
   const [showOutline, setShowOutline] = useState(false);
   const [newValue, setNewValue] = useState(value);
 
-  const handleOnBlur = async () => {
+  const handleOnBlur = useCallback(async () => {
     setShowOutline(false);
     if (value.trim() === newValue.trim()) return;
     await createOptionForMultiChoiceQuestion({
-      label: newValue,
-      value: newValue,
+      label: newValue.trim(),
+      value: newValue.trim(),
       questionId,
       formId,
       optionId,
     });
-  };
+  }, [newValue, questionId, formId, optionId, value]);
 
-  const handleDeleteOption = async () => {
-    setData(data.filter((item) => item.id !== optionId));
+  const handleDeleteOption = useCallback(async () => {
+    setData((data) => data.filter((item) => item.id !== optionId));
     await deleteMultipleChoiceOption({ formId, optionId });
-  };
+  }, [formId, optionId, setData]);
 
   return (
     <div className="flex items-center gap-2 relative">
@@ -55,7 +57,7 @@ const RadioGroupItem = ({
       <input
         type="text"
         value={newValue}
-        id={id}
+        id={inputId}
         placeholder="Add option"
         onFocus={() => setShowOutline(true)}
         onBlur={handleOnBlur}

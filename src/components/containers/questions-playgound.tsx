@@ -14,8 +14,6 @@ type QuestionsPlaygoundProps = {
 };
 
 const QuestionsPlaygound = ({ form, questions }: QuestionsPlaygoundProps) => {
-  const questionId = uuid();
-
   return (
     <section
       style={{ backgroundColor: form.theme?.backgroundColor as string }}
@@ -28,6 +26,7 @@ const QuestionsPlaygound = ({ form, questions }: QuestionsPlaygoundProps) => {
             alt=""
             fill
             className="object-cover rounded-lg"
+            priority
           />
         </div>
 
@@ -53,7 +52,7 @@ const QuestionsPlaygound = ({ form, questions }: QuestionsPlaygoundProps) => {
 
       <div className="fixed right-[3%] lg:right-[12%] bottom-5 lg:bottom-1/3 flex flex-col bg-white z-10 px-1 py-2 rounded-md shadow-md">
         <CreateNewQuestionButton
-          questionId={questionId}
+          questionId={uuid()}
           ownerId={form.ownerId}
           formId={form.id}
         />

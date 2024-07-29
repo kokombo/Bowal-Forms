@@ -64,9 +64,10 @@ model Question {
 }
 
 model Response {
-  id     String @id @default(uuid())
-  form   Form   @relation(fields: [formId], references: [id])
-  formId String
+  id        String   @id @default(uuid())
+  form      Form     @relation(fields: [formId], references: [id])
+  formId    String
+  createdAt DateTime @default(now())
 }
 
 model Theme {
@@ -78,25 +79,28 @@ model Theme {
 }
 
 model MultipleChoiceOption {
-  id         String   @id @default(uuid())
+  id         String   @id
   label      String
   value      String
   question   Question @relation(fields: [questionId], references: [id])
   questionId String
+  createdAt  DateTime @default(now())
 }
 
 model CheckBoxOption {
-  id         String   @id @default(uuid())
+  id         String   @id
   label      String
   value      String
   question   Question @relation(fields: [questionId], references: [id])
   questionId String
+  createdAt  DateTime @default(now())
 }
 
 model DropDownOption {
-  id         String   @id @default(uuid())
+  id         String   @id
   label      String
   value      String
   question   Question @relation(fields: [questionId], references: [id])
   questionId String
+  createdAt  DateTime @default(now())
 }

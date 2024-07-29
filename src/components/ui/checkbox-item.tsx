@@ -1,17 +1,20 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { type Dispatch, type SetStateAction, useState } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useState,
+  useCallback,
+} from "react";
 import {
   createOptionForCheckboxQuestion,
   deleteCheckboxOption,
 } from "@/actions";
 
-//id is the identifier of the input element option while optionId is the id from the server
-
 type CheckboxItemProps = {
   value: string;
-  id: string;
+  inputId: string;
   optionId: string;
   questionId: string;
   formId: string;
@@ -21,35 +24,34 @@ type CheckboxItemProps = {
 
 const CheckboxItem = ({
   value,
-  id,
+  inputId,
   optionId,
   questionId,
   formId,
   setData,
-  data,
 }: CheckboxItemProps) => {
   const [showOutline, setShowOutline] = useState(false);
   const [newValue, setNewValue] = useState(value);
 
-  const handleOnBlur = async () => {
+  const handleOnBlur = useCallback(async () => {
     setShowOutline(false);
     if (value.trim() === newValue.trim()) return;
     await createOptionForCheckboxQuestion({
-      label: newValue,
-      value: newValue,
+      label: newValue.trim(),
+      value: newValue.trim(),
       questionId,
       formId,
       optionId,
     });
-  };
+  }, [formId, questionId, optionId, newValue, value]);
 
-  const handleDeleteOption = async () => {
-    setData(data.filter((item) => item.id !== optionId));
+  const handleDeleteOption = useCallback(async () => {
+    setData((data) => data.filter((item) => item.id !== optionId));
     await deleteCheckboxOption({ formId, optionId });
-  };
+  }, [formId, optionId, setData]);
 
   return (
-    <div className="flex items-center gap-2 relative">
+    <div className="flex items-center gap-1 lg:gap-2 relative">
       <input type="checkbox" disabled className="h-5 w-5" />
 
       <label htmlFor="label" />
@@ -57,7 +59,7 @@ const CheckboxItem = ({
       <input
         type="text"
         value={newValue}
-        id={id}
+        id={inputId}
         placeholder="Add option"
         onFocus={() => setShowOutline(true)}
         onBlur={handleOnBlur}
@@ -74,6 +76,7 @@ const CheckboxItem = ({
         type="button"
         onClick={handleDeleteOption}
         className="text-primarytext font-lg font-semibold px-2"
+        aria-label={`Delete option ${value}`}
       >
         X
       </button>

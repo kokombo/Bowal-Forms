@@ -6,6 +6,7 @@ import {
   type FocusEventHandler,
   useRef,
   useState,
+  memo,
 } from "react";
 import { Bold, Italic, Underline } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -94,4 +95,4 @@ const PlaygroundTextInput = ({
   );
 };
 
-export default PlaygroundTextInput;
+export default memo(PlaygroundTextInput);

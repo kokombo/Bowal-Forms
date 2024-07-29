@@ -14,7 +14,7 @@ const ProfilePicture = ({
           src={picture}
           alt="profile picture"
           fill
-          sizes="100vw"
+          sizes="100vw 50vw 30vw"
           className="object-contain rounded-full"
         />
       )}
