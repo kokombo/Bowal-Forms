@@ -44,7 +44,7 @@ const RenameFormDialog = ({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-[90vw]">
+      <DialogContent className="max-w-[90vw] sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Rename</DialogTitle>
           <DialogDescription>
@@ -52,7 +52,7 @@ const RenameFormDialog = ({
           </DialogDescription>
         </DialogHeader>
 
-        <form className="space-y-3" action={runAction}>
+        <form className="space-y-3" action={runAction} method="post">
           <Input
             name="title"
             type="text"

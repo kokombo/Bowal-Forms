@@ -6,6 +6,7 @@ import {
   type SetStateAction,
   useState,
   useCallback,
+  memo,
 } from "react";
 import {
   createOptionForCheckboxQuestion,
@@ -84,4 +85,4 @@ const CheckboxItem = ({
   );
 };
 
-export default CheckboxItem;
+export default memo(CheckboxItem);

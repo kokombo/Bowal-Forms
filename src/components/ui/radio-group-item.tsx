@@ -6,6 +6,7 @@ import {
   type SetStateAction,
   useCallback,
   useState,
+  memo,
 } from "react";
 import {
   createOptionForMultiChoiceQuestion,
@@ -81,4 +82,4 @@ const RadioGroupItem = ({
   );
 };
 
-export default RadioGroupItem;
+export default memo(RadioGroupItem);
