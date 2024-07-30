@@ -36,6 +36,8 @@ const EditFormTitleInput = ({
         ref={titleRef}
         onChange={(e) => setTitle(e.target.value)}
         onFocus={() => setShowOutline(true)}
+        onMouseEnter={() => setShowOutline(true)}
+        onMouseLeave={() => setShowOutline(false)}
         onBlur={handleInputBlur}
         className="outline-none"
       />

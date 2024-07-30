@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, memo } from "react";
 import PlaygroundTextInput from "../ui/playground-text-input";
 import { updateFormDescription, updateFormTitle } from "@/actions";
 
@@ -57,4 +57,4 @@ const TitleAndDescriptionCombo = ({
   );
 };
 
-export default TitleAndDescriptionCombo;
+export default memo(TitleAndDescriptionCombo);
