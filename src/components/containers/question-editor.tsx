@@ -22,7 +22,6 @@ import {
 import type { Question } from "@/types/my-types";
 import { Button } from "../ui/button";
 import { useServerAction } from "@/lib/use-server-actions";
-import { v4 as uuid } from "uuid";
 
 type QuestionEditorProps = {
   question: Question;
@@ -45,32 +44,6 @@ const QuestionEditor = ({
 
   const [isQuestionRequired, setIsQuestionRequired] = useState<boolean>(
     question.required || false
-  );
-
-  const [multiChoiceOptions, setMultiChoiceOptions] = useState<Option[]>(
-    question.multiChoiceOptions.length > 0
-      ? question.multiChoiceOptions
-      : [
-          {
-            id: uuid(),
-            value: "Option 1",
-            label: "Option 1",
-            questionId: question.id,
-          },
-        ]
-  );
-
-  const [checkboxOptions, setCheckboxOptions] = useState<Option[]>(
-    question.checkboxesOptions.length > 0
-      ? question.checkboxesOptions
-      : [
-          {
-            id: uuid(),
-            value: "Option 1",
-            label: "Option 1",
-            questionId: question.id,
-          },
-        ]
   );
 
   const [handleCreateShortAnswerTextQuestion, isCreatingShortAnswerQuestion] =
@@ -162,21 +135,11 @@ const QuestionEditor = ({
             )}
 
             {answerType === "MULTIPLE_CHOICE" && (
-              <MultipleChoiceOptions
-                multiChoiceOptions={multiChoiceOptions}
-                setMultiChoiceOptions={setMultiChoiceOptions}
-                questionId={question.id}
-                formId={question.formId}
-              />
+              <MultipleChoiceOptions question={question} />
             )}
 
             {answerType === "CHECKBOXES" && (
-              <CheckboxOptions
-                checkboxOptions={checkboxOptions}
-                setCheckboxOptions={setCheckboxOptions}
-                questionId={question.id}
-                formId={question.formId}
-              />
+              <CheckboxOptions question={question} />
             )}
           </div>
         </div>
@@ -217,7 +180,7 @@ const QuestionEditor = ({
             <span className="flex items-center gap-1">
               Required
               <Switch
-                defaultChecked={isQuestionRequired}
+                checked={isQuestionRequired}
                 onCheckedChange={(checked) => setIsQuestionRequired(checked)}
               />
             </span>

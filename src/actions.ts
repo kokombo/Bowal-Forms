@@ -552,8 +552,8 @@ export const createOptionForMultiChoiceQuestion = async ({
 
         data: {
           id: optionId,
-          value: value.trim(),
-          label: label.trim(),
+          value,
+          label,
           questionId,
         },
       });
@@ -561,8 +561,8 @@ export const createOptionForMultiChoiceQuestion = async ({
       await prisma.multipleChoiceOption.create({
         data: {
           id: optionId,
-          value: value.trim(),
-          label: label.trim(),
+          value,
+          label,
           questionId,
         },
       });
@@ -704,8 +704,8 @@ export const createOptionForCheckboxQuestion = async ({
         },
         data: {
           id: optionId,
-          value: value.trim(),
-          label: label.trim(),
+          value,
+          label,
           questionId,
         },
       });
@@ -713,8 +713,8 @@ export const createOptionForCheckboxQuestion = async ({
       await prisma.checkBoxOption.create({
         data: {
           id: optionId,
-          value: value.trim(),
-          label: label.trim(),
+          value,
+          label,
           questionId,
         },
       });

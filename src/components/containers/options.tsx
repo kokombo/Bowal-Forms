@@ -1,12 +1,13 @@
 "use client";
 
-import type { Dispatch, SetStateAction, MouseEventHandler } from "react";
+import { type MouseEventHandler, useCallback, useState } from "react";
 import { RadioGroup } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import RadioGroupItem from "../ui/radio-group-item";
 import { v4 as uuid } from "uuid";
 import CheckboxItem from "../ui/checkbox-item";
+import type { Question } from "@/types/my-types";
 
 export const TextOption = ({
   placeholder,
@@ -26,28 +27,31 @@ export const TextOption = ({
   );
 };
 
-export const MultipleChoiceOptions = ({
-  multiChoiceOptions,
-  setMultiChoiceOptions,
-  questionId,
-  formId,
-}: {
-  multiChoiceOptions: Option[];
-  setMultiChoiceOptions: Dispatch<SetStateAction<Option[]>>;
-  questionId: string;
-  formId: string;
-}) => {
-  const addANewOption = () => {
+export const MultipleChoiceOptions = ({ question }: { question: Question }) => {
+  const [multiChoiceOptions, setMultiChoiceOptions] = useState<Option[]>(
+    question.multiChoiceOptions.length > 0
+      ? question.multiChoiceOptions
+      : [
+          {
+            id: uuid(),
+            value: "Option 1",
+            label: "Option 1",
+            questionId: question.id,
+          },
+        ]
+  );
+
+  const addANewOption = useCallback(() => {
     setMultiChoiceOptions((multiChoiceOptions) => [
       ...multiChoiceOptions,
       {
         id: uuid(),
         value: "",
         label: "",
-        questionId,
+        questionId: question.id,
       },
     ]);
-  };
+  }, [question.id]);
 
   return (
     <RadioGroup className="flex flex-col gap-6 py-2 items-start">
@@ -60,8 +64,8 @@ export const MultipleChoiceOptions = ({
               inputId={option.label}
               setData={setMultiChoiceOptions}
               data={multiChoiceOptions}
-              questionId={questionId}
-              formId={formId}
+              questionId={question.id}
+              formId={question.formId}
             />
 
             <Label htmlFor={option.label} />
@@ -76,28 +80,31 @@ export const MultipleChoiceOptions = ({
   );
 };
 
-export const CheckboxOptions = ({
-  checkboxOptions,
-  setCheckboxOptions,
-  questionId,
-  formId,
-}: {
-  checkboxOptions: Option[];
-  setCheckboxOptions: Dispatch<SetStateAction<Option[]>>;
-  questionId: string;
-  formId: string;
-}) => {
-  const addANewOption = () => {
+export const CheckboxOptions = ({ question }: { question: Question }) => {
+  const [checkboxOptions, setCheckboxOptions] = useState<Option[]>(
+    question.checkboxesOptions.length > 0
+      ? question.checkboxesOptions
+      : [
+          {
+            id: uuid(),
+            value: "Option 1",
+            label: "Option 1",
+            questionId: question.id,
+          },
+        ]
+  );
+
+  const addANewOption = useCallback(() => {
     setCheckboxOptions((checkboxOptions) => [
       ...checkboxOptions,
       {
         id: uuid(),
         value: "",
         label: "",
-        questionId,
+        questionId: question.id,
       },
     ]);
-  };
+  }, [question.id]);
 
   return (
     <div className="flex flex-col gap-6 py-2 items-start">
@@ -110,8 +117,8 @@ export const CheckboxOptions = ({
               inputId={option.label}
               setData={setCheckboxOptions}
               data={checkboxOptions}
-              questionId={questionId}
-              formId={formId}
+              questionId={question.id}
+              formId={question.formId}
             />
           </div>
         );

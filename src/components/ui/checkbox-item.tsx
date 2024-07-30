@@ -55,11 +55,12 @@ const CheckboxItem = ({
     <div className="flex items-center gap-1 lg:gap-2 relative">
       <input type="checkbox" disabled className="h-5 w-5" />
 
-      <label htmlFor="label" />
+      <label htmlFor={inputId} />
 
       <input
         type="text"
         value={newValue}
+        name="checkbox-option"
         id={inputId}
         placeholder="Add option"
         onFocus={() => setShowOutline(true)}

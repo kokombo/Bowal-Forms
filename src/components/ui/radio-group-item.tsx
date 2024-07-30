@@ -59,6 +59,7 @@ const RadioGroupItem = ({
         type="text"
         value={newValue}
         id={inputId}
+        name="radio-option"
         placeholder="Add option"
         onFocus={() => setShowOutline(true)}
         onBlur={handleOnBlur}
@@ -75,6 +76,7 @@ const RadioGroupItem = ({
         type="button"
         onClick={handleDeleteOption}
         className="text-primarytext font-lg font-semibold px-2"
+        aria-label={`Delete option ${value}`}
       >
         X
       </button>
