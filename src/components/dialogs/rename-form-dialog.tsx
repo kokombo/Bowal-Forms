@@ -52,7 +52,7 @@ const RenameFormDialog = ({
           </DialogDescription>
         </DialogHeader>
 
-        <form className="space-y-3" action={runAction} method="post">
+        <form className="space-y-3" action={runAction}>
           <Input
             name="title"
             type="text"
