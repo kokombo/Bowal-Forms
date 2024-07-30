@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  type Dispatch,
-  type SetStateAction,
-  type MouseEventHandler,
-  useState,
-} from "react";
+import type { Dispatch, SetStateAction, MouseEventHandler } from "react";
 import { RadioGroup } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
@@ -42,6 +37,18 @@ export const MultipleChoiceOptions = ({
   questionId: string;
   formId: string;
 }) => {
+  const addANewOption = () => {
+    setMultiChoiceOptions((multiChoiceOptions) => [
+      ...multiChoiceOptions,
+      {
+        id: uuid(),
+        value: "",
+        label: "",
+        questionId,
+      },
+    ]);
+  };
+
   return (
     <RadioGroup className="flex flex-col gap-6 py-2 items-start">
       {multiChoiceOptions.map((option) => {
@@ -62,21 +69,7 @@ export const MultipleChoiceOptions = ({
         );
       })}
 
-      <Button
-        variant="link"
-        size="sm"
-        onClick={() => {
-          setMultiChoiceOptions((multiChoiceOptions) => [
-            ...multiChoiceOptions,
-            {
-              id: uuid(),
-              value: "",
-              label: "",
-              questionId,
-            },
-          ]);
-        }}
-      >
+      <Button variant="link" size="sm" onClick={addANewOption}>
         {multiChoiceOptions.length > 1 ? "Add Another" : "Add Option"}
       </Button>
     </RadioGroup>
@@ -94,6 +87,18 @@ export const CheckboxOptions = ({
   questionId: string;
   formId: string;
 }) => {
+  const addANewOption = () => {
+    setCheckboxOptions((checkboxOptions) => [
+      ...checkboxOptions,
+      {
+        id: uuid(),
+        value: "",
+        label: "",
+        questionId,
+      },
+    ]);
+  };
+
   return (
     <div className="flex flex-col gap-6 py-2 items-start">
       {checkboxOptions.map((option) => {
@@ -112,21 +117,7 @@ export const CheckboxOptions = ({
         );
       })}
 
-      <Button
-        variant="link"
-        size="sm"
-        onClick={() => {
-          setCheckboxOptions((checkboxOptions) => [
-            ...checkboxOptions,
-            {
-              id: uuid(),
-              value: "",
-              label: "",
-              questionId,
-            },
-          ]);
-        }}
-      >
+      <Button variant="link" size="sm" onClick={addANewOption}>
         {checkboxOptions.length > 1 ? "Add Another" : "Add Option"}
       </Button>
     </div>

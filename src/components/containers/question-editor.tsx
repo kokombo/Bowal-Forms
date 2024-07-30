@@ -47,7 +47,7 @@ const QuestionEditor = ({
     question.required || false
   );
 
-  const [multiChoiceOptions, setMultiChoiceOptions] = useState(
+  const [multiChoiceOptions, setMultiChoiceOptions] = useState<Option[]>(
     question.multiChoiceOptions.length > 0
       ? question.multiChoiceOptions
       : [
@@ -60,7 +60,7 @@ const QuestionEditor = ({
         ]
   );
 
-  const [checkboxOptions, setCheckboxOptions] = useState(
+  const [checkboxOptions, setCheckboxOptions] = useState<Option[]>(
     question.checkboxesOptions.length > 0
       ? question.checkboxesOptions
       : [
