@@ -4,7 +4,7 @@ import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import images from "@/constants";
+import images from "@/lib/constants";
 import { useSession } from "next-auth/react";
 
 const Hero = () => {
@@ -60,6 +60,7 @@ const Hero = () => {
           alt="hero-image"
           fill
           quality={100}
+          sizes="any"
           priority
           className="object-contain shadow-xl rounded-xl"
         />

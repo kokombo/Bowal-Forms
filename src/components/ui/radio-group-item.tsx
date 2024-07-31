@@ -7,6 +7,7 @@ import {
   useCallback,
   useState,
   memo,
+  useId,
 } from "react";
 import {
   createOptionForMultiChoiceQuestion,
@@ -15,7 +16,6 @@ import {
 
 type RadioGroupItemProps = {
   value: string;
-  inputId: string;
   optionId: string;
   questionId: string;
   formId: string;
@@ -25,7 +25,6 @@ type RadioGroupItemProps = {
 
 const RadioGroupItem = ({
   value,
-  inputId,
   optionId,
   questionId,
   formId,
@@ -33,6 +32,7 @@ const RadioGroupItem = ({
 }: RadioGroupItemProps) => {
   const [showOutline, setShowOutline] = useState(false);
   const [newValue, setNewValue] = useState(value);
+  const id = useId();
 
   const handleOnBlur = useCallback(async () => {
     setShowOutline(false);
@@ -55,11 +55,13 @@ const RadioGroupItem = ({
     <div className="flex items-center gap-2 relative">
       <input type="radio" disabled className="h-5 w-5" />
 
+      <label htmlFor={`${id}-radioOption`} />
+
       <input
         type="text"
         value={newValue}
-        id={inputId}
-        name="radio-option"
+        id={`${id}-radioOption`}
+        name="radioOption"
         placeholder="Add option"
         onFocus={() => setShowOutline(true)}
         onBlur={handleOnBlur}

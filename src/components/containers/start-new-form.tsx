@@ -1,7 +1,7 @@
 "use client";
 
 import NewSampleForm from "../ui/new-sample-form";
-import { newFormSamples } from "@/constants";
+import { newFormSamples } from "@/lib/constants";
 
 const StartNewForm = () => {
   return (

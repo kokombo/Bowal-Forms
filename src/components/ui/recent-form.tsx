@@ -1,6 +1,6 @@
 "use client";
 
-import images from "@/constants";
+import images from "@/lib/constants";
 import Image from "next/image";
 import { FaFileWaveform } from "react-icons/fa6";
 import { TbDotsVertical } from "react-icons/tb";

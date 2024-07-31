@@ -1,6 +1,6 @@
 "use client";
 
-import images from "@/constants";
+import images from "@/lib/constants";
 import Image from "next/image";
 import { AnswerTypePlayground } from "./answer-type-playground";
 import TitleAndDescriptionCombo from "./title-and-description-combo";
@@ -25,6 +25,7 @@ const QuestionsPlaygound = ({ form, questions }: QuestionsPlaygoundProps) => {
             src={images.hero}
             alt=""
             fill
+            sizes="any"
             className="object-cover rounded-lg"
             priority
           />

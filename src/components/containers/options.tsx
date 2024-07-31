@@ -61,14 +61,11 @@ export const MultipleChoiceOptions = ({ question }: { question: Question }) => {
             <RadioGroupItem
               value={option.value}
               optionId={option.id}
-              inputId={option.label}
               setData={setMultiChoiceOptions}
               data={multiChoiceOptions}
               questionId={question.id}
               formId={question.formId}
             />
-
-            <Label htmlFor={option.label} />
           </div>
         );
       })}
@@ -114,7 +111,6 @@ export const CheckboxOptions = ({ question }: { question: Question }) => {
             <CheckboxItem
               value={option.value}
               optionId={option.id}
-              inputId={option.label}
               setData={setCheckboxOptions}
               data={checkboxOptions}
               questionId={question.id}

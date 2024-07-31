@@ -7,6 +7,7 @@ import {
   useState,
   useCallback,
   memo,
+  useId,
 } from "react";
 import {
   createOptionForCheckboxQuestion,
@@ -15,7 +16,6 @@ import {
 
 type CheckboxItemProps = {
   value: string;
-  inputId: string;
   optionId: string;
   questionId: string;
   formId: string;
@@ -25,7 +25,6 @@ type CheckboxItemProps = {
 
 const CheckboxItem = ({
   value,
-  inputId,
   optionId,
   questionId,
   formId,
@@ -33,6 +32,7 @@ const CheckboxItem = ({
 }: CheckboxItemProps) => {
   const [showOutline, setShowOutline] = useState(false);
   const [newValue, setNewValue] = useState(value);
+  const id = useId();
 
   const handleOnBlur = useCallback(async () => {
     setShowOutline(false);
@@ -55,13 +55,13 @@ const CheckboxItem = ({
     <div className="flex items-center gap-1 lg:gap-2 relative">
       <input type="checkbox" disabled className="h-5 w-5" />
 
-      <label htmlFor={inputId} />
+      <label htmlFor={`${id}-checkboxOption`} />
 
       <input
         type="text"
         value={newValue}
-        name="checkbox-option"
-        id={inputId}
+        id={`${id}-checkboxOption`}
+        name="checkboxOption"
         placeholder="Add option"
         onFocus={() => setShowOutline(true)}
         onBlur={handleOnBlur}

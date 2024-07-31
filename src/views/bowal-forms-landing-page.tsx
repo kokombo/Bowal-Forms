@@ -2,7 +2,7 @@ import LandingFooter from "@/components/containers/landing-footer";
 import Hero from "@/components/containers/hero";
 import LandingSection from "@/components/containers/landing-section";
 import LandingPageNavbar from "@/components/containers/landing-page-navbar";
-import images from "@/constants";
+import images from "@/lib/constants";
 
 const BowalFormsLandingPage = () => {
   return (

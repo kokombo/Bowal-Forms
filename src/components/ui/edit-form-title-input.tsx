@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { updateFormTitle } from "@/actions";
 
 const EditFormTitleInput = ({
@@ -21,11 +21,11 @@ const EditFormTitleInput = ({
     }
   }, [title]);
 
-  const handleInputBlur = async () => {
+  const handleInputBlur = useCallback(async () => {
     setShowOutline(false);
     if (title.replace(/\s+/g, "").length < 1) setTitle(currentTitle || "");
     await updateFormTitle({ formId, title: title.trim(), ownerId });
-  };
+  }, [title, ownerId, currentTitle, formId]);
 
   return (
     <div className="relative">
