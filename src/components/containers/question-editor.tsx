@@ -7,7 +7,12 @@ import {
   useState,
 } from "react";
 import PlaygroundTextInput from "../ui/playground-text-input";
-import { CheckboxOptions, MultipleChoiceOptions, TextOption } from "./options";
+import {
+  CheckboxOptions,
+  DropdownOptions,
+  MultipleChoiceOptions,
+  TextOption,
+} from "./options";
 import AnswerTypeSelect from "../selects/answer-type-select";
 import { Separator } from "../ui/separator";
 import { RiDeleteBin5Fill } from "react-icons/ri";
@@ -18,6 +23,7 @@ import {
   createParagraphAnswerQuestion,
   createMultiChoiceAnswerQuestion,
   createCheckboxAnswerQuestion,
+  createDropdownAnswerQuestion,
 } from "@/actions";
 import type { Question } from "@/types/my-types";
 import { Button } from "../ui/button";
@@ -54,6 +60,8 @@ const QuestionEditor = ({
     useServerAction(createMultiChoiceAnswerQuestion);
   const [handleCreateCheckboxAnswerQuestion, isCreatingCheckboxQuestion] =
     useServerAction(createCheckboxAnswerQuestion);
+  const [handleCreateDropdownAnswerQuestion, isCreatingDropdownQuestion] =
+    useServerAction(createDropdownAnswerQuestion);
 
   const handleCreateQuestion = useCallback(async () => {
     if (answerType === "SHORT_ANSWER") {
@@ -88,6 +96,14 @@ const QuestionEditor = ({
         required: isQuestionRequired,
         title: questionTitle,
       });
+    } else if (answerType === "DROP_DOWN") {
+      await handleCreateDropdownAnswerQuestion({
+        formId: question.formId,
+        questionId: question.id,
+        ownerId,
+        required: isQuestionRequired,
+        title: questionTitle,
+      });
     }
 
     handleHideEditor();
@@ -101,6 +117,7 @@ const QuestionEditor = ({
     handleCreateMultiChoiceAnswerQuestion,
     handleCreateParagraphAnswerQuestion,
     handleCreateShortAnswerTextQuestion,
+    handleCreateDropdownAnswerQuestion,
     handleHideEditor,
   ]);
 
@@ -141,6 +158,10 @@ const QuestionEditor = ({
             {answerType === "CHECKBOXES" && (
               <CheckboxOptions question={question} />
             )}
+
+            {answerType === "DROP_DOWN" && (
+              <DropdownOptions question={question} />
+            )}
           </div>
         </div>
 
@@ -163,7 +184,8 @@ const QuestionEditor = ({
               {isCreatingShortAnswerQuestion ||
               isCreatingParagraphQuestion ||
               isCreatingMultiChoiceQuestion ||
-              isCreatingCheckboxQuestion
+              isCreatingCheckboxQuestion ||
+              isCreatingDropdownQuestion
                 ? "Saving..."
                 : ""}
             </p>

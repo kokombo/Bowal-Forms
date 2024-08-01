@@ -8,6 +8,7 @@ import RadioGroupItem from "../ui/radio-group-item";
 import { v4 as uuid } from "uuid";
 import CheckboxItem from "../ui/checkbox-item";
 import type { Question } from "@/types/my-types";
+import DropdownItem from "../ui/dropdown-item";
 
 export const TextOption = ({
   placeholder,
@@ -57,16 +58,15 @@ export const MultipleChoiceOptions = ({ question }: { question: Question }) => {
     <RadioGroup className="flex flex-col gap-6 py-2 items-start">
       {multiChoiceOptions.map((option) => {
         return (
-          <div key={option.id} className="flex items-center space-x-2">
-            <RadioGroupItem
-              value={option.value}
-              optionId={option.id}
-              setData={setMultiChoiceOptions}
-              data={multiChoiceOptions}
-              questionId={question.id}
-              formId={question.formId}
-            />
-          </div>
+          <RadioGroupItem
+            key={option.id}
+            value={option.value}
+            optionId={option.id}
+            setData={setMultiChoiceOptions}
+            data={multiChoiceOptions}
+            questionId={question.id}
+            formId={question.formId}
+          />
         );
       })}
 
@@ -107,12 +107,62 @@ export const CheckboxOptions = ({ question }: { question: Question }) => {
     <div className="flex flex-col gap-6 py-2 items-start">
       {checkboxOptions.map((option) => {
         return (
-          <div key={option.id} className="flex items-center space-x-2">
-            <CheckboxItem
+          <CheckboxItem
+            key={option.id}
+            value={option.value}
+            optionId={option.id}
+            setData={setCheckboxOptions}
+            data={checkboxOptions}
+            questionId={question.id}
+            formId={question.formId}
+          />
+        );
+      })}
+
+      <Button variant="link" size="sm" onClick={addANewOption}>
+        {checkboxOptions.length > 1 ? "Add Another" : "Add Option"}
+      </Button>
+    </div>
+  );
+};
+
+export const DropdownOptions = ({ question }: { question: Question }) => {
+  const [dropdownOptions, setDropdownOptions] = useState<Option[]>(
+    question.dropDownOptions.length > 0
+      ? question.dropDownOptions
+      : [
+          {
+            id: uuid(),
+            value: "Option 1",
+            label: "Option 1",
+            questionId: question.id,
+          },
+        ]
+  );
+
+  const addANewOption = useCallback(() => {
+    setDropdownOptions((dropdownOptions) => [
+      ...dropdownOptions,
+      {
+        id: uuid(),
+        value: "",
+        label: "",
+        questionId: question.id,
+      },
+    ]);
+  }, [question.id]);
+
+  return (
+    <div className="flex flex-col gap-6 py-2 items-start">
+      {dropdownOptions.map((option, index) => {
+        return (
+          <div key={option.id} className="flex items-center gap-1 lg:gap-2">
+            <h5>{index + 1}.</h5>
+            <DropdownItem
               value={option.value}
               optionId={option.id}
-              setData={setCheckboxOptions}
-              data={checkboxOptions}
+              setData={setDropdownOptions}
+              data={dropdownOptions}
               questionId={question.id}
               formId={question.formId}
             />
@@ -121,7 +171,7 @@ export const CheckboxOptions = ({ question }: { question: Question }) => {
       })}
 
       <Button variant="link" size="sm" onClick={addANewOption}>
-        {checkboxOptions.length > 1 ? "Add Another" : "Add Option"}
+        {dropdownOptions.length > 1 ? "Add Another" : "Add Option"}
       </Button>
     </div>
   );

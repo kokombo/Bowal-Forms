@@ -765,3 +765,155 @@ export const deleteCheckboxOption = async ({
 
   revalidatePath(`/forms/nx/${formId}/edit`);
 };
+
+/**
+ * The function allows a user to create dropdown answer question in a form
+ */
+
+export const createDropdownAnswerQuestion = async ({
+  formId,
+  title,
+  required,
+  questionId,
+  ownerId,
+}: {
+  formId: string;
+  title: string;
+  required: boolean;
+  questionId: string;
+  ownerId: string;
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+    if (ownerId !== session.user.id) return;
+    if (title.replace(/\s+/g, "").length < 1) return;
+
+    const existingQuestion = await prisma.question.findUnique({
+      where: {
+        id: questionId,
+      },
+    });
+
+    if (!existingQuestion) return;
+
+    await prisma.question.update({
+      where: {
+        id: existingQuestion.id,
+      },
+      data: {
+        type: "DROP_DOWN",
+        formId,
+        title: title.trim(),
+        required,
+      },
+    });
+  } catch (error) {
+    console.error("error creating dropdown question", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
+};
+
+/**
+ * The function allows a user to create options for a dropdown question
+ */
+
+export const createOptionForDropdownQuestion = async ({
+  value,
+  label,
+  questionId,
+  formId,
+  optionId,
+}: {
+  value: string;
+  label: string;
+  questionId: string;
+  formId: string;
+  optionId: string;
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+    if (value.replace(/\s+/g, "").length < 1) return;
+
+    const existingOption = await prisma.dropDownOption.findUnique({
+      where: {
+        id: optionId,
+      },
+    });
+
+    if (existingOption) {
+      if (existingOption.value === value) return;
+
+      await prisma.dropDownOption.update({
+        where: {
+          id: optionId,
+        },
+        data: {
+          id: optionId,
+          value,
+          label,
+          questionId,
+        },
+      });
+    } else {
+      await prisma.dropDownOption.create({
+        data: {
+          id: optionId,
+          value,
+          label,
+          questionId,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("error creating option for dropdown question", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
+};
+
+/**
+ * The function allows a user to delete a dropdown answer option
+ */
+
+export const deleteDropdownOption = async ({
+  formId,
+  optionId,
+}: {
+  formId: string;
+  optionId: string;
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+
+    const existingOption = await prisma.dropDownOption.findUnique({
+      where: {
+        id: optionId,
+      },
+    });
+
+    if (!existingOption) return;
+
+    await prisma.dropDownOption.delete({
+      where: {
+        id: optionId,
+      },
+    });
+  } catch (error) {
+    console.error("error deleting option for dropdown question", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
+};

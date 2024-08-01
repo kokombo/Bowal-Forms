@@ -75,6 +75,25 @@ export const QuestionsList = ({
             })}
           </div>
         )}
+
+        {answerType === "DROP_DOWN" && (
+          <div
+            className="flex flex-col gap-4 py-1 px-1 cursor-text"
+            onClick={handleShowEditor}
+            onKeyDown={() => {}}
+          >
+            {question?.dropDownOptions?.map((option, index) => {
+              return (
+                <span key={option.id} className="flex items-center gap-2">
+                  <h5>{index + 1}.</h5>
+                  <label className="text-sm font-medium text-gray-400">
+                    {option.label}
+                  </label>
+                </span>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
