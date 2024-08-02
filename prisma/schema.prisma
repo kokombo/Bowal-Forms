@@ -56,14 +56,14 @@ model Question {
   options   Option[]
   date      DateTime?
   time      DateTime?
-  form      Form?          @relation(fields: [formId], references: [id])
+  form      Form           @relation(fields: [formId], references: [id])
   formId    String
   createdAt DateTime       @default(now())
 }
 
 model Response {
   id        String   @id @default(uuid())
-  form      Form?    @relation(fields: [formId], references: [id])
+  form      Form     @relation(fields: [formId], references: [id])
   formId    String
   createdAt DateTime @default(now())
 }
@@ -72,15 +72,15 @@ model Theme {
   id              String  @id @default(uuid())
   headerImage     String?
   backgroundColor String?
-  form            Form?   @relation(fields: [formId], references: [id])
+  form            Form    @relation(fields: [formId], references: [id])
   formId          String  @unique
 }
 
 model Option {
-  id         String    @id
+  id         String   @id
   label      String
   value      String
-  question   Question? @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id])
   questionId String
-  createdAt  DateTime  @default(now())
+  createdAt  DateTime @default(now())
 }
