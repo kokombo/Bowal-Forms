@@ -1,13 +1,43 @@
 "use client";
 
+import { TbDotsVertical } from "react-icons/tb";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
+import { Switch } from "../ui/switch";
+
 const ResponsesPlayground = ({ theme }: Form) => {
   return (
-    <div
+    <section
       style={{ backgroundColor: theme?.backgroundColor as string }}
-      className="min-h-screen"
+      className="flex flex-col items-center gap-3 pt-5 pb-20 min-h-screen"
     >
-      ResponsesPlayground
-    </div>
+      <div className="bg-white py-6 px-5 space-y-5 rounded-lg shadow-md w-full md:w-3/5 ">
+        <div className="flex items-center justify-between">
+          <h5 className="text-2xl font-medium"> 0 responses</h5>
+
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" size="sm" className="rounded-full p-2">
+                <TbDotsVertical size={20} className="text-primarytext" />
+              </Button>
+            </PopoverTrigger>
+
+            <PopoverContent className="w-56 lg:w-72">Content</PopoverContent>
+          </Popover>
+        </div>
+
+        <div className="flex justify-end">
+          <span className="flex items-center gap-1 text-sm text-primarytext">
+            Accepting responses
+            <Switch />
+          </span>
+        </div>
+      </div>
+
+      <div className="bg-white py-6 px-5 space-y-5 rounded-lg shadow-md w-full md:w-3/5">
+        Responses
+      </div>
+    </section>
   );
 };
 

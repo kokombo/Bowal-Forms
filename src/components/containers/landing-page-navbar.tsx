@@ -6,7 +6,7 @@ import Logo from "../ui/logo";
 import { Fragment, useState } from "react";
 import dynamic from "next/dynamic";
 
-const Sidebar = dynamic(() => import("./sidebar"));
+const Sidebar = dynamic(() => import("./sidebar"), { ssr: false });
 
 const LandingPageNavbar = () => {
   const [sidebarIsActive, setSidebarIsActive] = useState(false);

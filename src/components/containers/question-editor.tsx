@@ -12,6 +12,7 @@ import { DateOption, ListOptions, TextOption, TimeOption } from "./options";
 import AnswerTypeSelect from "../selects/answer-type-select";
 import { Separator } from "../ui/separator";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import { GoDuplicate } from "react-icons/go";
 import { Switch } from "../ui/switch";
 import { deleteQuestion, updateQuestion } from "@/actions";
 import type { Question } from "@/types/my-types";
@@ -19,6 +20,7 @@ import { Button } from "../ui/button";
 import { useServerAction } from "@/lib/use-server-actions";
 import type { $Enums } from "@prisma/client";
 import { stringToEnum } from "@/lib/string-to-enum";
+import { Loader } from "lucide-react";
 
 type QuestionEditorProps = {
   question: Question;
@@ -122,21 +124,22 @@ const QuestionEditor = ({
         <Separator />
 
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-1">
-            <Button variant="default" size="sm" onClick={handleUpdateQuestion}>
-              Save
-            </Button>
+          <Button variant="default" size="sm" onClick={handleUpdateQuestion}>
+            {isPending ? <Loader size={16} /> : "Save"}
+          </Button>
 
-            {isPending && (
-              <p className="text-sm text-medium text-green-700">Saving...</p>
-            )}
-          </div>
-
-          <div className="flex items-center gap-2 text-sm text-primarytext">
+          <div className="flex items-center gap-2 lg:gap-3 text-sm text-primarytext">
             <span className="flex items-center gap-1">
               Delete
               <button type="button" onClick={handleDeleteQuestion}>
                 <RiDeleteBin5Fill size={28} />
+              </button>
+            </span>
+
+            <span className="flex items-center gap-1">
+              Duplicate
+              <button type="button" onClick={() => {}}>
+                <GoDuplicate size={28} />
               </button>
             </span>
 

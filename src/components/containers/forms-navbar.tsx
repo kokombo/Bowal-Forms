@@ -39,7 +39,7 @@ const FormsNavbar = ({ session }: { session: Session | null }) => {
                 <Button
                   variant="ghost"
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="w-full justify-start outline-none"
+                  className="w-full justify-start outline-0"
                 >
                   <BiLogOut size={20} className="text-primarytext mr-2" />
                   Logout
