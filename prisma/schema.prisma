@@ -49,23 +49,21 @@ model Form {
 }
 
 model Question {
-  id                 String                 @id @default(uuid())
-  title              String?
-  type               QUESTION_TYPE?
-  required           Boolean                @default(false)
-  multiChoiceOptions MultipleChoiceOption[]
-  checkboxesOptions  CheckBoxOption[]
-  dropDownOptions    DropDownOption[]
-  date               DateTime?
-  time               DateTime?
-  form               Form                   @relation(fields: [formId], references: [id])
-  formId             String
-  createdAt          DateTime               @default(now())
+  id        String         @id @default(uuid())
+  title     String?
+  type      QUESTION_TYPE?
+  required  Boolean        @default(false)
+  options   Option[]
+  date      DateTime?
+  time      DateTime?
+  form      Form?          @relation(fields: [formId], references: [id])
+  formId    String
+  createdAt DateTime       @default(now())
 }
 
 model Response {
   id        String   @id @default(uuid())
-  form      Form     @relation(fields: [formId], references: [id])
+  form      Form?    @relation(fields: [formId], references: [id])
   formId    String
   createdAt DateTime @default(now())
 }
@@ -74,33 +72,15 @@ model Theme {
   id              String  @id @default(uuid())
   headerImage     String?
   backgroundColor String?
-  form            Form    @relation(fields: [formId], references: [id])
+  form            Form?   @relation(fields: [formId], references: [id])
   formId          String  @unique
 }
 
-model MultipleChoiceOption {
-  id         String   @id
+model Option {
+  id         String    @id
   label      String
   value      String
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question? @relation(fields: [questionId], references: [id])
   questionId String
-  createdAt  DateTime @default(now())
-}
-
-model CheckBoxOption {
-  id         String   @id
-  label      String
-  value      String
-  question   Question @relation(fields: [questionId], references: [id])
-  questionId String
-  createdAt  DateTime @default(now())
-}
-
-model DropDownOption {
-  id         String   @id
-  label      String
-  value      String
-  question   Question @relation(fields: [questionId], references: [id])
-  questionId String
-  createdAt  DateTime @default(now())
+  createdAt  DateTime  @default(now())
 }

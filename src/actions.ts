@@ -398,6 +398,22 @@ export const deleteQuestion = async ({
 
     if (!existingQuestion) return;
 
+    //Delete question option
+    const options = await prisma.option.findMany({
+      where: {
+        questionId: existingQuestion.id,
+      },
+    });
+
+    if (options.length > 0) {
+      await prisma.option.deleteMany({
+        where: {
+          questionId: existingQuestion.id,
+        },
+      });
+    }
+
+    //Delete the question itself
     await prisma.question.delete({
       where: {
         id: questionId,
@@ -413,10 +429,10 @@ export const deleteQuestion = async ({
 };
 
 /**
- * The function allows a user to create options for a multi choice question
+ * The function allows a user to create options for question
  */
 
-export const createOptionForMultiChoiceQuestion = async ({
+export const createQuestionOption = async ({
   value,
   label,
   questionId,
@@ -435,7 +451,7 @@ export const createOptionForMultiChoiceQuestion = async ({
     if (!session) return;
     if (value.replace(/\s+/g, "").length < 1) return;
 
-    const existingOption = await prisma.multipleChoiceOption.findUnique({
+    const existingOption = await prisma.option.findUnique({
       where: {
         id: optionId,
       },
@@ -444,108 +460,7 @@ export const createOptionForMultiChoiceQuestion = async ({
     if (existingOption) {
       if (existingOption.value === value) return;
 
-      await prisma.multipleChoiceOption.update({
-        where: {
-          id: optionId,
-        },
-
-        data: {
-          id: optionId,
-          value,
-          label,
-          questionId,
-        },
-      });
-    } else {
-      await prisma.multipleChoiceOption.create({
-        data: {
-          id: optionId,
-          value,
-          label,
-          questionId,
-        },
-      });
-    }
-  } catch (error) {
-    console.error("error creating option for multichoice question", error);
-  } finally {
-    await prisma.$disconnect();
-  }
-
-  revalidatePath(`/forms/nx/${formId}/edit`);
-};
-
-/**
- * The function allows a user to delete a multiple choice answer option
- */
-
-export const deleteMultipleChoiceOption = async ({
-  formId,
-  optionId,
-}: {
-  formId: string;
-  optionId: string;
-}) => {
-  const session = await getServerSession();
-
-  try {
-    if (!session) return;
-
-    const existingOption = await prisma.multipleChoiceOption.findUnique({
-      where: {
-        id: optionId,
-      },
-    });
-
-    if (!existingOption) return;
-
-    await prisma.multipleChoiceOption.delete({
-      where: {
-        id: optionId,
-      },
-    });
-  } catch (error) {
-    console.error("error deleting option for multichoice question", error);
-  } finally {
-    await prisma.$disconnect();
-  }
-
-  revalidatePath(`/forms/nx/${formId}/edit`);
-};
-
-/**
- * The function allows a user to create options for a multi choice question
- */
-
-export const createOptionForCheckboxQuestion = async ({
-  value,
-  label,
-  questionId,
-  formId,
-  optionId,
-}: {
-  value: string;
-  label: string;
-  questionId: string;
-  formId: string;
-  optionId: string;
-}) => {
-  const session = await getServerSession();
-
-  try {
-    if (!session) return;
-    if (value.replace(/\s+/g, "").length < 1) return;
-
-    const existingOption = await prisma.checkBoxOption.findUnique({
-      where: {
-        id: optionId,
-      },
-    });
-
-    if (existingOption) {
-      if (existingOption.value === value) return;
-
-      await prisma.checkBoxOption.update({
+      await prisma.option.update({
         where: {
           id: optionId,
         },
@@ -557,7 +472,7 @@ export const createOptionForCheckboxQuestion = async ({
         },
       });
     } else {
-      await prisma.checkBoxOption.create({
+      await prisma.option.create({
         data: {
           id: optionId,
           value,
@@ -567,7 +482,7 @@ export const createOptionForCheckboxQuestion = async ({
       });
     }
   } catch (error) {
-    console.error("error creating option for checkbox question", error);
+    console.error("error creating option", error);
   } finally {
     await prisma.$disconnect();
   }
@@ -576,10 +491,10 @@ export const createOptionForCheckboxQuestion = async ({
 };
 
 /**
- * The function allows a user to delete a checkbox answer option
+ * The function allows a user to delete a question option
  */
 
-export const deleteCheckboxOption = async ({
+export const deleteQuestionOption = async ({
   formId,
   optionId,
 }: {
@@ -591,7 +506,7 @@ export const deleteCheckboxOption = async ({
   try {
     if (!session) return;
 
-    const existingOption = await prisma.checkBoxOption.findUnique({
+    const existingOption = await prisma.option.findUnique({
       where: {
         id: optionId,
       },
@@ -599,113 +514,13 @@ export const deleteCheckboxOption = async ({
 
     if (!existingOption) return;
 
-    await prisma.checkBoxOption.delete({
+    await prisma.option.delete({
       where: {
         id: optionId,
       },
     });
   } catch (error) {
-    console.error("error deleting option for checkbox question", error);
-  } finally {
-    await prisma.$disconnect();
-  }
-
-  revalidatePath(`/forms/nx/${formId}/edit`);
-};
-
-/**
- * The function allows a user to create options for a dropdown question
- */
-
-export const createOptionForDropdownQuestion = async ({
-  value,
-  label,
-  questionId,
-  formId,
-  optionId,
-}: {
-  value: string;
-  label: string;
-  questionId: string;
-  formId: string;
-  optionId: string;
-}) => {
-  const session = await getServerSession();
-
-  try {
-    if (!session) return;
-    if (value.replace(/\s+/g, "").length < 1) return;
-
-    const existingOption = await prisma.dropDownOption.findUnique({
-      where: {
-        id: optionId,
-      },
-    });
-
-    if (existingOption) {
-      if (existingOption.value === value) return;
-
-      await prisma.dropDownOption.update({
-        where: {
-          id: optionId,
-        },
-        data: {
-          id: optionId,
-          value,
-          label,
-          questionId,
-        },
-      });
-    } else {
-      await prisma.dropDownOption.create({
-        data: {
-          id: optionId,
-          value,
-          label,
-          questionId,
-        },
-      });
-    }
-  } catch (error) {
-    console.error("error creating option for dropdown question", error);
-  } finally {
-    await prisma.$disconnect();
-  }
-
-  revalidatePath(`/forms/nx/${formId}/edit`);
-};
-
-/**
- * The function allows a user to delete a dropdown answer option
- */
-
-export const deleteDropdownOption = async ({
-  formId,
-  optionId,
-}: {
-  formId: string;
-  optionId: string;
-}) => {
-  const session = await getServerSession();
-
-  try {
-    if (!session) return;
-
-    const existingOption = await prisma.dropDownOption.findUnique({
-      where: {
-        id: optionId,
-      },
-    });
-
-    if (!existingOption) return;
-
-    await prisma.dropDownOption.delete({
-      where: {
-        id: optionId,
-      },
-    });
-  } catch (error) {
-    console.error("error deleting option for dropdown question", error);
+    console.error("error deleting option", error);
   } finally {
     await prisma.$disconnect();
   }

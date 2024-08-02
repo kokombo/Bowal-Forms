@@ -2,18 +2,13 @@
 
 import {
   type Dispatch,
+  Fragment,
   type SetStateAction,
   useCallback,
   useState,
 } from "react";
 import PlaygroundTextInput from "../ui/playground-text-input";
-import {
-  CheckboxOptions,
-  DateOption,
-  DropdownOptions,
-  MultipleChoiceOptions,
-  TextOption,
-} from "./options";
+import { DateOption, ListOptions, TextOption, TimeOption } from "./options";
 import AnswerTypeSelect from "../selects/answer-type-select";
 import { Separator } from "../ui/separator";
 import { RiDeleteBin5Fill } from "react-icons/ri";
@@ -91,8 +86,7 @@ const QuestionEditor = ({
             onInputChange={(e) => setQuestionTitle(e.target.value)}
           />
 
-          {/* MULTIPLE_CHOICE CHECKBOXES PARAGRAPH SHORT_ANSWER DROP_DOWN DATE TIME */}
-          <div>
+          <Fragment>
             {answerType === "SHORT_ANSWER" && (
               <TextOption placeholder="Short-answer text" />
             )}
@@ -101,20 +95,21 @@ const QuestionEditor = ({
               <TextOption placeholder="Long-answer text" />
             )}
 
-            {answerType === "MULTIPLE_CHOICE" && (
-              <MultipleChoiceOptions question={question} />
-            )}
-
-            {answerType === "CHECKBOXES" && (
-              <CheckboxOptions question={question} />
-            )}
-
-            {answerType === "DROP_DOWN" && (
-              <DropdownOptions question={question} />
+            {["CHECKBOXES", "DROP_DOWN", "MULTIPLE_CHOICE"].includes(
+              answerType as string
+            ) && (
+              <ListOptions
+                questionId={question.id}
+                formId={question.formId}
+                options={question.options}
+                answerType={answerType}
+              />
             )}
 
             {answerType === "DATE" && <DateOption />}
-          </div>
+
+            {answerType === "TIME" && <TimeOption />}
+          </Fragment>
         </div>
 
         <AnswerTypeSelect
@@ -132,9 +127,9 @@ const QuestionEditor = ({
               Save
             </Button>
 
-            <p className="text-sm text-medium text-green-700">
-              {isPending ? "Saving..." : ""}
-            </p>
+            {isPending && (
+              <p className="text-sm text-medium text-green-700">Saving...</p>
+            )}
           </div>
 
           <div className="flex items-center gap-2 text-sm text-primarytext">

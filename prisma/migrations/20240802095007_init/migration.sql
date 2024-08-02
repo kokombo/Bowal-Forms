@@ -45,6 +45,7 @@ CREATE TABLE "Question" (
 CREATE TABLE "Response" (
     "id" TEXT NOT NULL,
     "formId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Response_pkey" PRIMARY KEY ("id")
 );
@@ -60,33 +61,14 @@ CREATE TABLE "Theme" (
 );
 
 -- CreateTable
-CREATE TABLE "MultipleChoiceOption" (
+CREATE TABLE "Option" (
     "id" TEXT NOT NULL,
-    "label" TEXT,
-    "value" TEXT,
+    "label" TEXT NOT NULL,
+    "value" TEXT NOT NULL,
     "questionId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "MultipleChoiceOption_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "CheckBoxOption" (
-    "id" TEXT NOT NULL,
-    "label" TEXT,
-    "value" TEXT,
-    "questionId" TEXT NOT NULL,
-
-    CONSTRAINT "CheckBoxOption_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "DropDownOption" (
-    "id" TEXT NOT NULL,
-    "label" TEXT,
-    "value" TEXT,
-    "questionId" TEXT NOT NULL,
-
-    CONSTRAINT "DropDownOption_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Option_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -108,10 +90,4 @@ ALTER TABLE "Response" ADD CONSTRAINT "Response_formId_fkey" FOREIGN KEY ("formI
 ALTER TABLE "Theme" ADD CONSTRAINT "Theme_formId_fkey" FOREIGN KEY ("formId") REFERENCES "Form"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "MultipleChoiceOption" ADD CONSTRAINT "MultipleChoiceOption_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "CheckBoxOption" ADD CONSTRAINT "CheckBoxOption_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "DropDownOption" ADD CONSTRAINT "DropDownOption_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Option" ADD CONSTRAINT "Option_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

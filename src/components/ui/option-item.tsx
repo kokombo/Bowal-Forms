@@ -4,32 +4,35 @@ import { cn } from "@/lib/utils";
 import {
   type Dispatch,
   type SetStateAction,
-  useCallback,
   useState,
+  useCallback,
   memo,
   useId,
 } from "react";
-import {
-  createOptionForMultiChoiceQuestion,
-  deleteMultipleChoiceOption,
-} from "@/actions";
+import { createQuestionOption, deleteQuestionOption } from "@/actions";
+import type { $Enums } from "@prisma/client";
+import OptionIcon from "./option-icon";
 
-type RadioGroupItemProps = {
+type CheckboxItemProps = {
   value: string;
   optionId: string;
   questionId: string;
   formId: string;
   setData: Dispatch<SetStateAction<Option[]>>;
   data: Option[];
+  type: $Enums.QUESTION_TYPE | null;
+  optionIndex: number;
 };
 
-const RadioGroupItem = ({
+const OptionItem = ({
   value,
   optionId,
   questionId,
   formId,
   setData,
-}: RadioGroupItemProps) => {
+  type,
+  optionIndex,
+}: CheckboxItemProps) => {
   const [showOutline, setShowOutline] = useState(false);
   const [newValue, setNewValue] = useState(value);
   const id = useId();
@@ -37,31 +40,31 @@ const RadioGroupItem = ({
   const handleOnBlur = useCallback(async () => {
     setShowOutline(false);
     if (value.trim() === newValue.trim()) return;
-    await createOptionForMultiChoiceQuestion({
+    await createQuestionOption({
       label: newValue.trim(),
       value: newValue.trim(),
       questionId,
       formId,
       optionId,
     });
-  }, [newValue, questionId, formId, optionId, value]);
+  }, [formId, questionId, optionId, newValue, value]);
 
   const handleDeleteOption = useCallback(() => {
     setData((data) => data.filter((item) => item.id !== optionId));
-    deleteMultipleChoiceOption({ formId, optionId });
+    deleteQuestionOption({ formId, optionId });
   }, [formId, optionId, setData]);
 
   return (
-    <div className="flex items-center gap-2 relative">
-      <input type="radio" disabled className="h-5 w-5" />
+    <div className="flex items-center gap-1 relative">
+      <OptionIcon type={type} index={optionIndex} />
 
-      <label htmlFor={`${id}-radioOption`} />
+      <label htmlFor={`${id}-option`} />
 
       <input
         type="text"
         value={newValue}
-        id={`${id}-radioOption`}
-        name="radioOption"
+        id={`${id}-option`}
+        name="option"
         placeholder="Add option"
         onFocus={() => setShowOutline(true)}
         onBlur={handleOnBlur}
@@ -86,4 +89,4 @@ const RadioGroupItem = ({
   );
 };
 
-export default memo(RadioGroupItem);
+export default memo(OptionItem);

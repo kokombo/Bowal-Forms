@@ -1,8 +1,9 @@
 "use client";
 
 import type { Question } from "@/types/my-types";
-import { DateOption, TextOption } from "./options";
+import { DateOption, TextOption, TimeOption } from "./options";
 import type { $Enums } from "@prisma/client";
+import ReadOnlyOptionList from "./read-only-option-list";
 
 type QuestionsListProps = {
   question: Question;
@@ -22,8 +23,6 @@ export const QuestionsList = ({
         {question.required && <span className="text-red-600 text-base">*</span>}
       </label>
 
-      {/* MULTIPLE_CHOICE CHECKBOXES PARAGRAPH SHORT_ANSWER DROP_DOWN DATE TIME */}
-
       <div>
         {answerType === "SHORT_ANSWER" && (
           <TextOption
@@ -39,64 +38,15 @@ export const QuestionsList = ({
           />
         )}
 
-        {answerType === "MULTIPLE_CHOICE" && (
-          <div
-            className="flex flex-col gap-4 py-1 px-1 cursor-text"
-            onClick={handleShowEditor}
-            onKeyDown={() => {}}
-          >
-            {question?.multiChoiceOptions?.map((option) => {
-              return (
-                <span key={option.id} className="flex items-center gap-2">
-                  <input type="radio" disabled className="h-5 w-5" />
-                  <label className="text-sm font-medium text-gray-400">
-                    {option.label}
-                  </label>
-                </span>
-              );
-            })}
-          </div>
-        )}
-
-        {answerType === "CHECKBOXES" && (
-          <div
-            className="flex flex-col gap-4 py-1 px-1 cursor-text"
-            onClick={handleShowEditor}
-            onKeyDown={() => {}}
-          >
-            {question?.checkboxesOptions?.map((option) => {
-              return (
-                <span key={option.id} className="flex items-center gap-2">
-                  <input type="checkbox" disabled className="h-5 w-5" />
-                  <label className="text-sm font-medium text-gray-400">
-                    {option.label}
-                  </label>
-                </span>
-              );
-            })}
-          </div>
-        )}
-
-        {answerType === "DROP_DOWN" && (
-          <div
-            className="flex flex-col gap-4 py-1 px-1 cursor-text"
-            onClick={handleShowEditor}
-            onKeyDown={() => {}}
-          >
-            {question?.dropDownOptions?.map((option, index) => {
-              return (
-                <span key={option.id} className="flex items-center gap-2">
-                  <h5>{index + 1}.</h5>
-                  <label className="text-sm font-medium text-gray-400">
-                    {option.label}
-                  </label>
-                </span>
-              );
-            })}
-          </div>
+        {["CHECKBOXES", "DROP_DOWN", "MULTIPLE_CHOICE"].includes(
+          answerType as string
+        ) && (
+          <ReadOnlyOptionList question={question} onClick={handleShowEditor} />
         )}
 
         {answerType === "DATE" && <DateOption onClick={handleShowEditor} />}
+
+        {answerType === "TIME" && <TimeOption onClick={handleShowEditor} />}
       </div>
     </div>
   );
