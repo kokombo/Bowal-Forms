@@ -43,7 +43,7 @@ export const ListOptions = ({
             id: uuid(),
             value: "",
             label: "",
-            questionId: questionId,
+            questionId,
           },
         ]
   );
@@ -55,7 +55,7 @@ export const ListOptions = ({
         id: uuid(),
         value: "",
         label: "",
-        questionId: questionId,
+        questionId,
       },
     ]);
   }, [questionId]);
@@ -79,7 +79,7 @@ export const ListOptions = ({
       })}
 
       <Button variant="link" size="sm" onClick={addANewOption}>
-        {options.length > 1 ? "Add Another" : "Add Option"}
+        {newOptions.length > 1 ? "Add Another" : "Add Option"}
       </Button>
     </div>
   );

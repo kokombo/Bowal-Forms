@@ -20,12 +20,12 @@ const TitleAndDescriptionCombo = ({
   const [newTitle, setNewTitle] = useState(title || "");
   const [newDescription, setNewDescription] = useState(description || "");
 
-  const handleCreateTitle = useCallback(async () => {
+  const handleUpdateTitle = useCallback(async () => {
     if (title?.trim() === newTitle.trim()) return;
     await updateFormTitle({ formId, ownerId, title: newTitle });
   }, [formId, ownerId, title, newTitle]);
 
-  const handleCreateDescription = useCallback(async () => {
+  const handleUpdateDescription = useCallback(async () => {
     if (description?.trim() === newDescription.trim()) return;
     await updateFormDescription({
       formId,
@@ -42,7 +42,7 @@ const TitleAndDescriptionCombo = ({
         size="large"
         placeholder="Form title"
         onInputChange={(e) => setNewTitle(e.target.value)}
-        onInputBlur={handleCreateTitle}
+        onInputBlur={handleUpdateTitle}
       />
 
       <PlaygroundTextInput
@@ -51,7 +51,7 @@ const TitleAndDescriptionCombo = ({
         size="small"
         placeholder="Form description"
         onInputChange={(e) => setNewDescription(e.target.value)}
-        onInputBlur={handleCreateDescription}
+        onInputBlur={handleUpdateDescription}
       />
     </div>
   );

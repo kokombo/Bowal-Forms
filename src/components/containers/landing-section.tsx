@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import Image, { type StaticImageData } from "next/image";
-import { memo } from "react";
 
 type LandingSectionProp = {
   heading: string;
@@ -11,12 +10,12 @@ type LandingSectionProp = {
   className?: string;
 };
 
-const LandingSection = memo(function LandingSecton({
+const LandingSection = ({
   heading,
   paragraph,
   image,
   className,
-}: LandingSectionProp) {
+}: LandingSectionProp) => {
   return (
     <section
       className={cn(
@@ -46,6 +45,6 @@ const LandingSection = memo(function LandingSecton({
       </div>
     </section>
   );
-});
+};
 
 export default LandingSection;
