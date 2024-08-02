@@ -45,7 +45,7 @@ const SigninPage = ({ heading, callToAction }: AuthProps) => {
             Continue with Google
           </Button>
 
-          <div className="mt-2">
+          <div className="mt-4">
             {pathname === "/sign-in" && (
               <AuthFooterCTA
                 text="Don't have an account yet?"

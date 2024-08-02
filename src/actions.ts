@@ -263,6 +263,20 @@ export const deleteForm = async ({
 
     if (!existingForm || !existingTheme) return;
 
+    const questions = await prisma.question.findMany({
+      where: {
+        formId,
+      },
+    });
+
+    if (questions.length > 0) {
+      await prisma.question.deleteMany({
+        where: {
+          formId,
+        },
+      });
+    }
+
     await prisma.theme.delete({
       where: {
         formId,
