@@ -54,11 +54,13 @@ const PlaygroundTextInput = ({
         placeholder={placeholder}
         onChange={onInputChange}
         onBlur={onInputBlur}
+        autoComplete="off"
+        autoCorrect="off"
         className={cn(
           "outline-none font-medium px-1 w-full",
           style,
           showOutline
-            ? "border-b-2 border-b-green-700 transition-colors duration-200"
+            ? "border-b-2 border-b-green-700 transition-colors duration-200 bg-gray-50 pt-3 pb-1 px-2"
             : "border-b-1",
           disabled && "bg-white"
         )}

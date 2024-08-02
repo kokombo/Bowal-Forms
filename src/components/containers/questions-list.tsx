@@ -1,11 +1,12 @@
 "use client";
 
 import type { Question } from "@/types/my-types";
-import { TextOption } from "./options";
+import { DateOption, TextOption } from "./options";
+import type { $Enums } from "@prisma/client";
 
 type QuestionsListProps = {
   question: Question;
-  answerType: string;
+  answerType: $Enums.QUESTION_TYPE | null;
   handleShowEditor: () => void;
 };
 
@@ -94,6 +95,8 @@ export const QuestionsList = ({
             })}
           </div>
         )}
+
+        {answerType === "DATE" && <DateOption onClick={handleShowEditor} />}
       </div>
     </div>
   );

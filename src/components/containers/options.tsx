@@ -2,7 +2,6 @@
 
 import { type MouseEventHandler, useCallback, useState } from "react";
 import { RadioGroup } from "../ui/radio-group";
-import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import RadioGroupItem from "../ui/radio-group-item";
 import { v4 as uuid } from "uuid";
@@ -174,5 +173,20 @@ export const DropdownOptions = ({ question }: { question: Question }) => {
         {dropdownOptions.length > 1 ? "Add Another" : "Add Option"}
       </Button>
     </div>
+  );
+};
+
+export const DateOption = ({
+  onClick,
+}: {
+  onClick?: MouseEventHandler<HTMLDivElement> | undefined;
+}) => {
+  return (
+    <input
+      onClick={onClick}
+      type="date"
+      readOnly
+      className="border-b-1 text-gray-400 font-medium px-1 py-1 bg-white outline-none"
+    />
   );
 };

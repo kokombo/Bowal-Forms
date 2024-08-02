@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "./lib/prisma-connect";
 import { getServerSession } from "./lib/getServerSession";
 import { revalidatePath } from "next/cache";
+import type { $Enums } from "@prisma/client";
 
 /**
  * The function allows a user to create a new form
@@ -317,6 +318,60 @@ export const createNewQuestion = async ({
 };
 
 /**
+ * The function allows a user to update a question in a form
+ */
+
+export const updateQuestion = async ({
+  formId,
+  title,
+  required,
+  questionId,
+  ownerId,
+  type,
+}: {
+  formId: string;
+  title: string;
+  required: boolean;
+  questionId: string;
+  ownerId: string;
+  type: $Enums.QUESTION_TYPE | null;
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+    if (ownerId !== session.user.id) return;
+    if (title.replace(/\s+/g, "").length < 1) return;
+
+    const existingQuestion = await prisma.question.findUnique({
+      where: {
+        id: questionId,
+      },
+    });
+
+    if (!existingQuestion) return;
+
+    await prisma.question.update({
+      where: {
+        id: existingQuestion.id,
+      },
+      data: {
+        type,
+        formId,
+        title: title.trim(),
+        required,
+      },
+    });
+  } catch (error) {
+    console.error("error creating short answer question", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  revalidatePath(`/forms/nx/${formId}/edit`);
+};
+
+/**
  * The function allows a user to delete a question associated with a form
  */
 
@@ -350,162 +405,6 @@ export const deleteQuestion = async ({
     });
   } catch (error) {
     console.error("error deleting form", error);
-  } finally {
-    await prisma.$disconnect();
-  }
-
-  revalidatePath(`/forms/nx/${formId}/edit`);
-};
-
-/**
- * The function allows a user to create a short answer text question in a form
- */
-
-export const createShortAnswerTextQuestion = async ({
-  formId,
-  title,
-  required,
-  questionId,
-  ownerId,
-}: {
-  formId: string;
-  title: string;
-  required: boolean;
-  questionId: string;
-  ownerId: string;
-}) => {
-  const session = await getServerSession();
-
-  try {
-    if (!session) return;
-    if (ownerId !== session.user.id) return;
-    if (title.replace(/\s+/g, "").length < 1) return;
-
-    const existingQuestion = await prisma.question.findUnique({
-      where: {
-        id: questionId,
-      },
-    });
-
-    if (!existingQuestion) return;
-
-    await prisma.question.update({
-      where: {
-        id: existingQuestion.id,
-      },
-      data: {
-        type: "SHORT_ANSWER",
-        formId,
-        title: title.trim(),
-        required,
-      },
-    });
-  } catch (error) {
-    console.error("error creating short answer question", error);
-  } finally {
-    await prisma.$disconnect();
-  }
-
-  revalidatePath(`/forms/nx/${formId}/edit`);
-};
-
-/**
- * The function allows a user to create a paragraph answer question in a form
- */
-
-export const createParagraphAnswerQuestion = async ({
-  formId,
-  title,
-  required,
-  questionId,
-  ownerId,
-}: {
-  formId: string;
-  title: string;
-  required: boolean;
-  questionId: string;
-  ownerId: string;
-}) => {
-  const session = await getServerSession();
-
-  try {
-    if (!session) return;
-    if (ownerId !== session.user.id) return;
-    if (title.replace(/\s+/g, "").length < 1) return;
-
-    const existingQuestion = await prisma.question.findUnique({
-      where: {
-        id: questionId,
-      },
-    });
-
-    if (!existingQuestion) return;
-
-    await prisma.question.update({
-      where: {
-        id: existingQuestion.id,
-      },
-      data: {
-        type: "PARAGRAPH",
-        formId,
-        title: title.trim(),
-        required,
-      },
-    });
-  } catch (error) {
-    console.error("error creating paragraph answer question", error);
-  } finally {
-    await prisma.$disconnect();
-  }
-
-  revalidatePath(`/forms/nx/${formId}/edit`);
-};
-
-/**
- * The function allows a user to create a multi choice answer question in a form
- */
-
-export const createMultiChoiceAnswerQuestion = async ({
-  formId,
-  title,
-  required,
-  questionId,
-  ownerId,
-}: {
-  formId: string;
-  title: string;
-  required: boolean;
-  questionId: string;
-  ownerId: string;
-}) => {
-  const session = await getServerSession();
-
-  try {
-    if (!session) return;
-    if (ownerId !== session.user.id) return;
-    if (title.replace(/\s+/g, "").length < 1) return;
-
-    const existingQuestion = await prisma.question.findUnique({
-      where: {
-        id: questionId,
-      },
-    });
-
-    if (!existingQuestion) return;
-
-    await prisma.question.update({
-      where: {
-        id: existingQuestion.id,
-      },
-      data: {
-        type: "MULTIPLE_CHOICE",
-        formId,
-        title: title.trim(),
-        required,
-      },
-    });
-  } catch (error) {
-    console.error("error creating multi choice form", error);
   } finally {
     await prisma.$disconnect();
   }
@@ -615,58 +514,6 @@ export const deleteMultipleChoiceOption = async ({
 };
 
 /**
- * The function allows a user to create checkboxes answer question in a form
- */
-
-export const createCheckboxAnswerQuestion = async ({
-  formId,
-  title,
-  required,
-  questionId,
-  ownerId,
-}: {
-  formId: string;
-  title: string;
-  required: boolean;
-  questionId: string;
-  ownerId: string;
-}) => {
-  const session = await getServerSession();
-
-  try {
-    if (!session) return;
-    if (ownerId !== session.user.id) return;
-    if (title.replace(/\s+/g, "").length < 1) return;
-
-    const existingQuestion = await prisma.question.findUnique({
-      where: {
-        id: questionId,
-      },
-    });
-
-    if (!existingQuestion) return;
-
-    await prisma.question.update({
-      where: {
-        id: existingQuestion.id,
-      },
-      data: {
-        type: "CHECKBOXES",
-        formId,
-        title: title.trim(),
-        required,
-      },
-    });
-  } catch (error) {
-    console.error("error creating checkbox question", error);
-  } finally {
-    await prisma.$disconnect();
-  }
-
-  revalidatePath(`/forms/nx/${formId}/edit`);
-};
-
-/**
  * The function allows a user to create options for a multi choice question
  */
 
@@ -759,58 +606,6 @@ export const deleteCheckboxOption = async ({
     });
   } catch (error) {
     console.error("error deleting option for checkbox question", error);
-  } finally {
-    await prisma.$disconnect();
-  }
-
-  revalidatePath(`/forms/nx/${formId}/edit`);
-};
-
-/**
- * The function allows a user to create dropdown answer question in a form
- */
-
-export const createDropdownAnswerQuestion = async ({
-  formId,
-  title,
-  required,
-  questionId,
-  ownerId,
-}: {
-  formId: string;
-  title: string;
-  required: boolean;
-  questionId: string;
-  ownerId: string;
-}) => {
-  const session = await getServerSession();
-
-  try {
-    if (!session) return;
-    if (ownerId !== session.user.id) return;
-    if (title.replace(/\s+/g, "").length < 1) return;
-
-    const existingQuestion = await prisma.question.findUnique({
-      where: {
-        id: questionId,
-      },
-    });
-
-    if (!existingQuestion) return;
-
-    await prisma.question.update({
-      where: {
-        id: existingQuestion.id,
-      },
-      data: {
-        type: "DROP_DOWN",
-        formId,
-        title: title.trim(),
-        required,
-      },
-    });
-  } catch (error) {
-    console.error("error creating dropdown question", error);
   } finally {
     await prisma.$disconnect();
   }

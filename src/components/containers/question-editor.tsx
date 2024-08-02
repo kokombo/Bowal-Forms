@@ -9,6 +9,7 @@ import {
 import PlaygroundTextInput from "../ui/playground-text-input";
 import {
   CheckboxOptions,
+  DateOption,
   DropdownOptions,
   MultipleChoiceOptions,
   TextOption,
@@ -17,22 +18,17 @@ import AnswerTypeSelect from "../selects/answer-type-select";
 import { Separator } from "../ui/separator";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { Switch } from "../ui/switch";
-import {
-  createShortAnswerTextQuestion,
-  deleteQuestion,
-  createParagraphAnswerQuestion,
-  createMultiChoiceAnswerQuestion,
-  createCheckboxAnswerQuestion,
-  createDropdownAnswerQuestion,
-} from "@/actions";
+import { deleteQuestion, updateQuestion } from "@/actions";
 import type { Question } from "@/types/my-types";
 import { Button } from "../ui/button";
 import { useServerAction } from "@/lib/use-server-actions";
+import type { $Enums } from "@prisma/client";
+import { stringToEnum } from "@/lib/string-to-enum";
 
 type QuestionEditorProps = {
   question: Question;
-  answerType: string;
-  setAnswerType: Dispatch<SetStateAction<string>>;
+  answerType: $Enums.QUESTION_TYPE | null;
+  setAnswerType: Dispatch<SetStateAction<$Enums.QUESTION_TYPE | null>>;
   ownerId: string;
   handleHideEditor: () => void;
 };
@@ -52,59 +48,17 @@ const QuestionEditor = ({
     question.required || false
   );
 
-  const [handleCreateShortAnswerTextQuestion, isCreatingShortAnswerQuestion] =
-    useServerAction(createShortAnswerTextQuestion);
-  const [handleCreateParagraphAnswerQuestion, isCreatingParagraphQuestion] =
-    useServerAction(createParagraphAnswerQuestion);
-  const [handleCreateMultiChoiceAnswerQuestion, isCreatingMultiChoiceQuestion] =
-    useServerAction(createMultiChoiceAnswerQuestion);
-  const [handleCreateCheckboxAnswerQuestion, isCreatingCheckboxQuestion] =
-    useServerAction(createCheckboxAnswerQuestion);
-  const [handleCreateDropdownAnswerQuestion, isCreatingDropdownQuestion] =
-    useServerAction(createDropdownAnswerQuestion);
+  const [runUpdateQuestion, isPending] = useServerAction(updateQuestion);
 
-  const handleCreateQuestion = useCallback(async () => {
-    if (answerType === "SHORT_ANSWER") {
-      await handleCreateShortAnswerTextQuestion({
-        formId: question.formId,
-        questionId: question.id,
-        ownerId,
-        required: isQuestionRequired,
-        title: questionTitle,
-      });
-    } else if (answerType === "PARAGRAPH") {
-      await handleCreateParagraphAnswerQuestion({
-        formId: question.formId,
-        questionId: question.id,
-        ownerId,
-        required: isQuestionRequired,
-        title: questionTitle,
-      });
-    } else if (answerType === "MULTIPLE_CHOICE") {
-      await handleCreateMultiChoiceAnswerQuestion({
-        formId: question.formId,
-        questionId: question.id,
-        ownerId,
-        required: isQuestionRequired,
-        title: questionTitle,
-      });
-    } else if (answerType === "CHECKBOXES") {
-      await handleCreateCheckboxAnswerQuestion({
-        formId: question.formId,
-        questionId: question.id,
-        ownerId,
-        required: isQuestionRequired,
-        title: questionTitle,
-      });
-    } else if (answerType === "DROP_DOWN") {
-      await handleCreateDropdownAnswerQuestion({
-        formId: question.formId,
-        questionId: question.id,
-        ownerId,
-        required: isQuestionRequired,
-        title: questionTitle,
-      });
-    }
+  const handleUpdateQuestion = useCallback(async () => {
+    await runUpdateQuestion({
+      formId: question.formId,
+      questionId: question.id,
+      ownerId,
+      required: isQuestionRequired,
+      title: questionTitle,
+      type: answerType,
+    });
 
     handleHideEditor();
   }, [
@@ -113,12 +67,8 @@ const QuestionEditor = ({
     ownerId,
     isQuestionRequired,
     questionTitle,
-    handleCreateCheckboxAnswerQuestion,
-    handleCreateMultiChoiceAnswerQuestion,
-    handleCreateParagraphAnswerQuestion,
-    handleCreateShortAnswerTextQuestion,
-    handleCreateDropdownAnswerQuestion,
     handleHideEditor,
+    runUpdateQuestion,
   ]);
 
   const handleDeleteQuestion = useCallback(() => {
@@ -136,7 +86,7 @@ const QuestionEditor = ({
           <PlaygroundTextInput
             name="question"
             value={questionTitle}
-            placeholder="Add question title"
+            placeholder="Add Question Title"
             size="small"
             onInputChange={(e) => setQuestionTitle(e.target.value)}
           />
@@ -162,12 +112,14 @@ const QuestionEditor = ({
             {answerType === "DROP_DOWN" && (
               <DropdownOptions question={question} />
             )}
+
+            {answerType === "DATE" && <DateOption />}
           </div>
         </div>
 
         <AnswerTypeSelect
-          value={answerType}
-          onValueChange={(value) => setAnswerType(value)}
+          value={answerType as string}
+          onValueChange={(value) => setAnswerType(stringToEnum(value))}
         />
       </div>
 
@@ -176,18 +128,12 @@ const QuestionEditor = ({
 
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-1">
-            <Button variant="default" size="sm" onClick={handleCreateQuestion}>
+            <Button variant="default" size="sm" onClick={handleUpdateQuestion}>
               Save
             </Button>
 
             <p className="text-sm text-medium text-green-700">
-              {isCreatingShortAnswerQuestion ||
-              isCreatingParagraphQuestion ||
-              isCreatingMultiChoiceQuestion ||
-              isCreatingCheckboxQuestion ||
-              isCreatingDropdownQuestion
-                ? "Saving..."
-                : ""}
+              {isPending ? "Saving..." : ""}
             </p>
           </div>
 
