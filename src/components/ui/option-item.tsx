@@ -13,7 +13,7 @@ import { createQuestionOption, deleteQuestionOption } from "@/actions";
 import type { $Enums } from "@prisma/client";
 import OptionIcon from "./option-icon";
 
-type CheckboxItemProps = {
+type OptionItemProps = {
   value: string;
   optionId: string;
   questionId: string;
@@ -32,7 +32,7 @@ const OptionItem = ({
   setData,
   type,
   optionIndex,
-}: CheckboxItemProps) => {
+}: OptionItemProps) => {
   const [showOutline, setShowOutline] = useState(false);
   const [newValue, setNewValue] = useState(value);
   const id = useId();

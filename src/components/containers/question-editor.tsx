@@ -38,11 +38,11 @@ const QuestionEditor = ({
   handleHideEditor,
 }: QuestionEditorProps) => {
   const [questionTitle, setQuestionTitle] = useState<string>(
-    question.title || ""
+    question.title ?? ""
   );
 
   const [isQuestionRequired, setIsQuestionRequired] = useState<boolean>(
-    question.required || false
+    question.required ?? false
   );
 
   const [runUpdateQuestion, isPending] = useServerAction(updateQuestion);

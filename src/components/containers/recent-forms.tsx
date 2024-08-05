@@ -10,8 +10,8 @@ const RecentForms = ({ recentForms }: { recentForms: Form[] | undefined }) => {
       {recentForms?.length === 0 ? (
         <div className="flex items-center justify-center h-40">
           <p className="text-primarytext font-medium lg:text-lg text-center max-w-screen-sm">
-            Keep track of your forms here. There are no recent forms yet. Start
-            adding forms now.
+            Keep track of your forms here. There are no forms yet. Start adding
+            forms now.
           </p>
         </div>
       ) : (

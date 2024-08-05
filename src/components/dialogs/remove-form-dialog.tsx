@@ -30,8 +30,8 @@ const RemoveFormDialog = ({
 }: RemoveFormDialogProps) => {
   const { toast } = useToast();
 
-  const handleDeleteForm = () => {
-    deleteForm({ formId, ownerId }).then(() => {
+  const handleDeleteForm = async () => {
+   await deleteForm({ formId, ownerId }).then(() => {
       toast({
         description: "Form deleted successfully",
       });

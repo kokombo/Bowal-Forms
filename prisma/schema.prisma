@@ -63,10 +63,13 @@ model Question {
 }
 
 model Response {
-  id        String   @id @default(uuid())
-  form      Form     @relation(fields: [formId], references: [id])
-  formId    String
-  createdAt DateTime @default(now())
+  id            String   @id @default(uuid())
+  form          Form     @relation(fields: [formId], references: [id])
+  formId        String
+  questionId    String
+  questionTitle String
+  answer        Json
+  createdAt     DateTime @default(now())
 }
 
 model Theme {

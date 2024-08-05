@@ -9,33 +9,35 @@ const ResponsesPlayground = ({ theme }: Form) => {
   return (
     <section
       style={{ backgroundColor: theme?.backgroundColor as string }}
-      className="flex flex-col items-center gap-3 pt-5 pb-20 min-h-screen"
+      className="flex justify-center pt-5 pb-20 min-h-screen"
     >
-      <div className="bg-white py-6 px-5 space-y-5 rounded-lg shadow-md w-full md:w-3/5 ">
-        <div className="flex items-center justify-between">
-          <h5 className="text-2xl font-medium"> 0 responses</h5>
+      <div className="w-11/12 lg:w-3/5 md:w-9/12 space-y-3">
+        <div className="bg-white py-6 px-5 space-y-5 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
+            <h5 className="text-2xl font-medium"> 0 responses</h5>
 
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="ghost" size="sm" className="rounded-full p-2">
-                <TbDotsVertical size={20} className="text-primarytext" />
-              </Button>
-            </PopoverTrigger>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm" className="rounded-full p-2">
+                  <TbDotsVertical size={20} className="text-primarytext" />
+                </Button>
+              </PopoverTrigger>
 
-            <PopoverContent className="w-56 lg:w-72">Content</PopoverContent>
-          </Popover>
+              <PopoverContent className="w-56 lg:w-72">Content</PopoverContent>
+            </Popover>
+          </div>
+
+          <div className="flex justify-end">
+            <span className="flex items-center gap-1 lg:gap-2 text-sm text-primarytext">
+              Accepting responses
+              <Switch />
+            </span>
+          </div>
         </div>
 
-        <div className="flex justify-end">
-          <span className="flex items-center gap-1 text-sm text-primarytext">
-            Accepting responses
-            <Switch />
-          </span>
+        <div className="bg-white py-6 px-5 space-y-5 rounded-lg shadow-md">
+          Responses
         </div>
-      </div>
-
-      <div className="bg-white py-6 px-5 space-y-5 rounded-lg shadow-md w-full md:w-3/5">
-        Responses
       </div>
     </section>
   );
