@@ -11,7 +11,7 @@ import { submitForm } from "../actions";
 import { useCallback } from "react";
 
 type Values = {
-  [key1: string]: string | [];
+  [key: string]: string | [];
 };
 
 type FormSubmitPlaygroundProps = {
