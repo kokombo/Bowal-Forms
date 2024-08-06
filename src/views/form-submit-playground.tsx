@@ -29,9 +29,9 @@ const FormSubmitPlayground = ({
     if (questions) {
       for (const question of questions) {
         if (question.type === "MULTIPLE_CHOICE") {
-          initialValues[`${question.title}_${question.id}` ?? ""] = [];
+          initialValues[`${question.title}_${question.id}`] = [];
         } else {
-          initialValues[`${question.title}_${question.id}` ?? ""] = "";
+          initialValues[`${question.title}_${question.id}`] = "";
         }
       }
     }
