@@ -28,3 +28,9 @@ type Option = {
 type Response = {
   id: string;
 };
+
+type Answer = {
+  questionId: string;
+  questionTitle: string;
+  answer: string | Array<string>;
+};

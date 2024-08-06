@@ -6,7 +6,7 @@ export default images;
 export const newFormSamples = [
   {
     image: images.hero,
-    caption: "Blank Form",
+    caption: "Untitled Form",
     theme: {
       headerImage: "",
       backgroundColor: "#f0fdf4",

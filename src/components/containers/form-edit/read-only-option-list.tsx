@@ -1,7 +1,7 @@
 "use client";
 
 import type { Question } from "@/types/my-types";
-import OptionIcon from "../ui/option-icon";
+import OptionIcon from "@/components/ui/option-icon";
 
 const ReadOnlyOptionList = ({
   question,

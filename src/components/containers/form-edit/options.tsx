@@ -1,9 +1,9 @@
 "use client";
 
 import { type MouseEventHandler, useCallback, useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { v4 as uuid } from "uuid";
-import OptionItem from "../ui/option-item";
+import OptionItem from "@/components/ui/option-item";
 import type { $Enums } from "@prisma/client";
 
 export const TextOption = ({

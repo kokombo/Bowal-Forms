@@ -7,20 +7,20 @@ import {
   useCallback,
   useState,
 } from "react";
-import PlaygroundTextInput from "../ui/playground-text-input";
 import { DateOption, ListOptions, TextOption, TimeOption } from "./options";
-import AnswerTypeSelect from "../selects/answer-type-select";
-import { Separator } from "../ui/separator";
+import AnswerTypeSelect from "@/components/selects/answer-type-select";
+import { Separator } from "@/components/ui/separator";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { GoDuplicate } from "react-icons/go";
-import { Switch } from "../ui/switch";
+import { Switch } from "@/components/ui/switch";
 import { deleteQuestion, updateQuestion } from "@/actions";
 import type { Question } from "@/types/my-types";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { useServerAction } from "@/lib/use-server-actions";
 import type { $Enums } from "@prisma/client";
 import { stringToEnum } from "@/lib/string-to-enum";
 import { Loader } from "lucide-react";
+import PlaygroundTextInput from "@/components/ui/playground-text-input";
 
 type QuestionEditorProps = {
   question: Question;

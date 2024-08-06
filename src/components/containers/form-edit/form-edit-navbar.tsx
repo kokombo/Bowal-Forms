@@ -1,18 +1,22 @@
 "use client";
 
 import { FaFileWaveform } from "react-icons/fa6";
-import EditFormTitleInput from "../ui/edit-form-title-input";
+import EditFormTitleInput from "@/components/ui/edit-form-title-input";
 import Link from "next/link";
-import ProfilePicture from "../ui/profile-picture";
+import ProfilePicture from "@/components/ui/profile-picture";
 import { useSession } from "next-auth/react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { TbDotsVertical } from "react-icons/tb";
 import FormEditTabs from "./form-edit-tabs";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { deleteForm } from "@/actions";
 import { useRouter } from "next/navigation";
-import { useToast } from "../ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 const FormEditNavbar = (form: Form) => {
   const { data: session } = useSession();

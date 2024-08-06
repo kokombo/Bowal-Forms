@@ -1,10 +1,10 @@
 "use client";
 
 import { useHash } from "@/lib/use-hash";
-import ResponsesPlayground from "@/components/containers/responses-playground";
-import QuestionsPlaygound from "@/components/containers/questions-playgound";
-import SettingsPlayground from "@/components/containers/settings-playground";
-import FormEditNavbar from "@/components/containers/form-edit-navbar";
+import ResponsesPlayground from "@/components/containers/form-edit/responses-playground";
+import QuestionsPlaygound from "@/components/containers/form-edit/questions-playgound";
+import SettingsPlayground from "@/components/containers/form-edit/settings-playground";
+import FormEditNavbar from "@/components/containers/form-edit/form-edit-navbar";
 import type { Question } from "@/types/my-types";
 
 type FormEditPlaygroundProps = {

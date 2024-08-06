@@ -1,12 +1,13 @@
 "use client";
 
 import images from "@/lib/constants";
-import Image from "next/image";
 import { AnswerTypePlayground } from "./answer-type-playground";
-import TitleAndDescriptionCombo from "./title-and-description-combo";
-import { CreateNewQuestionButton } from "../ui/icon-buttons";
+import { CreateNewQuestionButton } from "@/components/ui/icon-buttons";
 import { v4 as uuid } from "uuid";
 import type { Question } from "@/types/my-types";
+import TitleAndDescriptionCombo from "./title-and-description-combo";
+import FormBanner from "../form-banner";
+import Link from "next/link";
 
 type QuestionsPlaygoundProps = {
   form: Form;
@@ -14,22 +15,15 @@ type QuestionsPlaygoundProps = {
 };
 
 const QuestionsPlaygound = ({ form, questions }: QuestionsPlaygoundProps) => {
+  const id = form.id; //temp.. to be removed
+
   return (
     <section
       style={{ backgroundColor: form.theme?.backgroundColor as string }}
       className="flex justify-center pt-5 pb-20 relative min-h-screen"
     >
       <div className="w-11/12 lg:w-3/5 md:w-9/12 space-y-3">
-        <div className="block relative w-full h-[220px] bg-green-800 rounded-lg">
-          <Image
-            src={images.hero}
-            alt=""
-            fill
-            sizes="any"
-            className="object-cover rounded-lg"
-            priority
-          />
-        </div>
+        <FormBanner image={images.hero} />
 
         <TitleAndDescriptionCombo
           title={form.title}
@@ -57,6 +51,10 @@ const QuestionsPlaygound = ({ form, questions }: QuestionsPlaygoundProps) => {
           ownerId={form.ownerId}
           formId={form.id}
         />
+
+        <Link href={`/forms/vf/${id}/viewform`} target="_blank">
+          View Form
+        </Link>
       </div>
     </section>
   );

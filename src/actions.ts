@@ -504,10 +504,6 @@ export const createQuestionOption = async ({
   revalidatePath(`/forms/nx/${formId}/edit`);
 };
 
-/**
- * The function allows a user to delete a question option
- */
-
 export const deleteQuestionOption = async ({
   formId,
   optionId,
@@ -540,4 +536,45 @@ export const deleteQuestionOption = async ({
   }
 
   revalidatePath(`/forms/nx/${formId}/edit`);
+};
+
+/**
+ * The function allows a user to submit a form
+ */
+
+export const submitForm = async ({
+  formId,
+  answers,
+}: {
+  formId: string;
+  answers: Answer[];
+}) => {
+  const session = await getServerSession();
+
+  try {
+    if (!session) return;
+
+    const response = await prisma.response.create({
+      data: {
+        formId,
+      },
+    });
+
+    if (!response) return;
+
+    for (const answer of answers) {
+      await prisma.answer.create({
+        data: {
+          questionId: answer.questionId,
+          questionTitle: answer.questionTitle,
+          answer: answer.answer,
+          responseId: response.id,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("error submitting form", error);
+  } finally {
+    await prisma.$disconnect();
+  }
 };

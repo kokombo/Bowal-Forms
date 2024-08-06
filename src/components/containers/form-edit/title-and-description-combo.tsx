@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, memo } from "react";
-import PlaygroundTextInput from "../ui/playground-text-input";
+import PlaygroundTextInput from "@/components/ui/playground-text-input";
 import { updateFormDescription, updateFormTitle } from "@/actions";
 
 type TitleAndDescriptionComboProp = {
