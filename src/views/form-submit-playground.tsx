@@ -8,6 +8,7 @@ import images from "@/lib/constants";
 import type { Question } from "@/types/my-types";
 import { Formik, Form } from "formik";
 import { submitForm } from "../actions";
+import { useCallback } from "react";
 
 type Values = {
   [key1: string]: string | [];
@@ -39,21 +40,24 @@ const FormSubmitPlayground = ({
 
   const initialFormValues = generateInitialValues();
 
-  const handleSubmitForm = async (values: Values) => {
-    const answerArray: Answer[] = [];
+  const handleSubmitForm = useCallback(
+    async (values: Values) => {
+      const answerArray: Answer[] = [];
 
-    for (const [key, value] of Object.entries(values)) {
-      const answerObject: Answer = {
-        questionTitle: key.split("_")[0],
-        questionId: key.split("_")[1],
-        answer: value,
-      };
+      for (const [key, value] of Object.entries(values)) {
+        const answerObject: Answer = {
+          questionTitle: key.split("_")[0],
+          questionId: key.split("_")[1],
+          answer: value,
+        };
 
-      answerArray.push(answerObject);
-    }
+        answerArray.push(answerObject);
+      }
 
-    await submitForm({ formId: form.id, answers: answerArray });
-  };
+      await submitForm({ formId: form.id, answers: answerArray });
+    },
+    [form.id]
+  );
 
   return (
     <section
