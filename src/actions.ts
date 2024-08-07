@@ -260,26 +260,44 @@ export const deleteForm = async ({
 
     if (!existingForm || !existingTheme) return;
 
+    //check if there are questions in the form
     const questions = await prisma.question.findMany({
       where: {
         formId,
       },
     });
 
-    if (questions.length > 0) {
-      await prisma.question.deleteMany({
-        where: {
-          formId,
-        },
-      });
-    }
+    //check if there are user responses associated with the form
+    const responses = await prisma.response.findMany({
+      where: {
+        formId,
+      },
+    });
 
+    //delete the theme associated with the form
     await prisma.theme.delete({
       where: {
         formId,
       },
     });
 
+    //delete the questions associated with the form
+    if (questions.length > 0) {
+      for (const question of questions) {
+        await deleteQuestion({ questionId: question.id, formId, ownerId });
+      }
+    }
+
+    //delete the user responses associated with the form
+    if (responses.length > 0) {
+      await prisma.response.deleteMany({
+        where: {
+          formId,
+        },
+      });
+    }
+
+    //delete the form itself
     await prisma.form.delete({
       where: {
         id: formId,
