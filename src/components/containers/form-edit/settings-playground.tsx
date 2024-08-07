@@ -10,7 +10,7 @@ type SettingsPlaygoundProps = {
 const SettingsPlayground = ({ form, questions }: SettingsPlaygoundProps) => {
   return (
     <div
-      style={{ backgroundColor: form.theme?.backgroundColor || "white" }}
+      style={{ backgroundColor: form.theme?.backgroundColor ?? "white" }}
       className="min-h-screen"
     >
       SettingsPlayground

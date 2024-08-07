@@ -42,7 +42,7 @@ const QuestionEditor = ({
   );
 
   const [isQuestionRequired, setIsQuestionRequired] = useState<boolean>(
-    question.required ?? false
+    question.required || false
   );
 
   const [runUpdateQuestion, isPending] = useServerAction(updateQuestion);
