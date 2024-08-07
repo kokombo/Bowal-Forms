@@ -32,6 +32,7 @@ export const CreateNewQuestionButton = ({
             }
           >
             <IoMdAddCircle size={24} className="text-primarytext" />
+            <span className="sr-only">Add a new question</span>
           </Button>
         </TooltipTrigger>
         <TooltipContent>

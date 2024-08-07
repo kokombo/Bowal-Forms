@@ -5,9 +5,8 @@ import { getServerSession } from "@/lib/getServerSession";
 export const GET = async (req: NextRequest) => {
   const session = await getServerSession();
 
-  const { searchParams } = new URL(req.url);
-  const formId = searchParams.get("formId") as string;
-  const ownerId = searchParams.get("ownerId") as string;
+  const formId = req.nextUrl.searchParams.get("formId") as string;
+  const ownerId = req.nextUrl.searchParams.get("ownerId");
 
   try {
     if (!session) {
@@ -18,7 +17,6 @@ export const GET = async (req: NextRequest) => {
     }
 
     if (session.user.id !== ownerId) {
-      //Change this to NextResponse.redirect later on
       return NextResponse.json({ message: "Unauthorized." }, { status: 403 });
     }
 
@@ -36,6 +34,10 @@ export const GET = async (req: NextRequest) => {
 
     return NextResponse.json(responses);
   } catch (error) {
+    return NextResponse.json(
+      { message: "Something went wrong, please try again" },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }

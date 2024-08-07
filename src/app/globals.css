@@ -67,21 +67,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-/* ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-ul > li {
-  display: inline-block;
-  position: relative;
-}
-
-ul > li > a {
-  display: block;
-  padding: 10px 15px;
-  text-decoration: none;
-  color: inherit;
-} */

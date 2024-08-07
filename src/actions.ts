@@ -41,8 +41,6 @@ export const startANewForm = async ({
         backgroundColor,
       },
     });
-
-    if (!theme) return;
   } catch (error) {
     console.error("error creating form", error);
   } finally {
@@ -125,7 +123,6 @@ export const openRecentForm = async ({
       where: {
         id: formId,
       },
-
       data: {
         lastOpened: new Date(),
       },
@@ -183,7 +180,7 @@ export const updateFormTitle = async ({
   }
 
   revalidatePath("/forms");
-  revalidatePath(`/forms/nx/${formId}/edit`);
+  revalidatePath(`/forms/nx/${formId}/edit`, "page");
 };
 
 /**
@@ -229,7 +226,7 @@ export const updateFormDescription = async ({
     await prisma.$disconnect();
   }
 
-  revalidatePath(`/forms/nx/${formId}/edit`);
+  revalidatePath(`/forms/nx/${formId}/edit`, "page");
 };
 
 /**
@@ -328,7 +325,7 @@ export const createNewQuestion = async ({
     await prisma.$disconnect();
   }
 
-  revalidatePath(`/forms/nx/${formId}/edit`);
+  revalidatePath(`/forms/nx/${formId}/edit`, "page");
 };
 
 /**
@@ -382,7 +379,7 @@ export const updateQuestion = async ({
     await prisma.$disconnect();
   }
 
-  revalidatePath(`/forms/nx/${formId}/edit`);
+  revalidatePath(`/forms/nx/${formId}/edit`, "page");
 };
 
 /**
@@ -439,7 +436,7 @@ export const deleteQuestion = async ({
     await prisma.$disconnect();
   }
 
-  revalidatePath(`/forms/nx/${formId}/edit`);
+  revalidatePath(`/forms/nx/${formId}/edit`, "page");
 };
 
 /**
@@ -501,7 +498,7 @@ export const createQuestionOption = async ({
     await prisma.$disconnect();
   }
 
-  revalidatePath(`/forms/nx/${formId}/edit`);
+  revalidatePath(`/forms/nx/${formId}/edit`, "page");
 };
 
 export const deleteQuestionOption = async ({
@@ -535,7 +532,7 @@ export const deleteQuestionOption = async ({
     await prisma.$disconnect();
   }
 
-  revalidatePath(`/forms/nx/${formId}/edit`);
+  revalidatePath(`/forms/nx/${formId}/edit`, "page");
 };
 
 /**
