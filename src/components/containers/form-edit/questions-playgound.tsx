@@ -19,7 +19,7 @@ const QuestionsPlaygound = ({ form, questions }: QuestionsPlaygoundProps) => {
 
   return (
     <section
-      style={{ backgroundColor: form.theme?.backgroundColor as string }}
+      style={{ backgroundColor: form.theme?.backgroundColor || "white" }}
       className="flex justify-center pt-5 pb-20 relative min-h-screen"
     >
       <div className="w-11/12 lg:w-3/5 md:w-9/12 space-y-3">

@@ -21,8 +21,12 @@ const FormEditPlayground = ({ form, questions }: FormEditPlaygroundProps) => {
       {(!hash || hash === "") && (
         <QuestionsPlaygound form={form} questions={questions} />
       )}
-      {hash === "#responses" && <ResponsesPlayground {...form} />}
-      {hash === "#settings" && <SettingsPlayground {...form} />}
+      {hash === "#responses" && (
+        <ResponsesPlayground form={form} questions={questions} />
+      )}
+      {hash === "#settings" && (
+        <SettingsPlayground form={form} questions={questions} />
+      )}
     </main>
   );
 };

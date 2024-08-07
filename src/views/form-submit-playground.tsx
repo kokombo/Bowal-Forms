@@ -59,7 +59,7 @@ const FormSubmitPlayground = ({
 
       await submitForm({ formId: form.id, answers: answerArray }).then(() => {
         helpers.resetForm();
-        router.push("/vf/entry-submission?status=success");
+        router.push("/forms/vf/entry-submission?status=success");
       });
     },
     [form.id, router]

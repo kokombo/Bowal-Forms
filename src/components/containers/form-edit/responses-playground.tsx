@@ -10,9 +10,17 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import useSWR, { type Fetcher } from "swr";
 import { OvalLoader } from "@/components/loaders/loaders";
+import FormResponsesField from "./form-responses-field";
+import type { Question } from "@/types/my-types";
 
-const ResponsesPlayground = ({ theme, id, ownerId }: Form) => {
-  const formId = id;
+type ResponsesPlaygoundProps = {
+  form: Form;
+  questions: Question[] | undefined;
+};
+
+const ResponsesPlayground = ({ form, questions }: ResponsesPlaygoundProps) => {
+  const formId = form.id;
+  const ownerId = form.ownerId;
 
   const responsesFetcher: Fetcher<FormResponse[], string> = async (url) => {
     const res = await fetch(url, {
@@ -40,7 +48,7 @@ const ResponsesPlayground = ({ theme, id, ownerId }: Form) => {
 
   return (
     <main
-      style={{ backgroundColor: theme?.backgroundColor as string }}
+      style={{ backgroundColor: form.theme?.backgroundColor || "white" }}
       className="flex justify-center pt-5 pb-20 min-h-screen"
     >
       <div className="w-11/12 lg:w-3/5 md:w-9/12 space-y-3">
@@ -82,7 +90,7 @@ const ResponsesPlayground = ({ theme, id, ownerId }: Form) => {
               Waiting for responses
             </span>
           ) : (
-            <div>Data Table</div>
+            <FormResponsesField responses={data} questions={questions} />
           )}
         </section>
       </div>
