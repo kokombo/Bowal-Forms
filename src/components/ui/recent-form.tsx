@@ -7,7 +7,7 @@ import { TbDotsVertical } from "react-icons/tb";
 import { Fragment } from "react";
 import { openRecentForm } from "@/actions";
 import { useServerAction } from "@/lib/use-server-actions";
-import DotLoader from "@/components/loaders/dot-loader";
+import { DotLoader } from "@/components/loaders/loaders";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Button } from "./button";
 import { useFormatLastOpened } from "@/lib/use-format-last-opened";

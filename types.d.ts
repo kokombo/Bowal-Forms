@@ -34,3 +34,20 @@ type Answer = {
   questionTitle: string;
   answer: string | Array<string>;
 };
+
+type FormResponse = {
+  formId: string;
+  id: string;
+  answers: {
+    id: string;
+    questionId: string;
+    questionTitle: string;
+    answer: Prisma.JsonValue;
+    responseId: string | null;
+  }[];
+  createdAt: Date;
+};
+
+type ErrorResponse = {
+  message: string;
+};

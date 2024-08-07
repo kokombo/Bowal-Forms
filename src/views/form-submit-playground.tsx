@@ -6,9 +6,10 @@ import SubmitAnswersPlayground from "@/components/containers/form-submit/submit-
 import { Button } from "@/components/ui/button";
 import images from "@/lib/constants";
 import type { Question } from "@/types/my-types";
-import { Formik, Form } from "formik";
+import { Formik, Form, type FormikHelpers } from "formik";
 import { submitForm } from "../actions";
 import { useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 type Values = {
   [key: string]: string | [];
@@ -23,6 +24,8 @@ const FormSubmitPlayground = ({
   form,
   questions,
 }: FormSubmitPlaygroundProps) => {
+  const router = useRouter();
+
   const generateInitialValues = () => {
     const initialValues: Values = {};
 
@@ -41,7 +44,7 @@ const FormSubmitPlayground = ({
   const initialFormValues = generateInitialValues();
 
   const handleSubmitForm = useCallback(
-    async (values: Values) => {
+    async (values: Values, helpers: FormikHelpers<Values>) => {
       const answerArray: Answer[] = [];
 
       for (const [key, value] of Object.entries(values)) {
@@ -54,9 +57,12 @@ const FormSubmitPlayground = ({
         answerArray.push(answerObject);
       }
 
-      await submitForm({ formId: form.id, answers: answerArray });
+      await submitForm({ formId: form.id, answers: answerArray }).then(() => {
+        helpers.resetForm();
+        router.push("/vf/entry-submission?status=success");
+      });
     },
-    [form.id]
+    [form.id, router]
   );
 
   return (

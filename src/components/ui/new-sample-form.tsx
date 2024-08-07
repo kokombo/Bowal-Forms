@@ -5,7 +5,7 @@ import Image, { type StaticImageData } from "next/image";
 import { v4 as uuid } from "uuid";
 import { useServerAction } from "@/lib/use-server-actions";
 import { Fragment } from "react";
-import DotLoader from "../loaders/dot-loader";
+import { DotLoader } from "@/components/loaders/loaders";
 
 type NewSampleFormProps = {
   image: string | StaticImageData;

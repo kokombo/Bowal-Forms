@@ -8,17 +8,45 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import useSWR, { type Fetcher } from "swr";
+import { OvalLoader } from "@/components/loaders/loaders";
 
-const ResponsesPlayground = ({ theme }: Form) => {
+const ResponsesPlayground = ({ theme, id, ownerId }: Form) => {
+  const formId = id;
+
+  const responsesFetcher: Fetcher<FormResponse[], string> = async (url) => {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      let error: ErrorResponse;
+      error = await res.json();
+      throw error;
+    }
+
+    return res.json();
+  };
+
+  const { data, error, isLoading } = useSWR<FormResponse[], ErrorResponse>(
+    `/api/response?formId=${formId}&ownerId=${ownerId}`,
+    responsesFetcher
+  );
+
   return (
-    <section
+    <main
       style={{ backgroundColor: theme?.backgroundColor as string }}
       className="flex justify-center pt-5 pb-20 min-h-screen"
     >
       <div className="w-11/12 lg:w-3/5 md:w-9/12 space-y-3">
-        <div className="bg-white py-6 px-5 space-y-5 rounded-lg shadow-md">
+        <section className="bg-white py-6 px-5 space-y-5 rounded-lg shadow-md">
           <div className="flex items-center justify-between">
-            <h5 className="text-2xl font-medium"> 0 responses</h5>
+            <h5 className="text-2xl font-medium"> {data?.length} responses</h5>
 
             <Popover>
               <PopoverTrigger asChild>
@@ -34,16 +62,31 @@ const ResponsesPlayground = ({ theme }: Form) => {
           <div className="flex justify-end">
             <span className="flex items-center gap-1 lg:gap-2 text-sm text-primarytext">
               Accepting responses
-              <Switch />
+              <Switch defaultChecked />
             </span>
           </div>
-        </div>
+        </section>
 
-        <div className="bg-white py-6 px-5 space-y-5 rounded-lg shadow-md">
-          Responses
-        </div>
+        <section className="bg-white py-6 px-5 space-y-5 rounded-lg shadow-md">
+          {isLoading ? (
+            <div className="grid place-items-center space-y-2">
+              <OvalLoader />
+              <span className="text-sm text-primarytext">
+                Loading responses...
+              </span>
+            </div>
+          ) : error ? (
+            <span className="text-sm text-red-500">{error.message}</span>
+          ) : data?.length === 0 ? (
+            <span className="text-sm text-primarytext">
+              Waiting for responses
+            </span>
+          ) : (
+            <div>Data Table</div>
+          )}
+        </section>
       </div>
-    </section>
+    </main>
   );
 };
 
