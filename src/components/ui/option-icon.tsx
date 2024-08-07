@@ -20,7 +20,9 @@ const OptionIcon = ({
         <input type="radio" disabled className="h-5 w-5" />
       )}
 
-      {type === "DROP_DOWN" && <h5 className="w-5">{index + 1}.</h5>}
+      {type === "DROP_DOWN" && (
+        <h5 className="w-5 text-primarytext">{index + 1}.</h5>
+      )}
     </Fragment>
   );
 };

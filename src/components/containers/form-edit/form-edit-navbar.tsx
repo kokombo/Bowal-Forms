@@ -22,6 +22,7 @@ const FormEditNavbar = (form: Form) => {
   const { data: session } = useSession();
   const router = useRouter();
   const { toast } = useToast();
+  const id = form.id;
 
   const handleDeleteForm = async () => {
     await deleteForm({ formId: form.id, ownerId: form.ownerId }).then(() => {
@@ -44,7 +45,11 @@ const FormEditNavbar = (form: Form) => {
         </div>
 
         <div className="flex items-center gap-1 lg:gap-2">
-          <Button size="sm">Preview</Button>
+          <Button size="sm" asChild>
+            <Link href={`/forms/vf/${id}/viewform`} target="_blank">
+              Preview
+            </Link>
+          </Button>
 
           <Popover>
             <PopoverTrigger asChild>

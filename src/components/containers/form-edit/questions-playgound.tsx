@@ -7,7 +7,6 @@ import { v4 as uuid } from "uuid";
 import type { Question } from "@/types/my-types";
 import TitleAndDescriptionCombo from "./title-and-description-combo";
 import FormBanner from "../form-banner";
-import Link from "next/link";
 
 type QuestionsPlaygoundProps = {
   form: Form;
@@ -15,8 +14,6 @@ type QuestionsPlaygoundProps = {
 };
 
 const QuestionsPlaygound = ({ form, questions }: QuestionsPlaygoundProps) => {
-  const id = form.id; //temp.. to be removed
-
   return (
     <section
       style={{ backgroundColor: form.theme?.backgroundColor || "white" }}
@@ -51,10 +48,6 @@ const QuestionsPlaygound = ({ form, questions }: QuestionsPlaygoundProps) => {
           ownerId={form.ownerId}
           formId={form.id}
         />
-
-        <Link href={`/forms/vf/${id}/viewform`} target="_blank">
-          View Form
-        </Link>
       </div>
     </section>
   );
