@@ -81,11 +81,13 @@ const FormSubmitPlayground = ({
               <SubmitAnswersPlayground key={question.id} question={question} />
             ))}
 
-            <div>
-              <Button size="sm" type="submit">
-                Submit
-              </Button>
-            </div>
+            {questions && questions?.length > 0 && (
+              <div>
+                <Button size="sm" type="submit">
+                  Submit
+                </Button>
+              </div>
+            )}
           </Form>
         </Formik>
       </div>
