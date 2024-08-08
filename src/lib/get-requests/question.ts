@@ -2,15 +2,10 @@
  * The function allows a user to get all the questions associated with a form
  */
 
-import { getServerSession } from "../getServerSession";
 import { prisma } from "../prisma-connect";
 
 export const getQuestions = async (formId: string) => {
-  const session = await getServerSession();
-
   try {
-    if (!session) return;
-
     const questions = await prisma.question.findMany({
       where: {
         formId,

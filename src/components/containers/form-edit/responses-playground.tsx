@@ -47,10 +47,7 @@ const ResponsesPlayground = ({ form, questions }: ResponsesPlaygoundProps) => {
   );
 
   return (
-    <main
-      style={{ backgroundColor: form.theme?.backgroundColor ?? "white" }}
-      className="flex justify-center pt-5 pb-20 min-h-screen"
-    >
+    <main className="flex justify-center pt-5 pb-20 min-h-screen">
       <div className="w-11/12 lg:w-3/5 md:w-9/12 space-y-3">
         <section className="bg-white py-6 px-5 space-y-5 rounded-lg shadow-md">
           <div className="flex items-center justify-between">

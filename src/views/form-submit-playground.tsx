@@ -25,6 +25,7 @@ const FormSubmitPlayground = ({
   questions,
 }: FormSubmitPlaygroundProps) => {
   const router = useRouter();
+  const id = form.id;
 
   const generateInitialValues = () => {
     const initialValues: Values = {};
@@ -57,12 +58,12 @@ const FormSubmitPlayground = ({
         answerArray.push(answerObject);
       }
 
-      await submitForm({ formId: form.id, answers: answerArray }).then(() => {
+      await submitForm({ formId: id, answers: answerArray }).then(() => {
         helpers.resetForm();
-        router.push("/forms/vf/entry-submission?status=success");
+        router.push(`/forms/vf/${id}/entry-submission?status=success`);
       });
     },
-    [form.id, router]
+    [id, router]
   );
 
   return (

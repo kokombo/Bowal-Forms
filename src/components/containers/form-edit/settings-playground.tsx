@@ -8,14 +8,7 @@ type SettingsPlaygoundProps = {
 };
 
 const SettingsPlayground = ({ form, questions }: SettingsPlaygoundProps) => {
-  return (
-    <div
-      style={{ backgroundColor: form.theme?.backgroundColor ?? "white" }}
-      className="min-h-screen"
-    >
-      SettingsPlayground
-    </div>
-  );
+  return <div className="min-h-screen">SettingsPlayground</div>;
 };
 
 export default SettingsPlayground;

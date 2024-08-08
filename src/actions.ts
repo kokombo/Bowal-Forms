@@ -274,13 +274,6 @@ export const deleteForm = async ({
       },
     });
 
-    //delete the theme associated with the form
-    await prisma.theme.delete({
-      where: {
-        formId,
-      },
-    });
-
     //delete the questions associated with the form
     if (questions.length > 0) {
       for (const question of questions) {

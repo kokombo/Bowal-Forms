@@ -9,11 +9,9 @@ export const getForms = async () => {
   const session = await getServerSession();
 
   try {
-    if (!session) return;
-
     const forms = await prisma.form.findMany({
       where: {
-        ownerId: session.user.id,
+        ownerId: session?.user.id,
       },
       select: {
         id: true,
@@ -45,11 +43,7 @@ export const getForms = async () => {
  */
 
 export const getFormDetails = async (formId: string) => {
-  const session = await getServerSession();
-
   try {
-    if (!session) return;
-
     const form = await prisma.form.findUnique({
       where: {
         id: formId,

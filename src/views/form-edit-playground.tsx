@@ -2,7 +2,7 @@
 
 import { useHash } from "@/lib/use-hash";
 import ResponsesPlayground from "@/components/containers/form-edit/responses-playground";
-import QuestionsPlaygound from "@/components/containers/form-edit/questions-playgound";
+import QuestionsPlayground from "@/components/containers/form-edit/questions-playground";
 import SettingsPlayground from "@/components/containers/form-edit/settings-playground";
 import FormEditNavbar from "@/components/containers/form-edit/form-edit-navbar";
 import type { Question } from "@/types/my-types";
@@ -16,10 +16,10 @@ const FormEditPlayground = ({ form, questions }: FormEditPlaygroundProps) => {
   const hash = useHash();
 
   return (
-    <main>
+    <main style={{ backgroundColor: form.theme?.backgroundColor ?? "white" }}>
       <FormEditNavbar {...form} />
       {(!hash || hash === "") && (
-        <QuestionsPlaygound form={form} questions={questions} />
+        <QuestionsPlayground form={form} questions={questions} />
       )}
       {hash === "#responses" && (
         <ResponsesPlayground form={form} questions={questions} />

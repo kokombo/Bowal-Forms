@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,7 +30,7 @@ const RemoveFormDialog = ({
   const { toast } = useToast();
 
   const handleDeleteForm = async () => {
-   await deleteForm({ formId, ownerId }).then(() => {
+    await deleteForm({ formId, ownerId }).then(() => {
       toast({
         description: "Form deleted successfully",
       });
