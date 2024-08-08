@@ -66,6 +66,7 @@ const OptionItem = ({
         id={`${id}-option`}
         name="option"
         placeholder="Add option"
+        autoComplete="off"
         onFocus={() => setShowOutline(true)}
         onBlur={handleOnBlur}
         onChange={(e) => setNewValue(e.target.value)}
