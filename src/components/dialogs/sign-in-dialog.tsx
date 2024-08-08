@@ -29,7 +29,7 @@ const SignInDialog = () => {
           <AlertDialogAction asChild>
             <Button
               type="button"
-              onClick={() => signIn("google", { redirect: false })}
+              onClick={() => signIn("google")}
               size="lg"
               className="w-full"
             >
