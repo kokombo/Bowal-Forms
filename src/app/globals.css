@@ -67,3 +67,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  min-width: 375px;
+  overflow-x: scroll;
+  box-sizing: border-box;
+}

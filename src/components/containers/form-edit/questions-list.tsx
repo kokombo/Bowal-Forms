@@ -38,7 +38,7 @@ export const QuestionsList = ({
           />
         )}
 
-        {["CHECKBOXES", "DROP_DOWN", "MULTIPLE_CHOICE"].includes(
+        {new Set(["CHECKBOXES", "DROP_DOWN", "MULTIPLE_CHOICE"]).has(
           answerType as string
         ) && (
           <ReadOnlyOptionList question={question} onClick={handleShowEditor} />

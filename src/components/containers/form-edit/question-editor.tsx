@@ -97,7 +97,7 @@ const QuestionEditor = ({
               <TextOption placeholder="Long-answer text" />
             )}
 
-            {["CHECKBOXES", "DROP_DOWN", "MULTIPLE_CHOICE"].includes(
+            {new Set(["CHECKBOXES", "DROP_DOWN", "MULTIPLE_CHOICE"]).has(
               answerType as string
             ) && (
               <ListOptions
