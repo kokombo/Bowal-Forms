@@ -3,11 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { updateFormTitle } from "@/actions";
 
-const EditFormTitleInput = ({
-  title: currentTitle,
-  id: formId,
-  ownerId,
-}: Form) => {
+const EditFormTitleInput = ({ title: currentTitle, id: formId }: Form) => {
   const [showOutline, setShowOutline] = useState(false);
   const [title, setTitle] = useState(currentTitle || "");
   const titleRef = useRef<HTMLInputElement | null>(null);
@@ -24,8 +20,8 @@ const EditFormTitleInput = ({
   const handleInputBlur = useCallback(async () => {
     setShowOutline(false);
     if (title.replace(/\s+/g, "").length < 1) setTitle(currentTitle || "");
-    await updateFormTitle({ formId, title: title.trim(), ownerId });
-  }, [title, ownerId, currentTitle, formId]);
+    await updateFormTitle({ formId, title: title.trim() });
+  }, [title, currentTitle, formId]);
 
   return (
     <div className="relative">

@@ -109,11 +109,11 @@ export const openRecentForm = async ({
 
   try {
     if (!session) return;
-    if (ownerId !== session.user.id) return;
 
     const existingForm = await prisma.form.findUnique({
       where: {
         id: formId,
+        ownerId: session.user.id,
       },
     });
 
@@ -143,22 +143,20 @@ export const openRecentForm = async ({
 export const updateFormTitle = async ({
   formId,
   title,
-  ownerId,
 }: {
   formId: string;
   title: string;
-  ownerId: string;
 }) => {
   const session = await getServerSession();
 
   try {
     if (!session) return;
-    if (ownerId !== session.user.id) return;
     if (title.replace(/\s+/g, "").length < 1) return;
 
     const existingForm = await prisma.form.findUnique({
       where: {
         id: formId,
+        ownerId: session.user.id,
       },
     });
 
@@ -190,22 +188,20 @@ export const updateFormTitle = async ({
 export const updateFormDescription = async ({
   formId,
   description,
-  ownerId,
 }: {
   formId: string;
   description: string;
-  ownerId: string;
 }) => {
   const session = await getServerSession();
 
   try {
     if (!session) return;
-    if (ownerId !== session.user.id) return;
     if (description.replace(/\s+/g, "").length < 1) return;
 
     const existingForm = await prisma.form.findUnique({
       where: {
         id: formId,
+        ownerId: session.user.id,
       },
     });
 
@@ -244,11 +240,11 @@ export const deleteForm = async ({
 
   try {
     if (!session) return;
-    if (ownerId !== session.user.id) return;
 
     const existingForm = await prisma.form.findUnique({
       where: {
         id: formId,
+        ownerId: session.user.id,
       },
     });
 

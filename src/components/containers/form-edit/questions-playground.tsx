@@ -23,7 +23,6 @@ const QuestionsPlayground = ({ form, questions }: QuestionsPlaygoundProps) => {
           title={form.title}
           description={form.description}
           formId={form.id}
-          ownerId={form.ownerId}
         />
 
         <div className="flex flex-col gap-3">

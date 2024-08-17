@@ -8,31 +8,28 @@ type TitleAndDescriptionComboProp = {
   title: string | null;
   description: string | null;
   formId: string;
-  ownerId: string;
 };
 
 const TitleAndDescriptionCombo = ({
   title,
   description,
   formId,
-  ownerId,
 }: TitleAndDescriptionComboProp) => {
   const [newTitle, setNewTitle] = useState(title || "");
   const [newDescription, setNewDescription] = useState(description || "");
 
   const handleUpdateTitle = useCallback(async () => {
     if (title?.trim() === newTitle.trim()) return;
-    await updateFormTitle({ formId, ownerId, title: newTitle });
-  }, [formId, ownerId, title, newTitle]);
+    await updateFormTitle({ formId, title: newTitle });
+  }, [formId, title, newTitle]);
 
   const handleUpdateDescription = useCallback(async () => {
     if (description?.trim() === newDescription.trim()) return;
     await updateFormDescription({
       formId,
-      ownerId,
       description: newDescription,
     });
-  }, [formId, ownerId, description, newDescription]);
+  }, [formId, description, newDescription]);
 
   return (
     <div className="bg-white py-6 px-5 space-y-2 rounded-lg shadow-md">

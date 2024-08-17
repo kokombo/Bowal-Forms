@@ -73,11 +73,7 @@ const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
               >
                 <ul>
                   <li>
-                    <RenameFormDialog
-                      formId={id}
-                      previousTitle={title}
-                      ownerId={ownerId}
-                    />
+                    <RenameFormDialog formId={id} previousTitle={title} />
                   </li>
 
                   <li>

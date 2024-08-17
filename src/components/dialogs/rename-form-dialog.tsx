@@ -19,17 +19,12 @@ import { MdDriveFileRenameOutline } from "react-icons/md";
 type RenameFormDialogProps = {
   formId: string;
   previousTitle: string | null;
-  ownerId: string;
 };
 
-const RenameFormDialog = ({
-  formId,
-  previousTitle,
-  ownerId,
-}: RenameFormDialogProps) => {
+const RenameFormDialog = ({ formId, previousTitle }: RenameFormDialogProps) => {
   const [newTitle, setNewTitle] = useState(previousTitle as string);
   const [runAction, isPending] = useServerAction(() =>
-    updateFormTitle({ formId, title: newTitle.trim(), ownerId })
+    updateFormTitle({ formId, title: newTitle.trim() })
   );
 
   return (
