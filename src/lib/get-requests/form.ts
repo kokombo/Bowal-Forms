@@ -1,3 +1,4 @@
+import { formatLastOpened } from "../format-last-opened";
 import { getServerSession } from "../getServerSession";
 import { prisma } from "../prisma-connect";
 import { cache } from "react";
@@ -19,7 +20,12 @@ export const getForms = cache(async () => {
       },
     });
 
-    return forms;
+    const formattedForms = forms.map((form) => ({
+      ...form,
+      lastOpened: formatLastOpened(form.lastOpened),
+    }));
+
+    return formattedForms;
   } catch (error) {
     console.error(error);
   } finally {
