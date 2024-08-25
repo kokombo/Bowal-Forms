@@ -2,9 +2,10 @@
  * The function allows a user to get all the questions associated with a form
  */
 
+import { cache } from "react";
 import { prisma } from "../prisma-connect";
 
-export const getQuestions = async (formId: string) => {
+export const getQuestions = cache(async (formId: string) => {
   try {
     const questions = await prisma.question.findMany({
       where: {
@@ -24,4 +25,4 @@ export const getQuestions = async (formId: string) => {
   } finally {
     await prisma.$disconnect();
   }
-};
+});
