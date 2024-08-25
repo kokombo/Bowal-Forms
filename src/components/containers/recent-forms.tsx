@@ -20,7 +20,7 @@ const RecentForms = ({ recentForms }: { recentForms: Form[] | undefined }) => {
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5 lg:gap-x-5">
               {recentForms.map((form) => {
-                return <RecentForm key={form.id} {...form} />;
+                return <RecentForm key={form.id} form={form} />;
               })}
             </div>
           )}

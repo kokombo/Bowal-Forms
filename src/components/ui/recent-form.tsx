@@ -16,13 +16,13 @@ import RenameFormDialog from "../dialogs/rename-form-dialog";
 import RemoveFormDialog from "../dialogs/remove-form-dialog";
 import type { Form } from "@prisma/client";
 
-const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
+const RecentForm = ({ form }: { form: Form }) => {
   const [openForm, isPending] = useServerAction(openRecentForm);
-  const formattedLastOpened = useFormatLastOpened(lastOpened);
+  const formattedLastOpened = useFormatLastOpened(form.lastOpened);
 
   const handleOpenRecentForm = useCallback(async () => {
-    await openForm({ formId: id, ownerId });
-  }, [id, openForm, ownerId]);
+    await openForm({ formId: form.id, ownerId: form.ownerId });
+  }, [openForm, form]);
 
   return (
     <Fragment>
@@ -45,7 +45,7 @@ const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
 
         <div className="flex flex-col items-start gap-2 py-3 px-3 lg:px-4 border-t-1 w-full">
           <h5 className="text-xs lg:text-sm font-medium text-black">
-            {sliceString(title as string, 25)}
+            {sliceString(form.title, 25)}
           </h5>
 
           <div className="flex justify-between w-full">
@@ -74,14 +74,17 @@ const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
               >
                 <ul>
                   <li>
-                    <RenameFormDialog formId={id} previousTitle={title} />
+                    <RenameFormDialog
+                      formId={form.id}
+                      previousTitle={form.title}
+                    />
                   </li>
 
                   <li>
                     <RemoveFormDialog
-                      formId={id}
-                      title={title}
-                      ownerId={ownerId}
+                      formId={form.id}
+                      title={form.title}
+                      ownerId={form.ownerId}
                     />
                   </li>
                 </ul>
