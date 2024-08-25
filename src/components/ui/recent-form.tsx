@@ -17,19 +17,17 @@ import RemoveFormDialog from "../dialogs/remove-form-dialog";
 import type { Form } from "@prisma/client";
 
 const RecentForm = ({ form }: { form: Form }) => {
-  const [openForm, isPending] = useServerAction(openRecentForm);
-  const formattedLastOpened = useFormatLastOpened(form.lastOpened);
-
-  const handleOpenRecentForm = useCallback(async () => {
-    await openForm({ formId: form.id, ownerId: form.ownerId });
-  }, [openForm, form]);
+  const [handleOpenForm, isPending] = useServerAction(() =>
+    openRecentForm({ formId: form.id, ownerId: form.ownerId })
+  );
+  // const formattedLastOpened = useFormatLastOpened(form.lastOpened);
 
   return (
     <Fragment>
       {isPending && <DotLoader />}
 
       <div
-        onClick={handleOpenRecentForm}
+        onClick={handleOpenForm}
         onKeyDown={() => {}}
         className="flex flex-col items-start rounded-sm lg:min-w-56  border-1 hover:border-purple-800 cursor-pointer"
       >
@@ -52,7 +50,7 @@ const RecentForm = ({ form }: { form: Form }) => {
             <span className="flex items-center gap-1 lg:gap-2">
               <FaFileWaveform size={22} color="green" />
               <h6 className="text-xs font-medium text-primarytext">
-                Opened {formattedLastOpened}
+                {/* Opened {formattedLastOpened} */}
               </h6>
             </span>
 
