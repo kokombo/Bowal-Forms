@@ -14,7 +14,7 @@ const Forms = async () => {
     <main>
       <FormsNavbar session={session} />
       <StartNewForm />
-      <RecentForms recentForms={forms} />
+      {forms && <RecentForms recentForms={forms} />}
     </main>
   );
 };

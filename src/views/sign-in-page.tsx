@@ -22,7 +22,7 @@ const SigninPage = ({ heading, callToAction }: AuthProps) => {
         <Logo />
       </div>
 
-      <div className="flex flex-col justify-between text-center border-1 rounded-lg px-4 py-6 w-11/12 sm:w-3/5 md:w-1/2 lg:w-2/5 h-3/5 sm:h-4/5 shadow-sm">
+      <div className="flex flex-col justify-between text-center border-1 rounded-lg px-4 py-6 w-11/12 sm:w-3/5 md:w-1/2 lg:w-2/5 h-96 shadow-sm">
         <h4 className="text-black text-xl lg:text-2xl font-medium">
           {heading}
         </h4>
