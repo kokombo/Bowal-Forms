@@ -4,7 +4,7 @@ import images from "@/lib/constants";
 import { AnswerTypePlayground } from "./answer-type-playground";
 import { CreateNewQuestionButton } from "@/components/ui/icon-buttons";
 import { v4 as uuid } from "uuid";
-import type { Question } from "@/types/my-types";
+import type { Form, Question } from "@/types/my-types";
 import TitleAndDescriptionCombo from "./title-and-description-combo";
 import FormBanner from "../form-banner";
 

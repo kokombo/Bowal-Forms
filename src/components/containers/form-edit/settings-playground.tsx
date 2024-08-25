@@ -1,6 +1,6 @@
 "use client";
 
-import type { Question } from "@/types/my-types";
+import type { Form, Question } from "@/types/my-types";
 
 type SettingsPlaygoundProps = {
   form: Form;

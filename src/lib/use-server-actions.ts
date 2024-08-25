@@ -15,14 +15,22 @@ export const useServerAction = <P, R>(
 
     if (onFinished) onFinished(result);
     resolver.current?.(result);
+    resolver.current = undefined;
   }, [result, finished, onFinished]);
 
   const runAction = async (args: P): Promise<R | undefined> => {
-    startTransition(() => {
-      action(args).then((data) => {
+    setFinished(false);
+    setResult(undefined);
+
+    startTransition(async () => {
+      try {
+        const data = await action(args);
         setResult(data);
         setFinished(true);
-      });
+      } catch (error) {
+        console.error("Action failed:", error);
+        setFinished(true);
+      }
     });
 
     return new Promise((resolve) => {

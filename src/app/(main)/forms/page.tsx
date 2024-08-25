@@ -5,8 +5,8 @@ import { getForms } from "@/lib/get-requests/form";
 import { getServerSession } from "@/lib/getServerSession";
 
 const Forms = async () => {
-  const getSession = getServerSession();
-  const formsData = getForms();
+  const getSession = await getServerSession();
+  const formsData = await getForms();
 
   const [session, forms] = await Promise.all([getSession, formsData]);
 

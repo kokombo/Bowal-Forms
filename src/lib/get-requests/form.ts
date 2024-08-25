@@ -13,18 +13,6 @@ export const getForms = async () => {
       where: {
         ownerId: session?.user.id,
       },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        shareableURL: true,
-        ownerId: true,
-        createdAt: true,
-        updatedAt: true,
-        lastOpened: true,
-        image: true,
-        theme: true,
-      },
       orderBy: {
         lastOpened: "desc",
       },
@@ -48,16 +36,7 @@ export const getFormDetails = async (formId: string) => {
       where: {
         id: formId,
       },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        shareableURL: true,
-        ownerId: true,
-        createdAt: true,
-        updatedAt: true,
-        lastOpened: true,
-        image: true,
+      include: {
         theme: true,
       },
     });

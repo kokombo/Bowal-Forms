@@ -1,13 +1,15 @@
-import type { $Enums } from "@prisma/client";
+import type {
+  $Enums,
+  Form as FormType,
+  Option,
+  Question as QuestionType,
+  Theme,
+} from "@prisma/client";
 
-type Question = {
-  id: string;
-  title: string | null;
-  type: $Enums.QUESTION_TYPE | null;
-  required: boolean;
+interface Question extends QuestionType {
   options: Option[];
-  date: Date | null;
-  time: Date | null;
-  formId: string;
-  createdAt: Date;
-};
+}
+
+interface Form extends FormType {
+  theme: Theme | null;
+}

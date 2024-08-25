@@ -5,7 +5,7 @@ import ResponsesPlayground from "@/components/containers/form-edit/responses-pla
 import QuestionsPlayground from "@/components/containers/form-edit/questions-playground";
 import SettingsPlayground from "@/components/containers/form-edit/settings-playground";
 import FormEditNavbar from "@/components/containers/form-edit/form-edit-navbar";
-import type { Question } from "@/types/my-types";
+import type { Form, Question } from "@/types/my-types";
 
 type FormEditPlaygroundProps = {
   form: Form;

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { updateFormTitle } from "@/actions";
+import type { Form } from "@/types/my-types";
 
 const EditFormTitleInput = ({ title: currentTitle, id: formId }: Form) => {
   const [showOutline, setShowOutline] = useState(false);

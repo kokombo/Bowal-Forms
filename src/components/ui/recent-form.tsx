@@ -4,7 +4,7 @@ import images from "@/lib/constants";
 import Image from "next/image";
 import { FaFileWaveform } from "react-icons/fa6";
 import { TbDotsVertical } from "react-icons/tb";
-import { Fragment } from "react";
+import { Fragment, useCallback } from "react";
 import { openRecentForm } from "@/actions";
 import { useServerAction } from "@/lib/use-server-actions";
 import { DotLoader } from "@/components/loaders/loaders";
@@ -14,14 +14,15 @@ import { useFormatLastOpened } from "@/lib/use-format-last-opened";
 import { sliceString } from "@/lib/slice-string";
 import RenameFormDialog from "../dialogs/rename-form-dialog";
 import RemoveFormDialog from "../dialogs/remove-form-dialog";
+import type { Form } from "@prisma/client";
 
 const RecentForm = ({ lastOpened, title, id, ownerId }: Form) => {
   const [openForm, isPending] = useServerAction(openRecentForm);
   const formattedLastOpened = useFormatLastOpened(lastOpened);
 
-  const handleOpenRecentForm = async () => {
+  const handleOpenRecentForm = useCallback(async () => {
     await openForm({ formId: id, ownerId });
-  };
+  }, [id, openForm, ownerId]);
 
   return (
     <Fragment>

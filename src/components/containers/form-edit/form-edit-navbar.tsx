@@ -17,6 +17,7 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { deleteForm } from "@/actions";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import type { Form } from "@/types/my-types";
 
 const FormEditNavbar = (form: Form) => {
   const { data: session } = useSession();

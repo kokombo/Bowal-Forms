@@ -10,16 +10,8 @@ export const getQuestions = async (formId: string) => {
       where: {
         formId,
       },
-      select: {
-        id: true,
-        title: true,
-        type: true,
-        required: true,
+      include: {
         options: true,
-        date: true,
-        time: true,
-        formId: true,
-        createdAt: true,
       },
       orderBy: {
         createdAt: "asc",

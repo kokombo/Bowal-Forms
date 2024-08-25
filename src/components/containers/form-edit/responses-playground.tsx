@@ -11,7 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import useSWR, { type Fetcher } from "swr";
 import { OvalLoader } from "@/components/loaders/loaders";
 import FormResponsesField from "./form-responses-field";
-import type { Question } from "@/types/my-types";
+import type { Form, Question } from "@/types/my-types";
 
 type ResponsesPlaygoundProps = {
   form: Form;

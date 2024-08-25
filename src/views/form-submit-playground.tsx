@@ -5,7 +5,7 @@ import FormInfo from "@/components/containers/form-submit/form-info";
 import SubmitAnswersPlayground from "@/components/containers/form-submit/submit-answers-playground";
 import { Button } from "@/components/ui/button";
 import images from "@/lib/constants";
-import type { Question } from "@/types/my-types";
+import type { Form as FormType, Question } from "@/types/my-types";
 import { Formik, Form, type FormikHelpers } from "formik";
 import { submitForm } from "../actions";
 import { useCallback } from "react";
@@ -16,7 +16,7 @@ type Values = {
 };
 
 type FormSubmitPlaygroundProps = {
-  form: Form;
+  form: FormType;
   questions: Question[] | undefined;
 };
 
