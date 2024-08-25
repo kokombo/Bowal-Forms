@@ -240,6 +240,7 @@ export const deleteForm = async ({
 
   try {
     if (!session) return;
+    if (session.user.id !== ownerId) return;
 
     const existingForm = await prisma.form.findUnique({
       where: {
@@ -265,6 +266,14 @@ export const deleteForm = async ({
 
     //check if there are user responses associated with the form
     const responses = await prisma.response.findMany({
+      where: {
+        formId,
+      },
+    });
+
+    //delete theme
+
+    await prisma.theme.delete({
       where: {
         formId,
       },
