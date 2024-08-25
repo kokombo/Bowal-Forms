@@ -5,16 +5,16 @@ import { getForms } from "@/lib/get-requests/form";
 import { getServerSession } from "@/lib/getServerSession";
 
 const Forms = async () => {
-  const session = await getServerSession();
-  const forms = await getForms();
+  const getSession = getServerSession();
+  const formsData = getForms();
 
-  // const [session, forms] = await Promise.all([getSession, formsData]);
+  const [session, forms] = await Promise.all([getSession, formsData]);
 
   return (
     <main>
       <FormsNavbar session={session} />
       <StartNewForm />
-      {forms && <RecentForms recentForms={forms} />}
+      {/* {forms && <RecentForms recentForms={forms} />} */}
     </main>
   );
 };
