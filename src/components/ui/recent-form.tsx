@@ -10,17 +10,14 @@ import { useServerAction } from "@/lib/use-server-actions";
 import { DotLoader } from "@/components/loaders/loaders";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Button } from "./button";
-import { useFormatLastOpened } from "@/lib/use-format-last-opened";
 import { sliceString } from "@/lib/slice-string";
 import RenameFormDialog from "../dialogs/rename-form-dialog";
 import RemoveFormDialog from "../dialogs/remove-form-dialog";
-import type { Form } from "@prisma/client";
 
 const RecentForm = ({ form }: { form: Form }) => {
   const [handleOpenForm, isPending] = useServerAction(() =>
     openRecentForm({ formId: form.id, ownerId: form.ownerId })
   );
-  // const formattedLastOpened = useFormatLastOpened(form.lastOpened);
 
   return (
     <Fragment>
@@ -50,7 +47,7 @@ const RecentForm = ({ form }: { form: Form }) => {
             <span className="flex items-center gap-1 lg:gap-2">
               <FaFileWaveform size={22} color="green" />
               <h6 className="text-xs font-medium text-primarytext">
-                {/* Opened {formattedLastOpened} */}
+                Opened {form.lastOpened}
               </h6>
             </span>
 

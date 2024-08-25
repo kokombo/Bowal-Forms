@@ -32,3 +32,16 @@ type FormResponse = {
 type ErrorResponse = {
   message: string;
 };
+
+type Form = {
+  id: string;
+  title: string;
+  description: string | null;
+  shareableURL: string | null;
+  acceptingResponses: boolean;
+  ownerId: string;
+  image: string | null;
+  lastOpened: string;
+  createdAt: Date;
+  updatedAt: Date;
+};

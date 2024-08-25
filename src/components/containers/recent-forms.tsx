@@ -1,6 +1,5 @@
 "use client";
 
-import type { Form } from "@prisma/client";
 import RecentForm from "../ui/recent-form";
 
 const RecentForms = ({ recentForms }: { recentForms: Form[] | undefined }) => {

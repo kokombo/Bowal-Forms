@@ -1,4 +1,4 @@
-export const useFormatLastOpened = (lastOpened: Date) => {
+export const formatLastOpened = (lastOpened: Date) => {
   const now = new Date();
 
   const isSameDay =
