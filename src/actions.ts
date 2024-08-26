@@ -177,7 +177,7 @@ export const updateFormTitle = async ({
     await prisma.$disconnect();
   }
 
-  revalidatePath("/forms");
+  revalidatePath("/forms", "page");
   revalidatePath(`/forms/nx/${formId}/edit`, "page");
 };
 

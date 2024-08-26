@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -23,9 +23,11 @@ type RenameFormDialogProps = {
 
 const RenameFormDialog = ({ formId, previousTitle }: RenameFormDialogProps) => {
   const [newTitle, setNewTitle] = useState(previousTitle as string);
-  const [runAction, isPending] = useServerAction(() =>
-    updateFormTitle({ formId, title: newTitle.trim() })
-  );
+  const [runAction, isPending] = useServerAction(updateFormTitle);
+
+  const handleRenameForm = useCallback(() => {
+    runAction({ formId, title: newTitle.trim() });
+  }, [newTitle, formId, runAction]);
 
   return (
     <Dialog>
@@ -47,7 +49,11 @@ const RenameFormDialog = ({ formId, previousTitle }: RenameFormDialogProps) => {
           </DialogDescription>
         </DialogHeader>
 
-        <form className="space-y-3" action={runAction} id="rename-a-form">
+        <form
+          className="space-y-3"
+          action={handleRenameForm}
+          id="rename-a-form"
+        >
           <Input
             name="title"
             type="text"

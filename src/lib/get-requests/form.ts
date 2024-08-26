@@ -7,7 +7,7 @@ import { cache } from "react";
  * The function allows a user to get all of their forms
  */
 
-export const getForms = cache(async () => {
+export const getForms = async () => {
   const session = await getServerSession();
 
   try {
@@ -31,7 +31,7 @@ export const getForms = cache(async () => {
   } finally {
     await prisma.$disconnect();
   }
-});
+};
 
 /**
  * The function allows a user to get the details of a form

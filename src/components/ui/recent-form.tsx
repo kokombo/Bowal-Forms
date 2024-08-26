@@ -4,7 +4,7 @@ import images from "@/lib/constants";
 import Image from "next/image";
 import { FaFileWaveform } from "react-icons/fa6";
 import { TbDotsVertical } from "react-icons/tb";
-import { Fragment, useCallback } from "react";
+import { Fragment } from "react";
 import { openRecentForm } from "@/actions";
 import { useServerAction } from "@/lib/use-server-actions";
 import { DotLoader } from "@/components/loaders/loaders";
@@ -15,7 +15,7 @@ import RenameFormDialog from "../dialogs/rename-form-dialog";
 import RemoveFormDialog from "../dialogs/remove-form-dialog";
 
 const RecentForm = ({ form }: { form: Form }) => {
-  const [handleOpenForm, isPending] = useServerAction(() =>
+  const [handleOpenRecentForm, isPending] = useServerAction(() =>
     openRecentForm({ formId: form.id, ownerId: form.ownerId })
   );
 
@@ -24,7 +24,7 @@ const RecentForm = ({ form }: { form: Form }) => {
       {isPending && <DotLoader />}
 
       <div
-        onClick={handleOpenForm}
+        onClick={handleOpenRecentForm}
         onKeyDown={() => {}}
         className="flex flex-col items-start rounded-sm lg:min-w-56  border-1 hover:border-purple-800 cursor-pointer"
       >
