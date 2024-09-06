@@ -148,10 +148,10 @@ export const updateFormTitle = async ({
   title: string;
 }) => {
   const session = await getServerSession();
+  if (title.replace(/\s+/g, "").length < 1) return;
 
   try {
     if (!session) return;
-    if (title.replace(/\s+/g, "").length < 1) return;
 
     const existingForm = await prisma.form.findUnique({
       where: {
@@ -240,7 +240,6 @@ export const deleteForm = async ({
 
   try {
     if (!session) return;
-    if (session.user.id !== ownerId) return;
 
     const existingForm = await prisma.form.findUnique({
       where: {
@@ -249,13 +248,15 @@ export const deleteForm = async ({
       },
     });
 
+    if (!existingForm) return;
+
     const existingTheme = await prisma.theme.findUnique({
       where: {
         formId,
       },
     });
 
-    if (!existingForm || !existingTheme) return;
+    if (!existingTheme) return;
 
     //check if there are questions in the form
     const questions = await prisma.question.findMany({
@@ -364,11 +365,11 @@ export const updateQuestion = async ({
   type: $Enums.QUESTION_TYPE | null;
 }) => {
   const session = await getServerSession();
+  if (title.replace(/\s+/g, "").length < 1) return;
 
   try {
     if (!session) return;
     if (ownerId !== session.user.id) return;
-    if (title.replace(/\s+/g, "").length < 1) return;
 
     const existingQuestion = await prisma.question.findUnique({
       where: {
@@ -474,9 +475,10 @@ export const createQuestionOption = async ({
 }) => {
   const session = await getServerSession();
 
+  if (value.replace(/\s+/g, "").length < 1) return;
+
   try {
     if (!session) return;
-    if (value.replace(/\s+/g, "").length < 1) return;
 
     const existingOption = await prisma.option.findUnique({
       where: {
