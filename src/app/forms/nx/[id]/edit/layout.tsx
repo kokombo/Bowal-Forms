@@ -3,5 +3,5 @@ export default function FormEditLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main>{children}</main>;
+  return <div>{children}</div>;
 }

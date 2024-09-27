@@ -4,7 +4,7 @@ const EntrySubmissionStatus = ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   if (searchParams.status === "success")
-    return <main>You have successfully submitted the form</main>;
+    return <div>You have successfully submitted the form</div>;
 };
 
 export default EntrySubmissionStatus;

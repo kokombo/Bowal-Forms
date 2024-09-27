@@ -17,7 +17,7 @@ const SigninPage = ({ heading, callToAction }: AuthProps) => {
   const pathname = usePathname();
 
   return (
-    <main className="fixed flex lg:items-center justify-center pt-32 lg:py-12 h-screen w-full">
+    <div className="fixed flex lg:items-center justify-center pt-32 lg:py-12 h-screen w-full">
       <div className="absolute left-3 top-3">
         <Logo />
       </div>
@@ -64,7 +64,7 @@ const SigninPage = ({ heading, callToAction }: AuthProps) => {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

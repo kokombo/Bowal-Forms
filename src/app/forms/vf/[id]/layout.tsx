@@ -9,9 +9,9 @@ export default async function FormEditLayout({
   const session = await getServerSession();
 
   return (
-    <main>
+    <div>
       {children}
       {!session && <SignInDialog />}
-    </main>
+    </div>
   );
 }

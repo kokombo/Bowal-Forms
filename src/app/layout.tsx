@@ -19,11 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={manrope.className} suppressHydrationWarning>
+      <body className={manrope.className}>
         <WebVitals />
-        <main>
-          <Providers>{children}</Providers>
-        </main>
+        <Providers>
+          <main>{children}</main>
+        </Providers>
         <Toaster />
       </body>
     </html>

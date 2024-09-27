@@ -16,7 +16,7 @@ const FormEditPlayground = ({ form, questions }: FormEditPlaygroundProps) => {
   const hash = useHash();
 
   return (
-    <main style={{ backgroundColor: form.theme?.backgroundColor ?? "white" }}>
+    <div style={{ backgroundColor: form.theme?.backgroundColor ?? "white" }}>
       <FormEditNavbar {...form} />
       {(!hash || hash === "") && (
         <QuestionsPlayground form={form} questions={questions} />
@@ -27,7 +27,7 @@ const FormEditPlayground = ({ form, questions }: FormEditPlaygroundProps) => {
       {hash === "#settings" && (
         <SettingsPlayground form={form} questions={questions} />
       )}
-    </main>
+    </div>
   );
 };
 

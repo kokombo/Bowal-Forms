@@ -3,10 +3,11 @@ import Hero from "@/components/containers/hero";
 import LandingSection from "@/components/containers/landing-section";
 import LandingPageNavbar from "@/components/containers/landing-page-navbar";
 import images from "@/lib/constants";
+import { Fragment } from "react";
 
 const BowalFormsLandingPage = () => {
   return (
-    <main>
+    <Fragment>
       <LandingPageNavbar />
       <Hero />
       <LandingSection
@@ -34,7 +35,7 @@ const BowalFormsLandingPage = () => {
         className="md:flex-row"
       />
       <LandingFooter />
-    </main>
+    </Fragment>
   );
 };
 

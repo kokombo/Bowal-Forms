@@ -11,11 +11,11 @@ const Forms = async () => {
   const [session, forms] = await Promise.all([getSession, formsData]);
 
   return (
-    <main>
+    <div>
       <FormsNavbar session={session} />
       <StartNewForm />
       <RecentForms recentForms={forms} />
-    </main>
+    </div>
   );
 };
 
