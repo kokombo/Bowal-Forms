@@ -23,9 +23,9 @@ export const startANewForm = async ({
 }) => {
   const session = await getServerSession();
 
-  try {
-    if (!session) return;
+  if (!session) return;
 
+  try {
     const form = await prisma.form.create({
       data: {
         id: formId,
@@ -34,7 +34,7 @@ export const startANewForm = async ({
       },
     });
 
-    const theme = await prisma.theme.create({
+    await prisma.theme.create({
       data: {
         formId: form.id,
         headerImage,
@@ -66,9 +66,9 @@ export const updateFormTheme = async ({
 }) => {
   const session = await getServerSession();
 
-  try {
-    if (!session) return;
+  if (!session) return;
 
+  try {
     const existingTheme = await prisma.theme.findUnique({
       where: {
         formId,
@@ -107,9 +107,9 @@ export const openRecentForm = async ({
 }) => {
   const session = await getServerSession();
 
-  try {
-    if (!session) return;
+  if (!session) return;
 
+  try {
     const existingForm = await prisma.form.findUnique({
       where: {
         id: formId,
@@ -148,11 +148,11 @@ export const updateFormTitle = async ({
   title: string;
 }) => {
   const session = await getServerSession();
+
+  if (!session) return;
   if (title.replace(/\s+/g, "").length < 1) return;
 
   try {
-    if (!session) return;
-
     const existingForm = await prisma.form.findUnique({
       where: {
         id: formId,
@@ -194,10 +194,10 @@ export const updateFormDescription = async ({
 }) => {
   const session = await getServerSession();
 
-  try {
-    if (!session) return;
-    if (description.replace(/\s+/g, "").length < 1) return;
+  if (!session) return;
+  if (description.replace(/\s+/g, "").length < 1) return;
 
+  try {
     const existingForm = await prisma.form.findUnique({
       where: {
         id: formId,
@@ -237,10 +237,9 @@ export const deleteForm = async ({
   ownerId: string;
 }) => {
   const session = await getServerSession();
+  if (!session) return;
 
   try {
-    if (!session) return;
-
     const existingForm = await prisma.form.findUnique({
       where: {
         id: formId,
@@ -250,57 +249,59 @@ export const deleteForm = async ({
 
     if (!existingForm) return;
 
-    const existingTheme = await prisma.theme.findUnique({
-      where: {
-        formId,
-      },
-    });
-
-    if (!existingTheme) return;
-
-    //check if there are questions in the form
-    const questions = await prisma.question.findMany({
-      where: {
-        formId,
-      },
-    });
-
-    //check if there are user responses associated with the form
-    const responses = await prisma.response.findMany({
-      where: {
-        formId,
-      },
-    });
-
-    //delete theme
-
-    await prisma.theme.delete({
-      where: {
-        formId,
-      },
-    });
-
-    //delete the questions associated with the form
-    if (questions.length > 0) {
-      for (const question of questions) {
-        await deleteQuestion({ questionId: question.id, formId, ownerId });
-      }
-    }
-
-    //delete the user responses associated with the form
-    if (responses.length > 0) {
-      await prisma.response.deleteMany({
+    await prisma.$transaction(async (prisma) => {
+      // Check if theme exists
+      const existingTheme = await prisma.theme.findUnique({
         where: {
           formId,
         },
       });
-    }
 
-    //delete the form itself
-    await prisma.form.delete({
-      where: {
-        id: formId,
-      },
+      if (!existingTheme) return;
+
+      // Find questions associated with the form
+      const questions = await prisma.question.findMany({
+        where: {
+          formId,
+        },
+      });
+
+      // Find responses associated with the form
+      const responses = await prisma.response.findMany({
+        where: {
+          formId,
+        },
+      });
+
+      // Delete the theme associated with the form
+      await prisma.theme.delete({
+        where: {
+          formId,
+        },
+      });
+
+      // Delete the questions associated with the form (if any)
+      if (questions.length > 0) {
+        for (const question of questions) {
+          await deleteQuestion({ questionId: question.id, formId, ownerId });
+        }
+      }
+
+      // Delete the responses associated with the form (if any)
+      if (responses.length > 0) {
+        await prisma.response.deleteMany({
+          where: {
+            formId,
+          },
+        });
+      }
+
+      // Delete the form itself
+      await prisma.form.delete({
+        where: {
+          id: formId,
+        },
+      });
     });
   } catch (error) {
     console.error("error deleting form", error);
@@ -326,10 +327,10 @@ export const createNewQuestion = async ({
 }) => {
   const session = await getServerSession();
 
-  try {
-    if (!session) return;
-    if (ownerId !== session.user.id) return;
+  if (!session) return;
+  if (ownerId !== session.user.id) return;
 
+  try {
     await prisma.question.create({
       data: {
         id: questionId,
@@ -365,12 +366,12 @@ export const updateQuestion = async ({
   type: $Enums.QUESTION_TYPE | null;
 }) => {
   const session = await getServerSession();
+
+  if (!session) return;
+  if (ownerId !== session.user.id) return;
   if (title.replace(/\s+/g, "").length < 1) return;
 
   try {
-    if (!session) return;
-    if (ownerId !== session.user.id) return;
-
     const existingQuestion = await prisma.question.findUnique({
       where: {
         id: questionId,
@@ -414,8 +415,9 @@ export const deleteQuestion = async ({
 }) => {
   const session = await getServerSession();
 
+  if (!session) return;
+
   try {
-    if (!session) return;
     if (ownerId !== session.user.id) return;
 
     const existingQuestion = await prisma.question.findUnique({
@@ -426,26 +428,28 @@ export const deleteQuestion = async ({
 
     if (!existingQuestion) return;
 
-    //Delete question option
-    const options = await prisma.option.findMany({
-      where: {
-        questionId: existingQuestion.id,
-      },
-    });
-
-    if (options.length > 0) {
-      await prisma.option.deleteMany({
+    await prisma.$transaction(async (prisma) => {
+      // Delete all options related to the question if any exist
+      const options = await prisma.option.findMany({
         where: {
           questionId: existingQuestion.id,
         },
       });
-    }
 
-    //Delete the question itself
-    await prisma.question.delete({
-      where: {
-        id: questionId,
-      },
+      if (options.length > 0) {
+        await prisma.option.deleteMany({
+          where: {
+            questionId: existingQuestion.id,
+          },
+        });
+      }
+
+      // Delete the question itself
+      await prisma.question.delete({
+        where: {
+          id: questionId,
+        },
+      });
     });
   } catch (error) {
     console.error("error deleting form", error);
@@ -475,11 +479,10 @@ export const createQuestionOption = async ({
 }) => {
   const session = await getServerSession();
 
+  if (!session) return;
   if (value.replace(/\s+/g, "").length < 1) return;
 
   try {
-    if (!session) return;
-
     const existingOption = await prisma.option.findUnique({
       where: {
         id: optionId,
@@ -528,9 +531,9 @@ export const deleteQuestionOption = async ({
 }) => {
   const session = await getServerSession();
 
-  try {
-    if (!session) return;
+  if (!session) return;
 
+  try {
     const existingOption = await prisma.option.findUnique({
       where: {
         id: optionId,
@@ -566,9 +569,9 @@ export const submitForm = async ({
 }) => {
   const session = await getServerSession();
 
-  try {
-    if (!session) return;
+  if (!session) return;
 
+  try {
     const response = await prisma.response.create({
       data: {
         formId,
