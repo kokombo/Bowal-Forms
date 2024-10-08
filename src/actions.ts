@@ -26,20 +26,22 @@ export const startANewForm = async ({
   if (!session) return;
 
   try {
-    const form = await prisma.form.create({
-      data: {
-        id: formId,
-        title: title.trim(),
-        ownerId: session.user.id as string,
-      },
-    });
+    await prisma.$transaction(async (prisma) => {
+      const form = await prisma.form.create({
+        data: {
+          id: formId,
+          title: title.trim(),
+          ownerId: session.user.id as string,
+        },
+      });
 
-    await prisma.theme.create({
-      data: {
-        formId: form.id,
-        headerImage,
-        backgroundColor,
-      },
+      await prisma.theme.create({
+        data: {
+          formId: form.id,
+          headerImage,
+          backgroundColor,
+        },
+      });
     });
   } catch (error) {
     console.error("error creating form", error);
