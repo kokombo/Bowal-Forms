@@ -249,16 +249,16 @@ export const deleteForm = async ({
 
     if (!existingForm) return;
 
+    // Check if theme exists
+    const existingTheme = await prisma.theme.findUnique({
+      where: {
+        formId,
+      },
+    });
+
+    if (!existingTheme) return;
+
     await prisma.$transaction(async (prisma) => {
-      // Check if theme exists
-      const existingTheme = await prisma.theme.findUnique({
-        where: {
-          formId,
-        },
-      });
-
-      if (!existingTheme) return;
-
       // Find questions associated with the form
       const questions = await prisma.question.findMany({
         where: {
