@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { prisma } from "./prisma-connect";
+import prisma from "./prisma-connect";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.AUTH_SECRET,
@@ -55,8 +55,6 @@ export const authOptions: NextAuthOptions = {
             },
           });
         }
-
-        await prisma.$disconnect();
       }
 
       return true;

@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { prisma } from "./lib/prisma-connect";
+import prisma from "./lib/prisma-connect";
 import { getServerSession } from "./lib/getServerSession";
 import { revalidatePath } from "next/cache";
 import type { $Enums } from "@prisma/client";

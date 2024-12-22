@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma-connect";
+import prisma from "@/lib/prisma-connect";
 import { getServerSession } from "@/lib/getServerSession";
 
 export const GET = async (req: NextRequest) => {
@@ -38,8 +38,6 @@ export const GET = async (req: NextRequest) => {
       { message: "Something went wrong, please try again" },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 };
 
